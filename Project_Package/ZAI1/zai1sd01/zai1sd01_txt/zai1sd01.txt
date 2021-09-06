@@ -1,0 +1,81 @@
+*&---------------------------------------------------------------------*
+*& Report ZAI124R20
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zai1sd01 MESSAGE-ID zai1sdm.
+
+INCLUDE ZAI1SD01CLS.
+INCLUDE ZAI1SD01TOP.
+INCLUDE ZAI1SD01SEL.
+INCLUDE ZAI1SD01O01.
+INCLUDE ZAI1SD01I01.
+INCLUDE ZAI1SD01F01.
+
+INITIALIZATION.
+
+AT SELECTION-SCREEN OUTPUT.
+  PERFORM screen_output.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_path.
+  PERFORM upload_file.
+
+START-OF-SELECTION.
+  IF p_rb1 = 'X'.
+    PERFORM check_path_required.
+
+    PERFORM get_file_data.
+
+    PERFORM get_master_data.
+
+    PERFORM build_data.
+
+*    IF p_rb1_1 <> 'X'.
+      PERFORM save_data.
+*    ELSE.
+*      isSaved = 'X'.
+*    ENDIF.
+
+    PERFORM get_db_data.
+  ELSE.
+    PERFORM update_flag.
+
+    PERFORM get_data.
+  ENDIF.
+
+  CALL SCREEN 100.
+
+*GUI Texts
+*----------------------------------------------------------
+* 0100 --> & : ## ## ##
+* 0100 --> & : ## ## ##
+
+*Text elements
+*----------------------------------------------------------
+* 001 ## ##
+* 002 ## ###
+* 003 ##
+
+
+*Selection texts
+*----------------------------------------------------------
+* P_PATH         ## ##
+* P_RB1_1         ### ##
+* P_RB2_1         ### ## ##
+* P_RB2_2         ## ## ##
+* S_MATNR         ##
+* S_ORDER         ## ##
+* S_PARTN         ##
+* S_PURDT         ###
+* S_REQDT         ###
+
+
+*Messages
+*----------------------------------------------------------
+*
+* Message class: ZAI1SDM
+*000   & & & &
+*001   ## ### ## ## #####.
+
+----------------------------------------------------------------------------------
+Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754

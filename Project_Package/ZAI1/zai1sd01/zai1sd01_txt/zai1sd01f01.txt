@@ -1,0 +1,2726 @@
+*&---------------------------------------------------------------------*
+*& Include          ZAI124R20F01
+*&---------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*& Form screen_output
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM screen_output .
+  LOOP AT SCREEN.
+    CASE 'X'.
+      WHEN p_rb1.
+        IF screen-group1 = 'RB1'.
+          screen-required = '0'.
+          MODIFY SCREEN.
+        ENDIF.
+
+        IF screen-group1 = 'RB2'.
+          screen-active = '0'.
+          MODIFY SCREEN.
+        ENDIF.
+
+      WHEN p_rb2.
+        IF screen-group1 = 'RB1'.
+          screen-required = '0'.
+          MODIFY SCREEN.
+        ENDIF.
+
+        IF screen-group1 = 'RB1'.
+          screen-active = '0'.
+          MODIFY SCREEN.
+        ENDIF.
+
+    ENDCASE.
+  ENDLOOP.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form create_object
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM create_object .
+  CREATE OBJECT go_container
+    EXPORTING
+      container_name = 'GO_CONTAINER'.
+
+  CREATE OBJECT go_grid
+    EXPORTING
+      i_parent = go_container
+      i_appl_events     = 'X'
+      .
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_fieldcat
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM set_fieldcat .
+  CLEAR: gs_fieldcat, gt_fieldcat.
+
+  gs_fieldcat-fieldname = 'icon'.
+  gs_fieldcat-coltext   = 'Status'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = 'C'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'PARTN_NUMB'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'PARTN_NAME'.
+  gs_fieldcat-coltext   = '###'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'PURCH_NO_C'.
+  gs_fieldcat-coltext   = '## ## ##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'PURCH_DATE'.
+  gs_fieldcat-coltext   = '###'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'REQ_DATE'.
+  gs_fieldcat-coltext   = '#####'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'PURCH_ITEM_C'.
+  gs_fieldcat-coltext   = 'Item'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'MATERIAL'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'MATERIAL_desc'.
+  gs_fieldcat-coltext   = '###'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'TARGET_QTY'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = 'C'.
+  gs_fieldcat-qfieldname = 'TARGET_QU'.
+  gs_fieldcat-edit      = 'X'.
+  gs_fieldcat-do_sum    = 'X'.
+  gs_fieldcat-emphasize = 'C300'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'TARGET_QU'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = 'C'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'COND_VALUE'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-cfieldname = 'CURRENCY'.
+  gs_fieldcat-edit      = 'X'.
+  gs_fieldcat-emphasize = 'C300'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'CURRENCY'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'NAME'.
+  gs_fieldcat-coltext   = '####'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'ZIPCODE'.
+  gs_fieldcat-coltext   = '####'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = 'R'.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'ADDRESS'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'TELEPHONE'.
+  gs_fieldcat-coltext   = '###'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'MESSAGE'.
+  gs_fieldcat-coltext   = 'Message'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  APPEND gs_fieldcat TO gt_fieldcat.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_layout
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM set_layout .
+  DATA: lv_lines TYPE i.
+  DATA: lv_title LIKE grid_title.
+
+  DESCRIBE TABLE gt_disp LINES lv_lines.
+*  REPLACE '&' IN grid_title WITH CONV string( lv_lines ).
+  lv_title = grid_title.
+  lv_title+9(3) = lv_lines.
+*  grid_title = grid_title && ' ' && CONV string( lv_lines ).
+
+  CLEAR gs_layout.
+  gs_layout-zebra = 'X'.
+  gs_layout-cwidth_opt = 'A'.
+  gs_layout-sel_mode = 'D'.
+  gs_layout-grid_title = lv_title.
+  gs_layout-smalltitle = ''.
+  gs_layout-TOTALS_BEF = 'X'.
+  gs_layout-STYLEFNAME = 'CELLTAB'.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_sort
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM set_sort .
+  CLEAR: gs_sort, gt_sort.
+
+  gs_sort-fieldname = 'PARTN_NUMB'.
+  gs_sort-SUBTOT    = 'X'.
+  APPEND gs_sort TO gt_sort.
+
+  CLEAR gs_sort.
+  gs_sort-fieldname = 'REQ_DATE'.
+  APPEND gs_sort TO gt_sort.
+
+  CLEAR gs_sort.
+  gs_sort-fieldname = 'PURCH_NO_C'.
+  APPEND gs_sort TO gt_sort.
+
+  gs_sort-fieldname = 'PARTN_NAME'.
+  APPEND gs_sort TO gt_sort.
+
+  IF p_rb2 = 'X'.
+    gs_sort-fieldname = 'SALES_NUMB'.
+    APPEND gs_sort TO gt_sort.
+  ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_event
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM set_event .
+  CREATE OBJECT go_event_receiver.
+
+  SET HANDLER: go_event_receiver->handler_double_click  FOR go_grid,
+               go_event_receiver->handler_hotspot_click FOR go_grid,
+               go_event_receiver->handler_data_changed  FOR go_grid.
+
+  CALL METHOD go_grid->register_edit_event
+    EXPORTING
+      i_event_id = go_grid->mc_evt_modified " recognize change with Enter + F4
+*    EXCEPTIONS
+*     error      = 1
+*     others     = 2
+    .
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form display_alv
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM display_alv .
+  CALL METHOD go_grid->set_table_for_first_display
+    EXPORTING
+*      i_buffer_active               =
+*      i_bypassing_buffer            =
+*      i_consistency_check           =
+*      i_structure_name              =
+*      is_variant                    =
+*      i_save                        =
+*      i_default                     = 'X'
+      is_layout                     = gs_layout
+*      is_print                      =
+*      it_special_groups             =
+*      it_toolbar_excluding          =
+*      it_hyperlink                  =
+*      it_alv_graphics               =
+*      it_except_qinfo               =
+*      ir_salv_adapter               =
+    CHANGING
+      it_outtab                     = gt_disp
+      it_fieldcatalog               = gt_fieldcat
+      it_sort                       = gt_sort
+*      it_filter                     =
+*    EXCEPTIONS
+*      invalid_parameter_combination = 1
+*      program_error                 = 2
+*      too_many_lines                = 3
+*      others                        = 4
+          .
+  IF sy-subrc <> 0.
+*   Implement suitable error handling here
+  ENDIF.
+
+  CALL METHOD go_grid->set_ready_for_input
+    EXPORTING
+      i_ready_for_input = 0.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form refresh_alv
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM refresh_alv .
+  CALL METHOD go_grid->refresh_table_display
+*    EXPORTING
+*      is_stable      =
+*      i_soft_refresh =
+*    EXCEPTIONS
+*      finished       = 1
+*      others         = 2
+          .
+  IF sy-subrc <> 0.
+*   Implement suitable error handling here
+  ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form upload_file
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM upload_file .
+  DATA: lt_path    TYPE filetable,
+        ls_path    TYPE file_table,
+        lv_rcs     TYPE i,
+        check_path TYPE string,
+        lv_result  TYPE abap_bool.
+
+  CALL METHOD cl_gui_frontend_services=>file_open_dialog
+*    EXPORTING
+*      window_title            =
+*      default_extension       =
+*      default_filename        =
+*      file_filter             =
+*      with_encoding           =
+*      initial_directory       =
+*      multiselection          =
+    CHANGING
+      file_table              = lt_path
+      rc                      = lv_rcs
+*      user_action             =
+*      file_encoding           =
+*    EXCEPTIONS
+*      file_open_dialog_failed = 1
+*      cntl_error              = 2
+*      error_no_gui            = 3
+*      not_supported_by_gui    = 4
+*      others                  = 5
+          .
+  IF sy-subrc <> 0.
+*   Implement suitable error handling here
+  ENDIF.
+
+  READ TABLE lt_path INTO ls_path INDEX 1.
+  check_path = ls_path.
+
+  CALL METHOD cl_gui_frontend_services=>file_exist
+    EXPORTING
+      file   = check_path
+    RECEIVING
+      result = lv_result
+*    EXCEPTIONS
+*     cntl_error           = 1
+*     error_no_gui         = 2
+*     wrong_parameter      = 3
+*     not_supported_by_gui = 4
+*     others = 5
+    .
+
+  IF lv_result = abap_true.
+    p_path = ls_path-filename.
+  ELSE.
+    MESSAGE s000 WITH '#### ## #####.' DISPLAY LIKE 'E'.
+  ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form check_path
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM check_path_required .
+  DATA: lv_path   TYPE string,
+        lv_result TYPE ABAP_BOOL.
+
+  IF p_path IS INITIAL.
+    MESSAGE S001 DISPLAY LIKE 'E'.
+    LEAVE LIST-PROCESSING.
+  ENDIF.
+
+  lv_path = p_path.
+
+  CALL METHOD cl_gui_frontend_services=>file_exist
+    EXPORTING
+      file   = lv_path
+    RECEIVING
+      result = lv_result
+*    EXCEPTIONS
+*     cntl_error           = 1
+*     error_no_gui         = 2
+*     wrong_parameter      = 3
+*     not_supported_by_gui = 4
+*     others = 5
+    .
+
+  IF lv_result <> abap_true.
+    MESSAGE s000 WITH '#### ## #####.' DISPLAY LIKE 'E'.
+    LEAVE LIST-PROCESSING.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form get_file_data
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM get_file_data .
+  DATA: ls_intern TYPE alsmex_tabline,
+        lt_intern TYPE TABLE OF alsmex_tabline.
+
+  FIELD-SYMBOLS <fs>.
+
+  CALL FUNCTION 'ALSM_EXCEL_TO_INTERNAL_TABLE'
+    EXPORTING
+      filename    = p_path
+      i_begin_col = 1
+      i_begin_row = 2
+      i_end_col   = 20
+      i_end_row   = 9999
+    TABLES
+      intern      = lt_intern
+*   EXCEPTIONS
+*     INCONSISTENT_PARAMETERS       = 1
+*     UPLOAD_OLE  = 2
+*     OTHERS      = 3
+    .
+  IF sy-subrc <> 0.
+* Implement suitable error handling here
+  ENDIF.
+
+  CLEAR gt_excel.
+  LOOP AT lt_intern INTO ls_intern.
+    ASSIGN COMPONENT ls_intern-col OF STRUCTURE gs_excel TO <fs>.
+    <fs> = ls_intern-value.
+    AT END OF row.
+      APPEND gs_excel TO gt_excel.
+      CLEAR: gs_excel.
+    ENDAT.
+  ENDLOOP.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form get_master_data
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM get_master_data .
+* cust ## ##
+  PERFORM get_customer.
+* ## ## ##
+  PERFORM get_material.
+*  Ship ## ##
+  PERFORM get_shippingcond.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form build_data
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM build_data .
+
+  CLEAR: gs_excel, gs_disp.
+  LOOP AT gt_excel INTO gs_excel.
+    gs_disp-icon = ICON_LED_YELLOW.
+    gs_disp-currency = gc_waers.
+
+    " Date check
+*    PERFORM check_date.
+    PERFORM build_date.
+
+    MOVE-CORRESPONDING gs_excel TO gs_disp.
+*
+*     customer check
+*    PERFORM check_cutomer.
+    PERFORM build_customer.
+*
+*     ## check
+*    PERFORM check_material.
+    PERFORM build_material.
+*
+*     ## check
+*    PERFORM check_currency.
+    PERFORM build_currency.
+
+    " ## check
+
+    " ### check
+    APPEND gs_disp TO gt_disp.
+  ENDLOOP.
+
+  PERFORM set_item_no.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form get_customer
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM get_customer .
+  LOOP AT gt_excel INTO gs_excel GROUP BY gs_excel-taxnum.
+    CLEAR gv_mcod.
+    gv_mcod = gs_excel-taxnum.
+    APPEND gv_mcod TO gt_mcod.
+  ENDLOOP.
+
+  CLEAR gv_mcod.
+  LOOP AT gt_mcod INTO gv_mcod.
+
+    SELECT SINGLE *
+      FROM KNA1 AS A1
+      LEFT OUTER JOIN KNVV AS VV ON A1~KUNNR = VV~KUNNR
+      INTO CORRESPONDING FIELDS OF gs_cust
+      WHERE A1~STCEG = gv_mcod.
+
+    APPEND gs_cust TO gt_cust.
+    CLEAR: gs_cust, gv_mcod.
+  ENDLOOP.
+
+  LOOP AT gt_cust INTO gs_cust.
+    SELECT SINGLE zterm
+      FROM KNB1
+      INTO CORRESPONDING FIELDS OF gs_cust
+      WHERE kunnr = gs_cust-kunnr.
+  ENDLOOP.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form get_material
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM get_material .
+  CLEAR gs_cust.
+  LOOP AT gt_cust INTO gs_cust.
+    SELECT *
+      FROM KNMT
+      INTO CORRESPONDING FIELDS OF TABLE gt_mtmp
+      WHERE kunnr = gs_cust-kunnr
+        AND vkorg = gs_cust-vkorg
+        AND vtweg = gs_cust-vtweg.
+
+    LOOP AT gt_mtmp INTO gs_mtmp.
+      APPEND gs_mtmp TO gt_matr.
+    ENDLOOP.
+  ENDLOOP.
+
+  CLEAR: gs_matr, gs_mtmp.
+  LOOP AT gt_matr INTO gs_matr.
+    SELECT SINGLE *
+      FROM MARA AS R
+      LEFT OUTER JOIN MAKT AS K ON R~matnr = K~matnr
+      INTO CORRESPONDING FIELDS OF gs_mtmp
+      WHERE R~matnr = gs_matr-matnr.
+
+    gs_mtmp-vkorg = gs_matr-vkorg.
+    gs_mtmp-vtweg = gs_matr-vtweg.
+    gs_mtmp-kunnr = gs_matr-kunnr.
+    gs_mtmp-kdmat = gs_matr-kdmat.
+    MODIFY gt_matr FROM gs_mtmp.
+  ENDLOOP.
+
+  CLEAR: gs_matr, gs_mtmp.
+  LOOP AT gt_matr INTO gs_matr.
+    SELECT SINGLE *
+      FROM MARC
+      INTO CORRESPONDING FIELDS OF gs_mtmp
+      WHERE matnr = gs_matr-matnr.
+
+      gs_matr-werks = gs_mtmp-werks.
+      gs_matr-ladgr = gs_mtmp-ladgr.
+      MODIFY gt_matr FROM gs_matr.
+  ENDLOOP.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form get_shippingcond
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM get_shippingcond .
+  CLEAR: gs_ship, gt_ship, gs_matr, gs_cust.
+
+  LOOP AT gt_matr INTO gs_matr.
+    gs_ship-kunnr = gs_matr-kunnr.
+    gs_ship-matnr = gs_matr-matnr.
+    gs_ship-werks = gs_matr-werks.
+    gs_ship-ladgr = gs_matr-ladgr.
+    APPEND gs_ship TO gt_ship.
+  ENDLOOP.
+
+  LOOP AT gt_ship INTO gs_ship.
+   CLEAR: gs_cust.
+   READ TABLE gt_cust INTO gs_cust WITH KEY kunnr = gs_ship-kunnr.
+   IF sy-subrc = 0.
+    gs_ship-vsbed = gs_cust-vsbed.
+    MODIFY gt_ship FROM gs_ship.
+  ENDIF.
+  ENDLOOP.
+
+  CLEAR: gs_ship.
+  LOOP AT gt_ship INTO gs_ship.
+    SELECT SINGLE *
+      FROM TVSTZ
+      INTO CORRESPONDING FIELDS OF gs_ship
+      WHERE vsbed = gs_ship-vsbed
+        AND ladgr = gs_ship-ladgr
+        AND werks = gs_ship-werks.
+    MODIFY gt_ship FROM gs_ship.
+  ENDLOOP.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form check_date
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM check_date .
+  DATA: lv_date TYPE sy-datum.
+
+    REPLACE ALL OCCURRENCES OF '.' IN gs_excel-purch_date WITH ''.
+    REPLACE ALL OCCURRENCES OF ',' IN gs_excel-purch_date WITH ''.
+    REPLACE ALL OCCURRENCES OF '-' IN gs_excel-purch_date WITH ''.
+    REPLACE ALL OCCURRENCES OF '/' IN gs_excel-purch_date WITH ''.
+
+    REPLACE ALL OCCURRENCES OF '.' IN gs_excel-req_date WITH ''.
+    REPLACE ALL OCCURRENCES OF ',' IN gs_excel-req_date WITH ''.
+    REPLACE ALL OCCURRENCES OF '-' IN gs_excel-req_date WITH ''.
+    REPLACE ALL OCCURRENCES OF '/' IN gs_excel-req_date WITH ''.
+
+    lv_date = gs_excel-purch_date.
+    CALL FUNCTION 'DATE_CHECK_PLAUSIBILITY'
+      EXPORTING
+        date                            = lv_date
+     EXCEPTIONS
+       PLAUSIBILITY_CHECK_FAILED       = 1
+       OTHERS                          = 2
+              .
+
+    IF sy-subrc <> 0.
+      gs_disp-icon = ICON_LED_RED.
+      gs_disp-message = '#### ## ### ## ####.'.
+    ENDIF.
+
+    lv_date = gs_excel-req_date.
+    CALL FUNCTION 'DATE_CHECK_PLAUSIBILITY'
+      EXPORTING
+        date                            = lv_date
+     EXCEPTIONS
+       PLAUSIBILITY_CHECK_FAILED       = 1
+       OTHERS                          = 2
+              .
+    IF sy-subrc <> 0.
+      gs_disp-icon = ICON_LED_RED.
+      gs_disp-message = '#### ## ### ## ####.'.
+    ENDIF.
+
+
+    IF gs_excel-purch_date > gs_excel-req_date.
+      gs_disp-icon = ICON_LED_RED.
+      gs_disp-message = '#### ##### ####'.
+    ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form check_cutomer
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM check_cutomer .
+  CLEAR: gs_cust.
+  READ TABLE gt_cust INTO gs_cust WITH KEY STCEG = gs_excel-taxnum.
+
+  IF sy-subrc = 0.
+    gs_disp-partn_numb = gs_cust-kunnr.
+    gs_disp-partn_name = gs_cust-name1.
+  ELSE.
+    gs_disp-icon = ICON_LED_RED.
+    gs_disp-message = '#### ## customer###'.
+  ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form check_material
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM check_material .
+  CLEAR: gs_matr.
+  READ TABLE gt_matr INTO gs_matr WITH KEY kdmat = gs_excel-material.
+
+  IF sy-subrc = 0.
+    gs_disp-material = gs_matr-matnr.
+    gs_disp-material_desc = gs_matr-maktx.
+    gs_disp-target_qu = gs_matr-meins.
+  ELSE.
+    gs_disp-icon = ICON_LED_RED.
+    gs_disp-message = '## ## ## ### #####'.
+  ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form check_currency
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM check_currency .
+
+  DATA: lv_curr  TYPE char10,
+        lv_htype TYPE DD01V-DATATYPE.
+  DATA: lv_input TYPE BAPICURR-BAPICURR,
+        ls_input TYPE BAPICURR-BAPICURR.
+
+  DATA: lv_amt TYPE BAPICURR_D.
+  DATA: ls_return TYPE BAPIRETURN.
+
+  lv_curr = gs_disp-cond_value.
+  CALL FUNCTION 'NUMERIC_CHECK'
+    EXPORTING
+      string_in        = lv_curr
+   IMPORTING
+*     STRING_OUT       =
+     HTYPE            = lv_htype
+            .
+
+  IF lv_htype <> 'NUMC'.
+    gs_disp-icon = ICON_LED_RED.
+    gs_disp-message = '## ### ## ####.'.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form save_data
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM save_data .
+  DATA: ls_data TYPE zai24T0010,
+        lt_data TYPE TABLE OF zai24T0010.
+
+  LOOP AT gt_disp INTO gs_disp.
+    MOVE-CORRESPONDING gs_disp TO ls_data.
+    ls_data-erdat = sy-datum.
+    ls_data-erzet = sy-uzeit.
+    ls_data-ernam = sy-uname.
+    APPEND ls_data TO lt_data.
+  ENDLOOP.
+
+  INSERT zai24T0010 FROM TABLE lt_data.
+  IF sy-subrc = 0.
+    COMMIT WORK.
+    MESSAGE S000 WITH 'DB ## ##'.
+  ELSE.
+    ROLLBACK WORK.
+    MESSAGE S000 WITH 'DB ## ##' DISPLAY LIKE 'E'.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_item_no
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM set_item_no .
+  DATA: lv_item TYPE zai24T0010-purch_item_c.
+  DATA: ls_disp LIKE gs_disp.
+
+  LOOP AT gt_disp INTO gs_disp GROUP BY ( partn_numb = gs_disp-partn_numb purch_no_c = gs_disp-purch_no_c ).
+    lv_item = 10.
+    LOOP AT gt_disp INTO ls_disp WHERE partn_numb = gs_disp-partn_numb
+                                   AND purch_no_c = gs_disp-purch_no_c.
+      ls_disp-purch_item_c = lv_item.
+      MODIFY gt_disp FROM ls_disp.
+      lv_item = lv_item + 10.
+    ENDLOOP.
+  ENDLOOP.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form get_db_data
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM get_db_data .
+
+  RANGES: lr_partn FOR zai24T0010-partn_numb,
+          lr_refc  FOR zai24T0010-purch_no_c.
+
+  DATA: lv_partn TYPE zai24T0010-partn_numb.
+
+  SORT gt_disp BY partn_numb ASCENDING.
+
+  CLEAR: gs_disp.
+  LOOP AT gt_disp INTO gs_disp GROUP BY ( partn_numb = gs_disp-partn_numb purch_no_c = gs_disp-purch_no_c ).
+    CLEAR: lr_partn, lr_refc.
+    IF lv_partn <> gs_disp-partn_numb.
+      lr_partn-sign = 'I'.
+      lr_partn-option = 'EQ'.
+      lr_partn-low = gs_disp-partn_numb.
+      lv_partn = gs_disp-partn_numb.
+      APPEND lr_partn.
+    ELSE.
+      lv_partn = gs_disp-partn_numb.
+    ENDIF.
+
+    lr_refc-sign = 'I'.
+    lr_refc-option = 'EQ'.
+    lr_refc-low = gs_disp-purch_no_c.
+    APPEND lr_refc.
+  ENDLOOP.
+
+  CLEAR: gs_disp, gt_disp.
+
+  SELECT *
+    FROM zai24T0010
+    INTO CORRESPONDING FIELDS OF TABLE gt_disp
+    WHERE partn_numb IN lr_partn
+      AND purch_no_c IN lr_refc.
+
+  PERFORM set_db_display_rb1.
+  PERFORM set_db_display_rb2.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form build_date
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM build_date .
+    REPLACE ALL OCCURRENCES OF '.' IN gs_excel-purch_date WITH ''.
+    REPLACE ALL OCCURRENCES OF ',' IN gs_excel-purch_date WITH ''.
+    REPLACE ALL OCCURRENCES OF '-' IN gs_excel-purch_date WITH ''.
+    REPLACE ALL OCCURRENCES OF '/' IN gs_excel-purch_date WITH ''.
+
+    REPLACE ALL OCCURRENCES OF '.' IN gs_excel-req_date WITH ''.
+    REPLACE ALL OCCURRENCES OF ',' IN gs_excel-req_date WITH ''.
+    REPLACE ALL OCCURRENCES OF '-' IN gs_excel-req_date WITH ''.
+    REPLACE ALL OCCURRENCES OF '/' IN gs_excel-req_date WITH ''.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form build_customer
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM build_customer .
+  CLEAR: gs_cust.
+  READ TABLE gt_cust INTO gs_cust WITH KEY STCEG = gs_excel-taxnum.
+
+  IF sy-subrc = 0.
+    gs_disp-partn_numb = gs_cust-kunnr.
+    gs_disp-partn_name = gs_cust-name1.
+  ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form build_material
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM build_material .
+  CLEAR: gs_matr.
+  READ TABLE gt_matr INTO gs_matr WITH KEY kdmat = gs_excel-material.
+
+  IF sy-subrc = 0.
+    gs_disp-material = gs_matr-matnr.
+    gs_disp-material_desc = gs_matr-maktx.
+    gs_disp-target_qu = gs_matr-meins.
+  ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form build_currency
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM build_currency .
+  REPLACE ALL OCCURRENCES OF ',' IN gs_excel-cond_value WITH ''.
+
+  DATA: lv_curr  TYPE char10,
+        lv_htype TYPE DD01V-DATATYPE.
+  DATA: lv_input TYPE BAPICURR-BAPICURR,
+        ls_input TYPE BAPICURR-BAPICURR.
+
+  DATA: lv_amt TYPE BAPICURR_D.
+  DATA: ls_return TYPE BAPIRETURN.
+
+  lv_curr = gs_excel-cond_value.
+  CALL FUNCTION 'NUMERIC_CHECK'
+    EXPORTING
+      string_in        = lv_curr
+   IMPORTING
+*     STRING_OUT       =
+     HTYPE            = lv_htype
+            .
+  IF lv_htype = 'NUMC'.
+    lv_input = gs_excel-cond_value.
+    CALL FUNCTION 'BAPI_CURRENCY_CONV_TO_INTERNAL'
+      EXPORTING
+        currency                   = gs_disp-currency
+        amount_external            = lv_input
+        max_number_of_digits       = 20
+     IMPORTING
+       AMOUNT_INTERNAL            = lv_amt
+       RETURN                     = ls_return
+              .
+    IF ls_return IS INITIAL.
+      gs_disp-COND_VALUE = lv_amt.
+    ENDIF.
+  ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form get_data
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM get_data .
+  CLEAR: gs_disp, gt_disp.
+
+  RANGES lr_besta FOR zai24T0010-BESTA. "lr_besta
+  IF p_rb2_1 = 'X'.
+    lr_besta-sign = 'I'.
+    lr_besta-option = 'EQ'.
+    lr_besta-low = ''.
+    APPEND lr_besta.
+
+    lr_besta-sign = 'I'.
+    lr_besta-option = 'EQ'.
+    lr_besta-low = 'A'.
+    APPEND lr_besta.
+
+    lr_besta-sign = 'I'.
+    lr_besta-option = 'EQ'.
+    lr_besta-low = 'B'.
+    APPEND lr_besta.
+  ENDIF.
+
+  SELECT *
+    FROM zai24T0010
+    INTO CORRESPONDING FIELDS OF TABLE gt_disp
+    WHERE sales_numb IN s_order
+      AND purch_date IN s_purdt
+      AND req_date   IN s_reqdt
+      AND partn_numb IN s_partn
+      AND material   IN s_matnr
+      AND gbstk      IN lr_besta.
+
+  PERFORM set_db_display_rb2.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_db_display
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM set_db_display_rb1 .
+  LOOP AT gt_disp INTO gs_disp.
+    gs_disp-icon = ICON_LED_YELLOW.
+
+    READ TABLE gt_cust INTO gs_cust WITH KEY KUNNR = gs_disp-partn_numb.
+    IF sy-subrc = 0.
+      gs_disp-partn_name = gs_cust-name1.
+    ELSE.
+      gs_disp-icon = ICON_LED_RED.
+      gs_disp-message = '### ### #####.'.
+    ENDIF.
+
+    READ TABLE gt_matr INTO gs_matr WITH KEY matnr = gs_disp-material.
+    IF sy-subrc = 0.
+      gs_disp-material_desc = gs_matr-maktx.
+    ELSE.
+      gs_disp-icon = ICON_LED_RED.
+      gs_disp-message = '## ### #####.'.
+    ENDIF.
+
+*    PERFORM check_currency.
+
+
+    MODIFY gt_disp FROM gs_disp.
+  ENDLOOP.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_db_display_rb2
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM set_db_display_rb2 .
+  " GET MASTER DATA
+  PERFORM get_cust.
+  PERFORM get_matr.
+  PERFORM get_ship.
+
+  LOOP AT gt_disp INTO gs_disp.
+    gs_disp-icon = ICON_LED_YELLOW.
+
+    PERFORM set_cust.
+  " MATERIIAL
+    PERFORM set_matr.
+  " confirmed ## # ## ####
+    IF gs_disp-BESTA = 'C' AND gs_disp-sales_numb IS NOT INITIAL.
+      gs_disp-besta_sta = ICON_GREEN_LIGHT.
+      gs_disp-icon = ICON_LED_GREEN.
+    ELSEIF gs_disp-BESTA = 'B' AND gs_disp-sales_numb IS NOT INITIAL.
+      gs_disp-besta_sta = ICON_YELLOW_LIGHT.
+      gs_disp-icon = ICON_LED_GREEN.
+    ELSEIF gs_disp-BESTA = 'A' AND gs_disp-sales_numb IS NOT INITIAL.
+      gs_disp-besta_sta = ICON_RED_LIGHT.
+      gs_disp-icon = ICON_LED_GREEN.
+    ELSEIF gs_disp-sales_numb IS INITIAL.
+      gs_disp-icon = ICON_LED_YELLOW.
+    ELSE.
+      gs_disp-besta_sta = ICON_GREEN_LIGHT.
+      gs_disp-icon = ICON_LED_GREEN.
+    ENDIF.
+
+    IF gs_disp-LFGSK = 'C' AND gs_disp-sales_numb IS NOT INITIAL.
+      gs_disp-lfgsk_sta = ICON_GREEN_LIGHT.
+    ELSEIF gs_disp-LFGSK = 'B' AND gs_disp-sales_numb IS NOT INITIAL.
+      gs_disp-lfgsk_sta = ICON_YELLOW_LIGHT.
+    ELSEIF gs_disp-LFGSK = 'A' AND gs_disp-sales_numb IS NOT INITIAL.
+      gs_disp-lfgsk_sta = ICON_RED_LIGHT.
+    ELSE.
+*      gs_disp-lfgsk_sta = ICON_GREEN_LIGHT.
+    ENDIF.
+
+    MODIFY gt_disp FROM gs_disp.
+  ENDLOOP.
+
+  SORT gt_disp BY partn_numb ASCENDING
+                  req_date ASCENDING
+                  purch_item_c ASCENDING.
+  isSaved = 'X'.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form change_toggle
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM change_toggle .
+  DATA: lv_result TYPE int4.
+  DATA: lv_answer TYPE c.
+
+  DATA: ls_cells TYPE lvc_s_modi.
+  DATA: ls_data TYPE zai24T0010.
+
+  lv_result = go_grid->is_ready_for_input( ).
+
+  CASE lv_result.
+    WHEN 0.  "Display ### ##, Change# ##
+      PERFORM set_style.
+
+      CALL METHOD go_grid->set_ready_for_input
+        EXPORTING
+          i_ready_for_input = 1.
+      titlebar = 'Change'.
+      MOVE gt_disp TO gt_cp_disp.
+
+    WHEN 1.  "Change ### ##, Display# ##
+      CALL METHOD go_grid->CHECK_CHANGED_DATA
+*        IMPORTING
+*          e_valid   =
+*        CHANGING
+*          c_refresh = 'X'
+          .
+
+      IF isChanged = 'X'.
+        CALL FUNCTION 'POPUP_TO_CONFIRM'
+          EXPORTING
+           TITLEBAR                    = '## ### ## ##'
+*           DIAGNOSE_OBJECT             = ' '
+            text_question               = '### #### #####. ########?'
+           TEXT_BUTTON_1               = '#'
+*           ICON_BUTTON_1               = ' '
+           TEXT_BUTTON_2               = '###'
+*           ICON_BUTTON_2               = ' '
+*           DEFAULT_BUTTON              = '1'
+           DISPLAY_CANCEL_BUTTON       = ''
+*           USERDEFINED_F1_HELP         = ' '
+*           START_COLUMN                = 25
+*           START_ROW                   = 6
+*           POPUP_TYPE                  =
+*           IV_QUICKINFO_BUTTON_1       = ' '
+*           IV_QUICKINFO_BUTTON_2       = ' '
+         IMPORTING
+           ANSWER                      = lv_answer
+*         TABLES
+*           PARAMETER                   =
+*         EXCEPTIONS
+*           TEXT_NOT_FOUND              = 1
+*           OTHERS                      = 2
+                  .
+        IF lv_answer = 1.
+          READ TABLE gt_disp INTO gs_disp WITH KEY icon = ICON_LED_RED.
+          IF sy-subrc <> 0.
+           DELETE ADJACENT DUPLICATES FROM gt_cells COMPARING row_id.
+           LOOP AT gt_cells INTO ls_cells.
+             READ TABLE gt_disp INTO gs_disp INDEX ls_cells-row_id.
+             IF sy-subrc = 0.
+               MOVE-CORRESPONDING gs_disp TO ls_data.
+               PERFORM log_changed CHANGING ls_data.
+               MODIFY zai24T0010 FROM ls_data.
+               MESSAGE S000 WITH '## ##'.
+             ENDIF.
+           ENDLOOP.
+         ELSE.
+           MESSAGE S000 WITH '## ##' DISPLAY LIKE 'E'.
+           MOVE gt_cp_disp TO gt_disp.
+         ENDIF.
+        ELSE.
+          MOVE gt_cp_disp TO gt_disp.
+          CLEAR: gt_cells, gt_cp_disp.
+        ENDIF.
+      ENDIF.
+
+
+
+      CALL METHOD go_grid->set_ready_for_input
+        EXPORTING
+          i_ready_for_input = 0.
+      titlebar = 'Display'.
+      isChanged = ''.
+  ENDCASE.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_cust
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM set_cust .
+  READ TABLE gt_cust INTO gs_cust WITH KEY KUNNR = gs_disp-partn_numb.
+  IF sy-subrc = 0.
+    gs_disp-partn_name = gs_cust-name1.
+  ELSE.
+    gs_disp-icon = ICON_LED_RED.
+    gs_disp-message = 'Customer# #####.'.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_matr
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM set_matr .
+  CLEAR: gs_matr.
+  READ TABLE gt_matr INTO gs_matr WITH KEY matnr = gs_disp-material.
+  IF sy-subrc = 0.
+    gs_disp-material_desc = gs_matr-maktx.
+  ELSE.
+    gs_disp-icon = ICON_LED_RED.
+    gs_disp-message = '### #####'.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form get_cust
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM get_cust .
+  DATA: lt_disp LIKE gt_disp,
+        ls_disp LIKE gs_disp.
+
+  MOVE-CORRESPONDING gt_disp TO lt_disp.
+  SORT lt_disp BY partn_numb ASCENDING.
+  DELETE ADJACENT DUPLICATES FROM lt_disp COMPARING partn_numb.
+
+  LOOP AT lt_disp INTO ls_disp.
+    SELECT SINGLE *
+      FROM KNA1 AS A1
+      LEFT OUTER JOIN KNVV AS VV ON A1~KUNNR = VV~KUNNR
+      INTO CORRESPONDING FIELDS OF gs_cust
+      WHERE A1~KUNNR = ls_disp-partn_numb.
+
+    SELECT SINGLE zterm
+      FROM KNB1
+      INTO CORRESPONDING FIELDS OF gs_cust
+      WHERE KUNNR = ls_disp-partn_numb.
+
+    APPEND gs_cust TO gt_cust.
+    CLEAR: gs_cust.
+  ENDLOOP.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form get_matr
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM get_matr .
+  DATA: lt_disp LIKE gt_disp,
+        ls_disp LIKE gs_disp.
+
+  MOVE-CORRESPONDING gt_disp TO lt_disp.
+  SORT lt_disp BY material ASCENDING.
+  DELETE ADJACENT DUPLICATES FROM lt_disp COMPARING material.
+
+  LOOP AT lt_disp INTO ls_disp.
+    SELECT SINGLE *
+      FROM MARA AS R
+      LEFT OUTER JOIN MAKT AS K ON R~matnr = K~matnr
+      INTO CORRESPONDING FIELDS OF gs_matr
+      WHERE R~matnr = ls_disp-material.
+
+    SELECT SINGLE werks ladgr vkorg vtweg
+      FROM MARC AS C
+      LEFT OUTER JOIN MVKE AS E ON C~matnr = E~matnr
+      INTO CORRESPONDING FIELDS OF gs_matr
+      WHERE C~matnr = ls_disp-material.
+
+    APPEND gs_matr TO gt_matr.
+  ENDLOOP.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form get_ship
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM get_ship .
+  DATA: lt_ship LIKE gt_ship,
+        ls_ship LIKE gs_ship.
+
+  LOOP AT gt_cust INTO gs_cust.
+    SELECT *
+      FROM KNMT
+      INTO CORRESPONDING FIELDS OF TABLE lt_ship
+      WHERE KUNNR = gs_cust-KUNNR.
+
+    LOOP AT lt_ship INTO ls_ship.
+      ls_ship-vsbed = gs_cust-vsbed.
+      READ TABLE gt_matr INTO gs_matr WITH KEY matnr = ls_ship-matnr.
+      IF sy-subrc = 0.
+        ls_ship-ladgr = gs_matr-ladgr.
+        ls_ship-werks = gs_matr-werks.
+      ENDIF.
+      APPEND ls_ship TO gt_ship.
+      CLEAR: ls_ship.
+    ENDLOOP.
+    CLEAR: lt_ship.
+  ENDLOOP.
+
+  MOVE-CORRESPONDING gt_ship TO lt_ship.
+  SORT lt_ship BY vsbed ladgr werks.
+  DELETE ADJACENT DUPLICATES FROM lt_ship COMPARING vsbed ladgr werks.
+
+  LOOP AT lt_ship INTO ls_ship.
+    SELECT SINGLE vstel vste1
+      FROM TVSTZ
+      INTO CORRESPONDING FIELDS OF ls_ship
+      WHERE vsbed = ls_ship-vsbed
+        AND ladgr = ls_ship-ladgr
+        AND werks = ls_ship-werks.
+    MODIFY lt_ship FROM ls_ship.
+    CLEAR: ls_ship.
+  ENDLOOP.
+
+  LOOP AT gt_ship INTO gs_ship.
+    READ TABLE lt_ship INTO ls_ship WITH KEY vsbed = gs_ship-vsbed
+                                             ladgr = gs_ship-ladgr
+                                             werks = gs_ship-werks.
+    IF sy-subrc = 0.
+      gs_ship-vstel = ls_ship-vstel.
+      gs_ship-vste1 = ls_ship-vste1.
+      MODIFY gt_ship FROM gs_ship.
+    ENDIF.
+  ENDLOOP.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form reset_fieldcat
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM reset_fieldcat .
+  CLEAR: gs_fieldcat, gt_fieldcat.
+
+  gs_fieldcat-fieldname = 'icon'.
+  gs_fieldcat-coltext   = 'Status'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = 'C'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'PARTN_NUMB'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'PARTN_NAME'.
+  gs_fieldcat-coltext   = '###'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'PURCH_NO_C'.
+  gs_fieldcat-coltext   = '## ## ##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'PURCH_DATE'.
+  gs_fieldcat-coltext   = '###'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'REQ_DATE'.
+  gs_fieldcat-coltext   = '#####'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'PURCH_ITEM_C'.
+  gs_fieldcat-coltext   = 'Item'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'MATERIAL'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'MATERIAL_desc'.
+  gs_fieldcat-coltext   = '###'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'TARGET_QTY'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = 'C'.
+  gs_fieldcat-qfieldname = 'TARGET_QU'.
+  gs_fieldcat-edit      = 'X'.
+  gs_fieldcat-do_sum    = 'X'.
+  gs_fieldcat-emphasize = 'C300'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'TARGET_QU'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = 'C'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'COND_VALUE'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-cfieldname = 'CURRENCY'.
+  gs_fieldcat-edit      = 'X'.
+  gs_fieldcat-do_sum    = 'X'.
+  gs_fieldcat-emphasize = 'C300'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'CURRENCY'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'NAME'.
+  gs_fieldcat-coltext   = '####'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'ZIPCODE'.
+  gs_fieldcat-coltext   = '####'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = 'R'.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'ADDRESS'.
+  gs_fieldcat-coltext   = '##'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'TELEPHONE'.
+  gs_fieldcat-coltext   = '###'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'SALES_NUMB'.
+  gs_fieldcat-coltext   = 'Order'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  gs_fieldcat-edit      = ''.
+  gs_fieldcat-no_zero   = 'X'.
+  gs_fieldcat-hotspot   = 'X'.
+  gs_fieldcat-emphasize = 'C700'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'BESTA_STA'.
+  gs_fieldcat-coltext   = 'Confirmed'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = 'C'.
+  gs_fieldcat-edit      = ''.
+  gs_fieldcat-no_zero   = 'X'.
+  gs_fieldcat-hotspot   = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'LFGSK_STA'.
+  gs_fieldcat-coltext   = 'Deliv.'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = 'C'.
+  gs_fieldcat-edit      = ''.
+  gs_fieldcat-no_zero   = 'X'.
+  gs_fieldcat-hotspot   = 'X'.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+  CLEAR gs_fieldcat.
+  gs_fieldcat-fieldname = 'MESSAGE'.
+  gs_fieldcat-coltext   = 'Message'.
+  gs_fieldcat-key       = ''.
+  gs_fieldcat-ref_table = ''.
+  gs_fieldcat-ref_field = ''.
+  gs_fieldcat-just      = ''.
+  APPEND gs_fieldcat TO gt_fieldcat.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form refresh_fieldcat
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM refresh_fieldcat .
+  PERFORM reset_fieldcat.
+
+  CALL METHOD go_grid->set_frontend_fieldcatalog
+    EXPORTING
+      it_fieldcatalog = gt_fieldcat
+          .
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form bapi_create_so
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM bapi_create_so .
+
+  DATA: ls_disp LIKE gs_disp,
+        lt_disp LIKE gt_disp.
+
+  DATA: lt_table TYPE TABLE OF zai24T0010,
+        ls_table TYPE zai24T0010.
+
+  PERFORM selected_lines CHANGING lt_disp.
+
+  READ TABLE lt_disp INTO ls_disp WITH KEY icon = ICON_LED_RED.
+  IF sy-subrc = 0.
+    MESSAGE E000 WITH '## #### #####'.
+    EXIT.
+  ENDIF.
+
+  LOOP AT lt_disp INTO ls_disp.
+    IF ls_disp-sales_numb IS NOT INITIAL.
+      MESSAGE E000 WITH ls_disp-sales_numb '# ## ### #####'.
+      EXIT.
+    ENDIF.
+  ENDLOOP.
+*&---------------------------------------------------------------------*
+*& ==== BAPI ====
+*&---------------------------------------------------------------------*
+*  Exporting
+  DATA: ls_header  TYPE bapisdhd1,
+        ls_headerx TYPE bapisdhd1x.
+
+*  Importing
+  DATA: lv_vbeln   TYPE bapivbeln-vbeln.
+
+*  Tables
+  DATA: ls_return  TYPE bapiret2,
+        lt_return  TYPE TABLE OF bapiret2,
+        ls_partner TYPE bapiparnr,
+        lt_partner TYPE TABLE OF bapiparnr,
+        ls_item    TYPE BAPISDITM,
+        lt_item    TYPE TABLE OF BAPISDITM,
+        ls_itemx   TYPE BAPISDITMX,
+        lt_itemx   TYPE TABLE Of BAPISDITMX,
+        ls_schd    TYPE BAPISCHDL,
+        lt_schd    TYPE TABLE OF BAPISCHDL,
+        ls_schdx   TYPE BAPISCHDLX,
+        lt_schdx   TYPE TABLE OF BAPISCHDLX,
+        ls_cond    TYPE BAPICOND,
+        lt_cond    TYPE TABLE OF BAPICOND,
+        ls_condx   TYPE BAPICONDX,
+        lt_condx   TYPE TABLE OF BAPICONDX.
+
+  SORT lt_disp BY req_date ASCENDING.
+  CLEAR: gs_disp.
+  LOOP AT lt_disp INTO gs_disp GROUP BY ( partn_numb = gs_disp-partn_numb purch_no_c = gs_disp-purch_no_c ).
+    CLEAR: lt_item, lt_schd, lt_cond.
+    gt_cp_disp = gt_disp.
+    LOOP AT lt_disp INTO ls_disp WHERE partn_numb = gs_disp-partn_numb AND purch_no_c = gs_disp-purch_no_c.
+      " Item setting
+      PERFORM set_items CHANGING ls_disp ls_item ls_itemx.
+      APPEND ls_item  TO lt_item.
+      APPEND ls_itemx TO lt_itemx.
+
+      " schedule line setting
+      PERFORM set_schd USING ls_disp CHANGING ls_schd ls_schdx.
+      APPEND ls_schd  TO lt_schd.
+      APPEND ls_schdx TO lt_schdx.
+
+      " conditions setting
+      PERFORM set_cond USING ls_disp CHANGING ls_cond ls_condx.
+      APPEND ls_cond  TO lt_cond.
+      APPEND ls_condx TO lt_condx.
+    ENDLOOP.
+
+    " header setting
+    PERFORM set_header USING ls_disp CHANGING ls_header ls_headerx.
+
+    " partner setting
+    CLEAR: lt_partner, ls_partner, gs_cust.
+    READ TABLE gt_cust INTO gs_cust WITH KEY KUNNR = ls_disp-partn_numb.
+    IF sy-subrc = 0.
+      ls_partner-PARTN_ROLE = 'AG'. " sold-to-party
+      ls_partner-PARTN_NUMB = gs_cust-KUNNR.
+      ls_partner-COUNTRY = gs_cust-land1.
+      ls_partner-LANGU = gs_cust-spras.
+      ls_partner-REGION =  gs_cust-regio.
+      ls_partner-NAME = gs_cust-name1.
+      ls_partner-CITY = gs_cust-ort01.
+      ls_partner-POSTL_CODE = gs_cust-pstlz.
+      APPEND ls_partner TO lt_partner.
+    ENDIF.
+
+    CLEAR ls_partner.
+    ls_partner-PARTN_ROLE = 'WE'. " ship-to-party
+    ls_partner-PARTN_NUMB = 'CS01_99999'. "gs_disp-partn_numb.
+    ls_partner-COUNTRY = 'DE'.
+    ls_partner-LANGU = 'E'.
+*    gs_partner-REGION =  '02'.
+    ls_partner-NAME = ls_disp-name.
+    ls_partner-CITY = ls_disp-city.
+    ls_partner-POSTL_CODE = ls_disp-zipcode.
+    ls_partner-STREET = ls_disp-address.
+    ls_partner-TELEPHONE = ls_disp-telephone.
+    APPEND ls_partner TO lt_partner.
+
+*&---------------------------------------------------------------------*
+    " create_bapi_salesorder
+    CALL FUNCTION 'BAPI_SALESORDER_CREATEFROMDAT2'
+      EXPORTING
+*       SALESDOCUMENTIN  =
+        order_header_in  = ls_header
+        order_header_inx = ls_headerx
+*       SENDER           =
+*       BINARY_RELATIONSHIPTYPE       =
+*       INT_NUMBER_ASSIGNMENT         =
+*       BEHAVE_WHEN_ERROR             =
+*       LOGIC_SWITCH     =
+        testrun          = gc_test
+*       CONVERT          = ' '
+      IMPORTING
+        salesdocument         = lv_vbeln
+      TABLES
+        return                = lt_return
+        ORDER_ITEMS_IN        = lt_item
+        ORDER_ITEMS_INX       = lt_itemx
+        order_partners        = lt_partner
+        ORDER_SCHEDULES_IN    = lt_schd
+        ORDER_SCHEDULES_INX   = lt_schdx
+        ORDER_CONDITIONS_IN   = lt_cond
+        ORDER_CONDITIONS_INX  = lt_condx
+*       ORDER_CFGS_REF   =
+*       ORDER_CFGS_INST  =
+*       ORDER_CFGS_PART_OF            =
+*       ORDER_CFGS_VALUE =
+*       ORDER_CFGS_BLOB  =
+*       ORDER_CFGS_VK    =
+*       ORDER_CFGS_REFINST            =
+*       ORDER_CCARD      =
+*       ORDER_TEXT       =
+*       ORDER_KEYS       =
+*       EXTENSIONIN      =
+*       PARTNERADDRESSES =
+*       EXTENSIONEX      =
+*       NFMETALLITMS     =
+      .
+
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+
+    READ TABLE lt_return INTO ls_return WITH KEY TYPE = 'E'.
+    IF sy-subrc <> 0.
+      ls_disp-icon = ICON_LED_GREEN.
+      ls_disp-sales_numb = lv_vbeln.
+      IF ls_disp-besta = 'C'.
+        ls_disp-besta_sta = ICON_GREEN_LIGHT.
+      ELSEIF ls_disp-besta = 'B'.
+        ls_disp-besta_sta = ICON_YELLOW_LIGHT.
+      ELSE.
+        ls_disp-besta_sta = ICON_RED_LIGHT.
+      ENDIF.
+      MODIFY gt_disp FROM ls_disp TRANSPORTING icon sales_numb KLMENG BESTA BESTA_STA WHERE partn_numb = ls_disp-partn_numb
+                                                                                        AND purch_no_c = ls_disp-purch_no_c.
+      MODIFY lt_disp FROM ls_disp TRANSPORTING icon sales_numb KLMENG BESTA BESTA_STA WHERE partn_numb = ls_disp-partn_numb
+                                                                                        AND purch_no_c = ls_disp-purch_no_c.
+    ElSE.
+      ls_disp-icon = ICON_LED_RED.
+      ls_disp-message = ls_return-message.
+      MODIFY gt_disp FROM ls_disp TRANSPORTING icon message WHERE partn_numb = ls_disp-partn_numb
+                                                              AND purch_no_c = ls_disp-purch_no_c.
+    ENDIF.
+
+*&---------------------------------------------------------------------*
+
+    READ TABLE gt_disp INTO ls_disp WITH KEY ICON = ICON_LED_RED.
+    IF sy-subrc <> 0.
+      CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
+*       EXPORTING
+*        WAIT          =
+*       IMPORTING
+*         RETURN        =
+                .
+
+       isSaved = 'X'.
+    ELSE.
+      CALL FUNCTION 'BAPI_TRANSACTION_ROLLBACK'
+*       IMPORTING
+*         RETURN        =
+                .
+      gt_disp = gt_cp_disp.
+
+    ENDIF.
+    CLEAR: gs_disp, ls_disp, gt_cp_disp.
+  ENDLOOP.
+
+  MOVE-CORRESPONDING lt_disp TO lt_table.
+  LOOP AT lt_table INTO ls_table.
+    PERFORM log_changed CHANGING ls_table.
+    MODIFY lt_table FROM ls_table.
+  ENDLOOP.
+  MODIFY zai24T0010 FROM TABLE lt_table.
+  IF sy-subrc = 0.
+    COMMIT WORK.
+    MESSAGE S000 WITH 'Sales Order ## ##'.
+  ELSE.
+    ROLLBACK WORK.
+    MESSAGE S000 WITH 'Sales Order ## ##' DISPLAY LIKE 'E'.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form selected_lines
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      <-- LT_DISP
+*&---------------------------------------------------------------------*
+FORM selected_lines  CHANGING pt_disp LIKE gt_disp.
+    DATA: lt_disp  LIKE gt_disp,
+          lt_index TYPE LVC_T_ROW,
+          ls_index TYPE LVC_S_ROW,
+          lv_lines TYPE i.
+
+    CALL METHOD go_grid->get_selected_rows
+      IMPORTING
+        et_index_rows = lt_index
+*        et_row_no     =
+        .
+
+    DESCRIBE TABLE lt_index LINES lv_lines.
+
+    CLEAR: gs_disp.
+    LOOP AT gt_disp INTO gs_disp.
+      IF gs_disp-sales_numb EQ SPACE.
+        APPEND gs_disp TO lt_disp.
+      ENDIF.
+    ENDLOOP.
+
+    IF lv_lines = 0.
+      MOVE-CORRESPONDING lt_disp TO pt_disp.
+    ELSE.
+      LOOP AT lt_index INTO ls_index.
+        CLEAR: gs_disp.
+        READ TABLE gt_disp INTO gs_disp INDEX ls_index-index.
+        IF sy-subrc = 0.
+          APPEND gs_disp TO pt_disp.
+        ENDIF.
+      ENDLOOP.
+    ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form data_changed
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> ER_DATA_CHANGED
+*&---------------------------------------------------------------------*
+FORM data_changed  USING    po_data_changed TYPE REF TO cl_alv_changed_data_protocol.
+  DATA: ls_cells TYPE lvc_s_modi,
+        lt_cells TYPE lvc_t_modi.
+
+  lt_cells = po_data_changed->mt_mod_cells.
+
+  LOOP AT lt_cells INTO ls_cells.
+
+    CASE ls_cells-fieldname.
+      WHEN ls_cells-fieldname.
+        CALL METHOD po_data_changed->modify_cell
+          EXPORTING
+            i_row_id    = ls_cells-row_id
+*           i_tabix     =
+            i_fieldname = ls_cells-fieldname
+            i_value     = ls_cells-value.
+    ENDCASE.
+
+    CASE ls_cells-fieldname.
+      WHEN 'PARTN_NUMB'.
+        PERFORM changed_partn_numb USING ls_cells po_data_changed.
+      WHEN 'PURCH_NO_C'.
+        PERFORM changed_purch_no_c USING ls_cells po_data_changed.
+      WHEN 'MATERIAL'.
+        PERFORM changed_material USING ls_cells po_data_changed.
+      WHEN 'REQ_DATE'.
+        PERFORM changed_date USING ls_cells po_data_changed.
+    ENDCASE.
+
+    APPEND ls_cells TO gt_cells.
+  ENDLOOP.
+
+  isChanged = 'X'.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_items
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      <-- LS_DISP
+*&      <-- LS_ITEM
+*&      <-- LS_ITEMX
+*&---------------------------------------------------------------------*
+FORM set_items  CHANGING ps_disp  LIKE gs_disp
+                         ps_item  TYPE BAPISDITM
+                         ps_itemx TYPE BAPISDITMX.
+
+  DATA: lv_plnt  TYPE BAPIMATVP-WERKS,
+        lv_matnr TYPE MATNR18,
+        lv_unit  TYPE BAPIADMM-UNIT,
+        lv_chru  TYPE BAPIT441V-PRREG.
+
+  DATA: lv_ledate TYPE BAPICM61M-WZTER,
+        lv_atpqty TYPE BAPICM61V-WKBST,
+        lv_dialog TYPE BAPICM61V-DIAFL,
+        ls_return TYPE BAPIRETURN,
+        ls_input  TYPE BAPIWMDVS,
+        lt_input  TYPE TABLE OF BAPIWMDVS,
+        ls_output TYPE BAPIWMDVE,
+        lt_output TYPE TABLE OF BAPIWMDVE.
+  DATA: lv_conf   TYPE C.
+
+  CLEAR: ps_item, ps_itemx.
+
+  ps_itemx-UPDATEFLAG = 'I'.
+
+  ps_item-ITM_NUMBER  = ps_disp-purch_item_c.
+  ps_itemx-ITM_NUMBER = 'X'.
+
+  ps_item-MATERIAL  = ps_disp-material.
+  ps_itemx-MATERIAL = 'X'.
+
+  CLEAR: gs_matr.
+  READ TABLE gt_matr INTO gs_matr WITH KEY matnr = ps_disp-material.
+
+  IF sy-subrc = 0.
+    ps_item-PLANT  = gs_matr-werks.
+    ps_itemx-PLANT = 'X'.
+
+    ps_item-TARGET_QTY  = ps_disp-target_qty.
+    ps_itemx-TARGET_QTY = 'X'.
+
+    ps_item-TARGET_QU  = ps_disp-target_qu.
+    ps_itemx-TARGET_QU = 'X'.
+
+*    gs_item-ITEM_CATEG  = 'TAN'.
+*    gs_itemx-ITEM_CATEG = 'X'.
+
+    ps_item-PURCH_NO_C = ps_disp-purch_no_c.
+    ps_itemx-PURCH_NO_C = 'X'.
+  ENDIF.
+
+  CLEAR: gs_cust.
+  READ TABLE gt_cust INTO gs_cust WITH KEY kunnr = ps_disp-partn_numb.
+  IF sy-subrc = 0.
+    ps_item-INCOTERMS1 = gs_cust-inco1.
+    ps_itemx-INCOTERMS1 = 'X'.
+
+    ps_item-PMNTTRMS = gs_cust-zterm.
+    ps_itemx-PMNTTRMS = 'X'.
+
+    READ TABLE gt_ship INTO gs_ship WITH KEY kunnr = ps_disp-partn_numb
+                                             matnr = ps_disp-material.
+    IF sy-subrc = 0.
+      ps_item-SHIP_POINT = gs_ship-vstel.
+      ps_itemx-SHIP_POINT = 'X'.
+    ELSE.
+      ps_item-SHIP_POINT = '0001'.
+      ps_itemx-SHIP_POINT = 'X'.
+    ENDIF.
+  ENDIF.
+
+  ls_input-req_date = ps_disp-req_date.
+  ls_input-req_qty  = ps_disp-target_qty.
+  APPEND ls_input TO lt_input.
+
+  lv_plnt = gs_matr-werks.
+  lv_matnr = gs_matr-matnr.
+  lv_unit = gs_matr-meins.
+  lv_chru = 'A'.
+
+  CALL FUNCTION 'BAPI_MATERIAL_AVAILABILITY'
+    EXPORTING
+      plant                    = lv_plnt
+      MATERIAL                 = lv_matnr
+      unit                     = lv_unit
+      CHECK_RULE               = lv_chru
+*     STGE_LOC                 =
+   IMPORTING
+     ENDLEADTME               = lv_ledate
+     AV_QTY_PLT               = lv_atpqty
+     DIALOGFLAG               = lv_dialog
+     RETURN                   = ls_return
+    TABLES
+      wmdvsx                   = lt_input
+      wmdvex                   = lt_output
+            .
+
+  IF lv_dialog = ''.
+    lv_conf = 'C'.
+  ELSEIF lv_dialog = 'X'.
+    lv_conf = 'A'.
+  ELSE.
+    lv_conf = 'A'.
+  ENDIF.
+
+  IF sy-subrc = 0.
+    READ TABLE lt_output INTO ls_output INDEX 1.
+    IF sy-subrc = 0.
+      ps_disp-KLMENG = ls_output-com_qty.
+    ENDIF.
+    ps_disp-BESTA = lv_conf.
+  ENDIF.
+
+  CLEAR: gs_ship, gs_cust, gs_matr.
+  CLEAR: lv_ledate, lv_atpqty, lv_dialog, ls_return, lt_input,lt_output, lv_conf.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_schd
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> LS_DISP
+*&      <-- LS_SCHD
+*&      <-- LS_SCHDX
+*&---------------------------------------------------------------------*
+FORM set_schd  USING    ps_disp  LIKE gs_disp
+               CHANGING ps_schd  TYPE BAPISCHDL
+                        ps_schdx TYPE BAPISCHDLX.
+
+  CLEAR: ps_schd, ps_schdx.
+
+  ps_schdx-UPDATEFLAG = 'I'.
+
+  ps_schd-ITM_NUMBER = ps_disp-purch_item_c.
+  ps_schdx-ITM_NUMBER = 'X'.
+
+  ps_schd-SCHED_LINE = '0001'.
+  ps_schdx-SCHED_LINE = 'X'.
+
+  ps_schd-REQ_QTY = ps_disp-target_qty.
+  ps_schdx-REQ_QTY = 'X'.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_cond
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> LS_DISP
+*&      <-- LS_COND
+*&      <-- LS_CONDX
+*&---------------------------------------------------------------------*
+FORM set_cond  USING    ps_disp  LIKE gs_disp
+               CHANGING ps_cond  TYPE BAPICOND
+                        ps_condx TYPE BAPICONDX.
+
+  CLEAR: ps_cond, ps_condx.
+
+  ps_cond-ITM_NUMBER = ps_disp-purch_item_c.
+  ps_condx-ITM_NUMBER = 'X'.
+
+  ps_cond-COND_TYPE = 'PR00'.
+  ps_condx-COND_TYPE = 'X'.
+
+  ps_cond-COND_VALUE = ps_disp-cond_value.
+  ps_condx-COND_VALUE = 'X'.
+
+  ps_cond-CURRENCY = ps_disp-currency.
+  ps_condx-CURRENCY = 'X'.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_header
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> LS_DISP
+*&      <-- LS_HEADER
+*&      <-- LS_HEADERX
+*&---------------------------------------------------------------------*
+FORM set_header  USING    ps_disp    LIKE gs_disp
+                 CHANGING ps_header  TYPE bapisdhd1
+                          ps_headerx TYPE bapisdhd1x.
+
+  ps_headerx-UPDATEFLAG = 'I'.
+*      ' ' :  Create a new sales document
+*      I:     Create a new sales document
+*      U:     Change an existing sales document
+*      D:     Delete an existing sales document
+
+  " refobjtype BUS2032
+  " refobjkey  RAMIRO1
+
+  ps_header-doc_type  = 'OR1'.
+  ps_headerx-doc_type = 'X'.
+
+  ps_header-SALES_ORG  = '1010'.
+  ps_headerx-SALES_ORG = 'X'.
+
+  ps_header-DISTR_CHAN  = '10'.
+  ps_headerx-DISTR_CHAN = 'X'.
+
+  ps_header-DIVISION  = '00'.
+  ps_headerx-DIVISION = 'X'.
+
+*  PURCH_DATE
+  ps_header-PURCH_NO_C = ps_disp-purch_no_c.
+  ps_headerX-PURCH_NO_C = 'X'.
+
+  ps_header-PURCH_DATE = ps_disp-purch_date.
+  ps_headerx-PURCH_DATE = 'X'.
+
+  CLEAR: gs_cust.
+  READ TABLE gt_cust INTO gs_cust WITH KEY kunnr = ps_disp-partn_numb.
+  IF sy-subrc = 0.
+    ps_header-INCOTERMS1 = gs_cust-inco1.
+    ps_headerX-INCOTERMS1 = 'X'.
+
+    ps_header-PMNTTRMS = gs_cust-zterm.
+    ps_headerX-PMNTTRMS = 'X'.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form log_changed
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      <-- LS_DATA
+*&---------------------------------------------------------------------*
+FORM log_changed  CHANGING ps_data TYPE zai24T0010.
+  ps_data-AEDAT = sy-datum.
+  ps_data-aezet = sy-uzeit.
+  ps_data-aenam = sy-uname.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form changed_partn_numb
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> LS_CELLS
+*&---------------------------------------------------------------------*
+FORM changed_partn_numb  USING    ps_cells TYPE lvc_s_modi
+                                  po_data_changed TYPE REF TO cl_alv_changed_data_protocol.
+
+  READ TABLE gt_cust INTO gs_cust WITH KEY KUNNR = ps_cells-value.
+  IF sy-subrc = 0.
+    CALL METHOD po_data_changed->modify_cell
+      EXPORTING
+        i_row_id    = ps_cells-row_id
+*       i_tabix     =
+        i_fieldname = 'PARTN_NAME'
+        i_value     = gs_cust-name1.
+  ELSE.
+
+    CLEAR: gs_cust.
+    SELECT SINGLE *
+      FROM KNA1 AS A1
+      LEFT OUTER JOIN KNVV AS VV ON A1~KUNNR = VV~KUNNR
+      INTO CORRESPONDING FIELDS OF gs_cust
+      WHERE A1~KUNNR = ps_cells-value.
+    APPEND gs_cust TO gt_cust.
+
+    CLEAR: gs_cust.
+    READ TABLE gt_cust INTO gs_cust WITH KEY kunnr = ps_cells-value.
+    IF sy-subrc = 0.
+      SELECT SINGLE zterm
+        FROM KNB1
+        INTO CORRESPONDING FIELDS OF gs_cust
+        WHERE kunnr = gs_cust-kunnr.
+      MODIFY gt_cust FROM gs_cust INDEX sy-tabix.
+    ENDIF.
+    IF sy-subrc = 0.
+    CALL METHOD po_data_changed->modify_cell
+      EXPORTING
+        i_row_id    = ps_cells-row_id
+*       i_tabix     =
+        i_fieldname = 'PARTN_NAME'
+        i_value     = gs_cust-name1.
+    ELSE.
+
+      READ TABLE gt_disp INTO gs_disp INDEX ps_cells-row_id.
+      gs_disp-icon = ICON_LED_RED.
+      gs_disp-partn_name = ''.
+      gs_disp-message = 'Customer# #####.'.
+      MODIFY gt_disp FROM gs_disp INDEX ps_cells-row_id.
+    ENDIF.
+
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form handle_hotspot_click
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> E_ROW_ID
+*&      --> E_COLUMN_ID
+*&---------------------------------------------------------------------*
+FORM handle_hotspot_click  USING    p_row_id    TYPE LVC_S_ROW
+                                    p_column_id TYPE LVC_S_COL.
+
+  DATA: lt_parm TYPE TABLE OF RFC_SPAGPA,
+        ls_parm TYPE RFC_SPAGPA,
+        lt_msgc TYPE TABLE OF BDCMSGCOLL,
+        ls_msgc TYPE BDCMSGCOLL,
+        lt_tab  TYPE TABLE OF BDCDATA,
+        ls_tab  TYPE BDCDATA.
+  DATA: ls_opt  TYPE CTU_PARAMS.
+
+  DATA: ls_vbfa TYPE vbfa.
+
+  DATA: lv_date TYPE sy-datum.
+  lv_date = sy-datum.
+  lv_date = lv_date + 10.
+
+  CLEAR gs_disp.
+  CLEAR: ls_parm, lt_parm.
+  READ TABLE gt_disp INTO gs_disp INDEX p_row_id-index.
+  IF sy-subrc = 0.
+    IF p_column_id-fieldname = 'SALES_NUMB'.
+
+      ls_parm-PARID = 'AUN'.
+      ls_parm-PARVAL = gs_disp-sales_numb.
+      APPEND ls_parm TO lt_parm.
+
+      ls_parm-PARID = 'LEDAT'.
+      ls_parm-PARVAL = lv_date.
+      APPEND ls_parm TO lt_parm.
+
+
+      CALL FUNCTION 'ABAP4_CALL_TRANSACTION' STARTING NEW TASK 'test'
+        EXPORTING
+          tcode                         = 'VA03'
+          SKIP_SCREEN                   = 'X'
+*         MODE_VAL                      = 'A'
+*         UPDATE_VAL                    = 'A'
+*       IMPORTING
+*         SUBRC                         =
+       TABLES
+*         USING_TAB                     =
+         SPAGPA_TAB                    = lt_parm
+*         MESS_TAB                      = lt_msgc
+*       EXCEPTIONS
+*         CALL_TRANSACTION_DENIED       = 1
+*         TCODE_INVALID                 = 2
+*         OTHERS                        = 3
+                .
+    ELSEIF p_column_id-fieldname = 'BESTA_STA'.
+      PERFORM set_dbcdata TABLES lt_tab
+                          USING  gs_disp.
+
+      ls_opt-dismode  = 'E'.
+
+      CALL TRANSACTION 'VA02' USING lt_tab
+                              OPTIONS FROM ls_opt.
+
+
+    ELSEIF p_column_id-fieldname = 'LFGSK_STA'.
+      CLEAR: gs_disp.
+      READ TABLE gt_disp INTO gs_disp INDEX p_row_id-index.
+      IF sy-subrc = 0.
+        IF gs_disp-lfgsk_sta = ICON_RED_LIGHT.
+          SET PARAMETER ID 'VST' FIELD '0001'.
+          SET PARAMETER ID 'AUF' FIELD gs_disp-sales_numb.
+          SET PARAMETER ID 'LEDAT' FIELD lv_date.
+          CALL TRANSACTION 'VL01N' AND SKIP FIRST SCREEN.
+        ELSEIF gs_disp-lfgsk_sta = ICON_YELLOW_LIGHT.
+          SELECT SINGLE *
+            FROM VBFA
+            INTO ls_vbfa
+            WHERE VBELV = gs_disp-sales_numb
+              AND POSNV = gs_disp-purch_item_c
+              AND VBTYP_N = 'J'.
+
+          SET PARAMETER ID 'VL' FIELD ls_vbfa-VBELN.
+          CALL TRANSACTION 'VL03N' AND SKIP FIRST SCREEN.
+        ELSEIF gs_disp-lfgsk_sta = ICON_GREEN_LIGHT.
+          SELECT SINGLE *
+            FROM VBFA
+            INTO ls_vbfa
+            WHERE VBELV = gs_disp-sales_numb
+              AND POSNV = gs_disp-purch_item_c
+              AND VBTYP_N = 'J'.
+
+          SET PARAMETER ID 'VL' FIELD ls_vbfa-VBELN.
+          CALL TRANSACTION 'VL03N' AND SKIP FIRST SCREEN.
+        ENDIF.
+      ENDIF.
+
+    ENDIF.
+  ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form changed_purch_no_c
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> LS_CELLS
+*&      --> PO_DATA_CHANGED
+*&---------------------------------------------------------------------*
+FORM changed_purch_no_c  USING    ps_cells TYPE lvc_s_modi
+                                  po_data_changed TYPE REF TO cl_alv_changed_data_protocol.
+
+  DATA: BEGIN OF ls_purch_no_c,
+          partn_numb TYPE KUNNR,
+          purch_no_c TYPE BSTKD,
+        END OF ls_purch_no_c.
+  DATA: lt_purch_no_c LIKE TABLE OF ls_purch_no_c.
+
+  MOVE-CORRESPONDING gt_disp TO lt_purch_no_c.
+
+  CLEAR: gs_disp.
+  READ TABLE gt_disp INTO gs_disp INDEX ps_cells-row_id.
+  DELETE lt_purch_no_c WHERE partn_numb = gs_disp-partn_numb AND purch_no_c = gs_disp-purch_no_c.
+  READ TABLE lt_purch_no_c INTO ls_purch_no_c WITH KEY partn_numb = gs_disp-partn_numb
+                                                         purch_no_c = ps_cells-value.
+  IF sy-subrc = 0.
+    gs_disp-icon = ICON_LED_RED.
+    gs_disp-message = '## #### ## #####'.
+    MODIFY gt_disp FROM gs_disp INDEX ps_cells-row_id.
+  ELSE.
+      gs_disp-icon = ICON_LED_GREEN.
+      gs_disp-purch_no_c = ps_cells-value.
+      CLEAR gs_disp-message.
+      MODIFY gt_disp FROM gs_disp INDEX ps_cells-row_id.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form changed_material
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> LS_CELLS
+*&      --> PO_DATA_CHANGED
+*&---------------------------------------------------------------------*
+FORM changed_material  USING    ps_cells TYPE lvc_s_modi
+                                po_data_changed TYPE REF TO cl_alv_changed_data_protocol.
+
+  CLEAR: gs_matr.
+  READ TABLE gt_disp INTO gs_disp INDEX ps_cells-row_id.
+  READ TABLE gt_matr INTO gs_matr WITH KEY matnr = ps_cells-value.
+  IF sy-subrc = 0.
+    CALL METHOD po_data_changed->modify_cell
+      EXPORTING
+        i_row_id    = ps_cells-row_id
+*       i_tabix     =
+        i_fieldname = 'MATERIAL_DESC'
+        i_value     = gs_matr-maktx.
+    gs_disp-icon = ICON_LED_GREEN.
+    CLEAR: gs_disp-message.
+  ELSE.
+    CLEAR: gs_matr.
+    SELECT SINGLE *
+      FROM MARA AS R
+      LEFT OUTER JOIN MAKT AS K ON R~matnr = K~matnr
+      INTO CORRESPONDING FIELDS OF gs_matr
+      WHERE R~matnr = ps_cells-value.
+
+    SELECT SINGLE werks ladgr vkorg vtweg
+      FROM MARC AS C
+      LEFT OUTER JOIN MVKE AS E ON C~matnr = E~matnr
+      INTO CORRESPONDING FIELDS OF gs_matr
+      WHERE C~matnr = ps_cells-value.
+    IF sy-subrc = 0.
+      APPEND gs_matr TO gt_matr.
+      gs_disp-icon = ICON_LED_GREEN.
+      gs_disp-material_desc = gs_matr-maktx.
+      CLEAR: gs_disp-message.
+    ELSE.
+      gs_disp-icon = ICON_LED_RED.
+      gs_disp-message = '#### ## #####'.
+      CLEAR: gs_disp-material_desc.
+      MODIFY gt_disp FROM gs_disp INDEX ps_cells-row_id.
+    ENDIF.
+  ENDIF.
+  MODIFY gt_disp FROM gs_disp INDEX ps_cells-row_id.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form changed_date
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> LS_CELLS
+*&      --> PO_DATA_CHANGED
+*&---------------------------------------------------------------------*
+FORM changed_date  USING    ps_cells TYPE lvc_s_modi
+                            po_data_changed TYPE REF TO cl_alv_changed_data_protocol.
+
+  CLEAR: gs_disp.
+  READ TABLE gt_disp INTO gs_disp INDEX ps_cells-row_id.
+  IF sy-subrc = 0.
+    IF gs_disp-PURCH_DATE > ps_cells-value.
+      gs_disp-icon = ICON_LED_RED.
+      gs_disp-message = '#### ### ## ## # ####'.
+      MODIFY gt_disp FROM gs_disp INDEX ps_cells-row_id.
+    ELSE.
+      CALL METHOD po_data_changed->modify_cell
+      EXPORTING
+        i_row_id    = ps_cells-row_id
+*       i_tabix     =
+        i_fieldname = 'REQ_DATE'
+        i_value     = ps_cells-value.
+    ENDIF.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form update_flag
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM update_flag .
+  DATA: lt_data TYPE TABLE OF zai24T0010,
+        ls_data TYPE zai24T0010,
+        cp_data LIKE lt_data.
+
+  DATA: BEGIN OF ls_flag,
+          VBELN  TYPE VBELN,
+          POSNR  TYPE POSNR,
+          KLMENG TYPE KLMENG,
+          BESTA  TYPE BESTA,
+          GBSTK  TYPE GBSTK,
+          LFGSK  TYPE LKGSK,
+          LFSTK  TYPE LFSTK,
+        END OF ls_flag.
+  DATA: lt_flag LIKE TABLE OF ls_flag.
+
+  RANGES lr_vbeln FOR VBAP-VBELN.
+
+*&---------------------------------------------------------------------*
+  SELECT *
+    FROM zai24T0010
+    INTO TABLE lt_data
+    WHERE SALES_NUMB NE SPACE
+      AND GBSTK NE 'C'.
+
+  MOVE-CORRESPONDING lt_data TO cp_data.
+  DELETE ADJACENT DUPLICATES FROM cp_data COMPARING sales_numb.
+  LOOP AT cp_data INTO ls_data.
+    lr_vbeln-sign = 'I'.
+    lr_vbeln-option = 'EQ'.
+    lr_vbeln-low = ls_data-sales_numb.
+    APPEND lr_vbeln.
+  ENDLOOP.
+
+*  SORT lt_data BY PURCH_NO_C ASCENDING
+*                  PURCH_ITEM_C ASCENDING.
+
+  SELECT VBELN POSNR KLMENG BESTA
+    FROM VBAP
+    INTO CORRESPONDING FIELDS OF TABLE lt_flag
+    WHERE VBELN IN lr_vbeln.
+
+  SORT lt_flag BY VBELN ASCENDING
+                  POSNR ASCENDING.
+
+  LOOP AT lt_flag INTO ls_flag.
+    READ TABLE lt_data INTO ls_data WITH KEY sales_numb = ls_flag-vbeln
+                                             purch_item_c = ls_flag-posnr.
+    IF sy-subrc = 0.
+      ls_data-klmeng = ls_flag-KLMENG.
+      ls_data-besta = ls_flag-besta.
+      MODIFY lt_data FROM ls_data TRANSPORTING KLMENG BESTA WHERE sales_numb = ls_flag-vbeln
+                                                              AND purch_item_c = ls_flag-posnr.
+    ENDIF.
+  ENDLOOP.
+
+
+  CLEAR: lt_flag, ls_flag.
+  SELECT VBELN GBSTK LFGSK LFSTK
+    FROM VBAK
+    INTO CORRESPONDING FIELDS OF TABLE lt_flag
+    WHERE VBELN IN lr_vbeln.
+
+  LOOP AT lt_flag INTO ls_flag.
+    LOOP AT lt_data INTO ls_data WHERE sales_numb = ls_flag-vbeln.
+      ls_data-GBSTK = ls_flag-GBSTK.
+      ls_data-LFGSK = ls_flag-LFGSK.
+      ls_data-LFSTK = ls_flag-LFGSK.
+      MODIFY lt_data FROM ls_data TRANSPORTING GBSTK LFGSK LFSTK WHERE sales_numb = ls_flag-vbeln.
+    ENDLOOP.
+  ENDLOOP.
+
+  UPDATE zai24T0010 FROM TABLE lt_data.
+  IF sy-subrc = 0.
+    COMMIT WORK.
+  ELSE.
+    ROLLBACK WORK.
+  ENDIF.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form refresh_layout
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM refresh_layout .
+  DATA: lv_lines TYPE i.
+  DATA: lv_title LIKE grid_title.
+
+  DESCRIBE TABLE gt_disp LINES lv_lines.
+  lv_title = grid_title.
+  lv_title+9(3) = lv_lines.
+
+  gs_layout-grid_title = lv_title.
+
+  CALL METHOD go_grid->set_frontend_layout
+    EXPORTING
+      is_layout = gs_layout
+      .
+
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_style
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM set_style .
+
+  DATA: lt_celltab TYPE lvc_t_styl,
+        ls_celltab TYPE lvc_s_styl.
+
+  CLEAR: gs_disp.
+  LOOP AT gt_disp INTO gs_disp.
+    CLEAR: lt_celltab, ls_celltab.
+    IF gs_disp-sales_numb IS NOT INITIAL.
+      ls_celltab-fieldname = 'PARTN_NUMB'.
+      ls_celltab-style = cl_gui_alv_grid=>mc_style_disabled.
+      INSERT ls_celltab INTO TABLE lt_celltab.
+
+      CLEAR: ls_celltab.
+      ls_celltab-fieldname = 'PURCH_DATE'.
+      ls_celltab-style = cl_gui_alv_grid=>mc_style_disabled.
+      INSERT ls_celltab INTO TABLE lt_celltab.
+
+      CLEAR: ls_celltab.
+      ls_celltab-fieldname = 'REQ_DATE'.
+      ls_celltab-style = cl_gui_alv_grid=>mc_style_disabled.
+      INSERT ls_celltab INTO TABLE lt_celltab.
+
+      CLEAR: ls_celltab.
+      ls_celltab-fieldname = 'PURCH_NO_C'.
+      ls_celltab-style = cl_gui_alv_grid=>mc_style_disabled.
+      INSERT ls_celltab INTO TABLE lt_celltab.
+
+      CLEAR: ls_celltab.
+      ls_celltab-fieldname = 'MATERIAL'.
+      ls_celltab-style = cl_gui_alv_grid=>mc_style_disabled.
+      INSERT ls_celltab INTO TABLE lt_celltab.
+
+      CLEAR: ls_celltab.
+      ls_celltab-fieldname = 'TARGET_QTY'.
+      ls_celltab-style = cl_gui_alv_grid=>mc_style_disabled.
+      INSERT ls_celltab INTO TABLE lt_celltab.
+
+      CLEAR: ls_celltab.
+      ls_celltab-fieldname = 'COND_VALUE'.
+      ls_celltab-style = cl_gui_alv_grid=>mc_style_disabled.
+      INSERT ls_celltab INTO TABLE lt_celltab.
+
+      CLEAR: ls_celltab.
+      ls_celltab-fieldname = 'NAME'.
+      ls_celltab-style = cl_gui_alv_grid=>mc_style_disabled.
+      INSERT ls_celltab INTO TABLE lt_celltab.
+
+      CLEAR: ls_celltab.
+      ls_celltab-fieldname = 'ZIPCODE'.
+      ls_celltab-style = cl_gui_alv_grid=>mc_style_disabled.
+      INSERT ls_celltab INTO TABLE lt_celltab.
+
+      CLEAR: ls_celltab.
+      ls_celltab-fieldname = 'ADDRESS'.
+      ls_celltab-style = cl_gui_alv_grid=>mc_style_disabled.
+      INSERT ls_celltab INTO TABLE lt_celltab.
+
+      CLEAR: ls_celltab.
+      ls_celltab-fieldname = 'TELEPHONE'.
+      ls_celltab-style = cl_gui_alv_grid=>mc_style_disabled.
+      INSERT ls_celltab INTO TABLE lt_celltab.
+    ENDIF.
+    gs_disp-celltab = lt_celltab.
+    MODIFY gt_disp FROM gs_disp.
+  ENDLOOP.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_dbcdata
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> LT_TAB
+*&---------------------------------------------------------------------*
+FORM set_dbcdata  TABLES   pt_tab  LIKE gt_bdc
+                  USING    ps_disp LIKE gs_disp.
+
+  READ TABLE gt_cust INTO gs_cust WITH KEY kunnr = gs_disp-partn_numb.
+  PERFORM set_bdc_line TABLES   pt_tab  USING    'SAPMV45A' '0102' 'X' '' ''.
+  PERFORM set_bdc_line TABLES   pt_tab  USING    '' '' '' 'BDC_OKCODE' '=ENT2'.
+  PERFORM set_bdc_line TABLES   pt_tab  USING    '' '' '' 'VBAK-VBELN' ps_disp-sales_numb.
+  PERFORM set_bdc_line TABLES   pt_tab  USING    'SAPMV45A' '4001' 'X' '' ''.
+  PERFORM set_bdc_line TABLES   pt_tab  USING    '' '' '' 'BDC_OKCODE' '=ITEM'.
+  PERFORM set_bdc_line TABLES   pt_tab  USING    'SAPMV45A' '4003' 'X' '' ''.
+  PERFORM set_bdc_line TABLES   pt_tab  USING    '' '' '' 'BDC_OKCODE' '=T\07'.
+*  PERFORM set_bdc_line TABLES   pt_tab  USING    '' '' '' 'RV45A-KWMENG' ps_disp-KLMENG.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form set_bdc_line
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> P_
+*&      --> P_
+*&      --> P_
+*&      --> P_
+*&      --> P_
+*&      <-- PT_TAB
+*&---------------------------------------------------------------------*
+FORM set_bdc_line  TABLES   pt_tab LIKE gt_bdc
+                   USING    VALUE(p_program)
+                            VALUE(p_screen)
+                            VALUE(p_start_id)
+                            VALUE(p_fname)
+                            VALUE(p_value).
+
+  DATA: ls_bdc TYPE BDCDATA.
+  CLEAR: ls_bdc.
+
+  ls_bdc-PROGRAM  = p_program.
+  ls_bdc-DYNPRO   = p_screen.
+  ls_bdc-DYNBEGIN = p_start_id.
+  ls_bdc-FNAM     = p_fname.
+  ls_bdc-FVAL     = p_value.
+  APPEND ls_bdc TO pt_tab.
+ENDFORM.
+
+----------------------------------------------------------------------------------
+Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754

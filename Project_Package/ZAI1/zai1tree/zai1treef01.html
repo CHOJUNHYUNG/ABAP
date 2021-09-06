@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; EUC-KR" />
+<title>ZAI1TREEF01</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZAI1TREEF01</h2>
+<h3> Description: Include ZFI04_0001F01</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Include&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Z03R01F01<br />
+*&---------------------------------------------------------------------*<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;create_object<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM CREATE_OBJECT .<br />
+<br />
+&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;GO_DOCKING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SIDE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;GO_DOCKING-&gt;DOCK_AT_LEFT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXTENSION&nbsp;=&nbsp;2000.<br />
+<br />
+&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;GO_SPLITTER<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PARENT&nbsp;&nbsp;=&nbsp;GO_DOCKING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROWS&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;COLUMNS&nbsp;=&nbsp;2.<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;GO_SPLITTER-&gt;GET_CONTAINER<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;COLUMN&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONTAINER&nbsp;=&nbsp;GO_CONT3.<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;GO_SPLITTER-&gt;GET_CONTAINER<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;COLUMN&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2<br />
+&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONTAINER&nbsp;=&nbsp;GO_CONT2.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;ROW&nbsp;##<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;GO_SPLITTER2<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PARENT&nbsp;&nbsp;=&nbsp;GO_CONT3<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROWS&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;COLUMNS&nbsp;=&nbsp;1.<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;GO_SPLITTER2-&gt;GET_CONTAINER<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;COLUMN&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONTAINER&nbsp;=&nbsp;GO_CONT1.<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;GO_SPLITTER2-&gt;SET_ROW_HEIGHT<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HEIGHT&nbsp;=&nbsp;36<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IMPORTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RESULT&nbsp;=<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXCEPTIONS<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CNTL_ERROR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CNTL_SYSTEM_ERROR&nbsp;=&nbsp;2<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OTHERS&nbsp;=&nbsp;3<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+&nbsp;&nbsp;IF&nbsp;SY-SUBRC&nbsp;&lt;&gt;&nbsp;0.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implement&nbsp;suitable&nbsp;error&nbsp;handling&nbsp;here<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;ENDIF.<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;GO_SPLITTER2-&gt;GET_CONTAINER<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ROW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;COLUMN&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;RECEIVING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONTAINER&nbsp;=&nbsp;GO_CONT4.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;ROW&nbsp;#<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;GO_SPLITTER-&gt;SET_COLUMN_WIDTH<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ID&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WIDTH&nbsp;=&nbsp;30.<br />
+<br />
+<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;build_node_table<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;LN_NODE_TABLE<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM BUILD_NODE_TABLE  USING    P_NODE_T TYPE NODE.<br />
+&nbsp;&nbsp;DATA&nbsp;:&nbsp;NODE&nbsp;LIKE&nbsp;MTREESNODE.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'ROOT'.<br />
+&nbsp;&nbsp;NODE-ISFOLDER&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'#dysap&nbsp;Business&nbsp;Process'.<br />
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-RELATKEY&nbsp;=&nbsp;'ROOT'.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'CHILD1'.<br />
+&nbsp;&nbsp;NODE-ISFOLDER&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'###'.<br />
+&nbsp;&nbsp;NODE-EXPANDER&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-RELATKEY&nbsp;=&nbsp;'CHILD1'.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'AA'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'#######&nbsp;##'.&nbsp;&nbsp;"MD61<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;NODE-N_IMAGE&nbsp;&nbsp;=&nbsp;'@1V@'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-RELATKEY&nbsp;=&nbsp;'CHILD1'.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'AB'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'MRP-##&nbsp;##,&nbsp;##&nbsp;##'.&nbsp;&nbsp;"MD02<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;NODE-N_IMAGE&nbsp;&nbsp;=&nbsp;'@1V@'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-RELATKEY&nbsp;=&nbsp;'CHILD1'.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'AC'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'##/###&nbsp;###'.&nbsp;"MD04<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;NODE-N_IMAGE&nbsp;&nbsp;=&nbsp;'@1V@'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-RELATKEY&nbsp;=&nbsp;'CHILD1'.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'AD'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'##&nbsp;##&nbsp;##&nbsp;##'.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ZAI1PP01<br />
+&nbsp;&nbsp;NODE-N_IMAGE&nbsp;&nbsp;=&nbsp;'@1V@'.<br />
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-RELATKEY&nbsp;=&nbsp;'CHILD1'.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'AE'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'##&nbsp;##&nbsp;##'.&nbsp;"CO01<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;NODE-N_IMAGE&nbsp;&nbsp;=&nbsp;'@1V@'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-RELATKEY&nbsp;=&nbsp;'ROOT'.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'CHILD2'.<br />
+&nbsp;&nbsp;NODE-ISFOLDER&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'###'.<br />
+&nbsp;&nbsp;NODE-EXPANDER&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-RELATKEY&nbsp;=&nbsp;'CHILD2'.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'BA'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'##&nbsp;##&nbsp;##&nbsp;#&nbsp;##'.&nbsp;&nbsp;"ME57<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;NODE-N_IMAGE&nbsp;&nbsp;=&nbsp;'@4A@'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-RELATKEY&nbsp;=&nbsp;'CHILD2'.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'BB'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'##&nbsp;###'.&nbsp;&nbsp;"ME2ON<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;NODE-N_IMAGE&nbsp;&nbsp;=&nbsp;'@4A@'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-RELATKEY&nbsp;=&nbsp;'CHILD2'.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'BC'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'###&nbsp;#&nbsp;##&nbsp;##&nbsp;##'.&nbsp;&nbsp;"ZAI1MM01<br />
+&nbsp;&nbsp;NODE-N_IMAGE&nbsp;&nbsp;=&nbsp;'@4A@'.<br />
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-RELATKEY&nbsp;=&nbsp;'CHILD2'.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'BD'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'#####&nbsp;##&nbsp;##'.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ZAI1MM02<br />
+&nbsp;&nbsp;NODE-N_IMAGE&nbsp;&nbsp;=&nbsp;'@0M@'.<br />
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-RELATKEY&nbsp;=&nbsp;'ROOT'.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'CHILD3'.<br />
+&nbsp;&nbsp;NODE-ISFOLDER&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'###'.<br />
+&nbsp;&nbsp;NODE-EXPANDER&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;NODE.<br />
+&nbsp;&nbsp;NODE-RELATKEY&nbsp;=&nbsp;'CHILD3'.<br />
+&nbsp;&nbsp;NODE-NODE_KEY&nbsp;=&nbsp;'CA'.<br />
+&nbsp;&nbsp;NODE-TEXT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'##&nbsp;##&nbsp;##&nbsp;##'.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ZAI1SD01<br />
+&nbsp;&nbsp;NODE-N_IMAGE&nbsp;&nbsp;=&nbsp;'@1S@'.<br />
+&nbsp;&nbsp;APPEND&nbsp;NODE&nbsp;TO&nbsp;P_NODE_T.<br />
+<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;handle_node_double_click<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;NODE_KEY<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM HANDLE_NODE_DOUBLE_CLICK  USING    P_NODE_KEY TYPE TV_NODEKEY.<br />
+<br />
+&nbsp;&nbsp;CASE&nbsp;P_NODE_KEY.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'AA'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'MD61'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'AB'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'MD02'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUBMIT&nbsp;ZAI01R01_01&nbsp;VIA&nbsp;SELECTION-SCREEN&nbsp;WITH&nbsp;P_RA1&nbsp;=&nbsp;''&nbsp;WITH&nbsp;&nbsp;P_RA2&nbsp;=&nbsp;'X'&nbsp;AND&nbsp;RETURN.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'AC'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'MD04'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'AD'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZAI1PP01'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'AE'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'CO01'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'BA'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ME57'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'BB'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ME2ON'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'BC'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZAI1MM01'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'BD'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZAI1MM02'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'CA'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZAI1SD01'.<br />
+&nbsp;&nbsp;ENDCASE.<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;set_event<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM SET_EVENT .<br />
+&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;GO_EVENT_RECEIVER.<br />
+<br />
+&nbsp;&nbsp;SET&nbsp;HANDLER&nbsp;:&nbsp;GO_EVENT_RECEIVER-&gt;HANDLE_NODE_DOUBLE_CLICK&nbsp;FOR&nbsp;GO_TREE.<br />
+ENDFORM.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

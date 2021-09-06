@@ -1,0 +1,348 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; EUC-KR" />
+<title>ZAI2MAINTOP</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZAI2MAINTOP</h2>
+<h3> Description: Include ZAI02_MAINTOP</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Include&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZAI02_MAINTOP<br />
+*&---------------------------------------------------------------------*<br />
+<br />
+   </div>
+   <div class="code">
+TABLES: thead, vbap.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;Long&nbsp;Text<br />
+   </div>
+   <div class="code">
+DATA: go_cont_0110 TYPE REF TO cl_gui_custom_container,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;go_editor&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cl_gui_textedit.<br />
+<br />
+DATA go_html1 TYPE REF TO cl_gui_html_viewer.<br />
+<br />
+DATA: gs_header     LIKE thead,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gt_lines_to&nbsp;&nbsp;&nbsp;TYPE&nbsp;tline&nbsp;OCCURS&nbsp;0&nbsp;WITH&nbsp;HEADER&nbsp;LINE,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gt_lines_from&nbsp;TYPE&nbsp;STANDARD&nbsp;TABLE&nbsp;OF&nbsp;tdline.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;100#&nbsp;##<br />
+   </div>
+   <div class="code">
+TYPES: node_table_type  LIKE STANDARD TABLE OF mtreesnode<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;DEFAULT&nbsp;KEY.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;##<br />
+   </div>
+   <div class="code">
+DATA: go_tree_con TYPE REF TO cl_gui_custom_container, "####<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;go_tree&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cl_gui_simple_tree.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"##&nbsp;####&nbsp;####<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;HTML&nbsp;##<br />
+   </div>
+   <div class="code">
+DATA: go_custom_con TYPE REF TO cl_gui_custom_container,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;go_htmlviewer&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cl_gui_html_viewer,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;go_picture&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cl_gui_picture.<br />
+<br />
+DATA : gv_url        TYPE cndp_url.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;TABSTRIP<br />
+   </div>
+   <div class="code">
+CONTROLS g_tabstrip TYPE TABSTRIP.<br />
+DATA dynnr TYPE sy-dynnr.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;###&nbsp;###<br />
+   </div>
+   <div class="code">
+DATA go_event_receiver TYPE REF TO zcl_event_receiver.<br />
+DATA : gv_okcode TYPE sy-ucomm,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gv_ucomm&nbsp;&nbsp;TYPE&nbsp;sy-ucomm.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;##<br />
+<br />
+   </div>
+   <div class="code">
+TYPES: BEGIN OF ty_subtot,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;erdat&nbsp;LIKE&nbsp;vbap-erdat,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;netwr&nbsp;LIKE&nbsp;vbap-netwr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;ty_subtot.<br />
+DATA: gt_subtot TYPE TABLE OF ty_subtot.<br />
+<br />
+DATA: BEGIN OF gs_sales,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vbeln&nbsp;LIKE&nbsp;vbap-vbeln,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;posnr&nbsp;LIKE&nbsp;vbap-posnr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;netwr&nbsp;LIKE&nbsp;vbap-netwr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;erdat&nbsp;LIKE&nbsp;vbap-erdat,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;gs_sales.<br />
+DATA gt_sales LIKE TABLE OF gs_sales.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;120#&nbsp;###-BP##<br />
+   </div>
+   <div class="code">
+DATA: BEGIN OF gs_disp_0120,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bp_type&nbsp;&nbsp;&nbsp;TYPE&nbsp;char20,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;partner&nbsp;&nbsp;&nbsp;TYPE&nbsp;but000-partner,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name_org1&nbsp;TYPE&nbsp;but000-name_org1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;telephone&nbsp;TYPE&nbsp;char30,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e_mail&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;char50,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;address&nbsp;&nbsp;&nbsp;TYPE&nbsp;char100,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;gs_disp_0120.<br />
+<br />
+DATA gt_disp_0120 LIKE TABLE OF gs_disp_0120.<br />
+<br />
+DATA: go_custom_con_0120 TYPE REF TO cl_gui_custom_container,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;go_grid_0120&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;REF&nbsp;TO&nbsp;cl_gui_alv_grid.<br />
+<br />
+DATA: gs_fieldcat_0120 TYPE lvc_s_fcat,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gt_fieldcat_0120&nbsp;TYPE&nbsp;lvc_t_fcat,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gs_sort_0120&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;lvc_s_sort,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gt_sort_0120&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;lvc_t_sort,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gs_layout_0120&nbsp;&nbsp;&nbsp;TYPE&nbsp;lvc_s_layo.<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+DATA gt_editor_text      TYPE TABLE OF progtab.<br />
+<br />
+DATA ok_code TYPE sy-ucomm.<br />
+DATA gv_edit TYPE c VALUE ' '.<br />
+<br />
+<br />
+<br />
+DATA: gt_board TYPE TABLE OF zai2t_board,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gs_board&nbsp;LIKE&nbsp;LINE&nbsp;OF&nbsp;gt_board.<br />
+<br />
+<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*--------------------------------------------------------------------*<br />
+*SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+   </div>
+   <div class="code">
+DATA t_01 TYPE c LENGTH 14.<br />
+DATA t_02 TYPE c LENGTH 14.<br />
+DATA t_03 TYPE c LENGTH 14.<br />
+DATA t_04 TYPE c LENGTH 14.<br />
+DATA t_05 TYPE c LENGTH 14.<br />
+DATA t_06 TYPE c LENGTH 14.<br />
+DATA t_07 TYPE c LENGTH 14.<br />
+   </div>
+   <div class="codeComment">
+*SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+<br />
+<br />
+*SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+   </div>
+   <div class="code">
+DATA p_01 TYPE char14.<br />
+DATA p_02 TYPE char14.<br />
+DATA p_03 TYPE char14.<br />
+DATA p_04 TYPE char14.<br />
+DATA p_05 TYPE char14.<br />
+DATA p_06 TYPE char14.<br />
+DATA p_07 TYPE char14.<br />
+   </div>
+   <div class="codeComment">
+*SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+*SELECTION-SCREEN&nbsp;SKIP&nbsp;2.<br />
+<br />
+*SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+   </div>
+   <div class="code">
+DATA t_08 TYPE c LENGTH 14.<br />
+DATA t_09 TYPE c LENGTH 14.<br />
+DATA t_10 TYPE c LENGTH 14.<br />
+DATA t_11 TYPE c LENGTH 14.<br />
+DATA t_12 TYPE c LENGTH 14.<br />
+DATA t_13 TYPE c LENGTH 14.<br />
+DATA t_14 TYPE c LENGTH 14.<br />
+   </div>
+   <div class="codeComment">
+*SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+*<br />
+*SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+   </div>
+   <div class="code">
+DATA p_08 TYPE char14.<br />
+DATA p_09 TYPE char14.<br />
+DATA p_10 TYPE char14.<br />
+DATA p_11 TYPE char14.<br />
+DATA p_12 TYPE char14.<br />
+DATA p_13 TYPE char14.<br />
+DATA p_14 TYPE char14.<br />
+   </div>
+   <div class="codeComment">
+*SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+*SELECTION-SCREEN&nbsp;SKIP&nbsp;2.<br />
+<br />
+*SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+   </div>
+   <div class="code">
+DATA t_15 TYPE c LENGTH 14.<br />
+DATA t_16 TYPE c LENGTH 14.<br />
+DATA t_17 TYPE c LENGTH 14.<br />
+DATA t_18 TYPE c LENGTH 14.<br />
+DATA t_19 TYPE c LENGTH 14.<br />
+DATA t_20 TYPE c LENGTH 14.<br />
+DATA t_21 TYPE c LENGTH 14.<br />
+   </div>
+   <div class="codeComment">
+*SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+<br />
+*SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+   </div>
+   <div class="code">
+DATA p_15 TYPE char14.<br />
+DATA p_16 TYPE char14.<br />
+DATA p_17 TYPE char14.<br />
+DATA p_18 TYPE char14.<br />
+DATA p_19 TYPE char14.<br />
+DATA p_20 TYPE char14.<br />
+DATA p_21 TYPE char14.<br />
+   </div>
+   <div class="codeComment">
+*SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+*SELECTION-SCREEN&nbsp;SKIP&nbsp;2.<br />
+<br />
+*SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+   </div>
+   <div class="code">
+DATA t_22 TYPE c LENGTH 14.<br />
+DATA t_23 TYPE c LENGTH 14.<br />
+DATA t_24 TYPE c LENGTH 14.<br />
+DATA t_25 TYPE c LENGTH 14.<br />
+DATA t_26 TYPE c LENGTH 14.<br />
+DATA t_27 TYPE c LENGTH 14.<br />
+DATA t_28 TYPE c LENGTH 14.<br />
+   </div>
+   <div class="codeComment">
+*SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+<br />
+*SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+   </div>
+   <div class="code">
+DATA p_22 TYPE char14.<br />
+DATA p_23 TYPE char14.<br />
+DATA p_24 TYPE char14.<br />
+DATA p_25 TYPE char14.<br />
+DATA p_26 TYPE char14.<br />
+DATA p_27 TYPE char14.<br />
+DATA p_28 TYPE char14.<br />
+   </div>
+   <div class="codeComment">
+*SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+<br />
+*SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+   </div>
+   <div class="code">
+DATA t_29 TYPE c LENGTH 14.<br />
+DATA t_30 TYPE c LENGTH 14.<br />
+DATA t_31 TYPE c LENGTH 14.<br />
+DATA t_32 TYPE c LENGTH 14.<br />
+DATA t_33 TYPE c LENGTH 14.<br />
+DATA t_34 TYPE c LENGTH 14.<br />
+DATA t_35 TYPE c LENGTH 14.<br />
+   </div>
+   <div class="codeComment">
+*SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+<br />
+*SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+   </div>
+   <div class="code">
+DATA p_29 TYPE char14.<br />
+DATA p_30 TYPE char14.<br />
+DATA p_31 TYPE char14.<br />
+DATA p_32 TYPE char14.<br />
+DATA p_33 TYPE char14.<br />
+DATA p_34 TYPE char14.<br />
+DATA p_35 TYPE char14.<br />
+   </div>
+   <div class="codeComment">
+*SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+<br />
+   </div>
+   <div class="code">
+DATA: p_goal  TYPE char14,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_total&nbsp;TYPE&nbsp;char14,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_pcnt&nbsp;&nbsp;TYPE&nbsp;char08.<br />
+<br />
+DATA t_month TYPE char02.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

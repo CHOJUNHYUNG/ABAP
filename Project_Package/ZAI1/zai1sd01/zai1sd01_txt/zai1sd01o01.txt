@@ -1,0 +1,63 @@
+*&---------------------------------------------------------------------*
+*& Include          ZAI124R20O01
+*&---------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*& Module STATUS_0100 OUTPUT
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+MODULE status_0100 OUTPUT.
+
+  DATA: BEGIN OF ls_extab,
+    fcode(10) TYPE c,
+    END OF ls_extab.
+  DATA: lt_extab LIKE TABLE OF ls_extab.
+
+  READ TABLE gt_disp INTO gs_disp WITH KEY sales_numb = SPACE.
+  IF sy-subrc <> 0.
+    ls_extab-fcode = 'CREATE_SO'.
+    APPEND ls_extab TO lt_extab.
+  ENDIF.
+
+ SET PF-STATUS '0100' EXCLUDING lt_extab.
+ SET TITLEBAR '0100' WITH titlebar.
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*& Module SET_ALV_0100 OUTPUT
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+MODULE set_alv_0100 OUTPUT.
+  IF go_grid IS INITIAL.
+    PERFORM create_object.
+
+    IF p_rb1 = 'X'.
+*      IF p_rb1_1 <> 'X'.
+        PERFORM set_fieldcat.
+*      ELSE.
+*        PERFORM reset_fieldcat.
+*      ENDIF.
+    ELSE.
+      PERFORM reset_fieldcat.
+    ENDIF.
+
+    PERFORM set_layout.
+
+    PERFORM set_sort.
+
+    PERFORM set_event.
+
+    PERFORM display_alv.
+  ELSE.
+    IF isSaved = 'X'.
+      PERFORM refresh_fieldcat.
+    ENDIF.
+
+    PERFORM refresh_layout.
+
+    PERFORM refresh_alv.
+  ENDIF.
+ENDMODULE.
+
+----------------------------------------------------------------------------------
+Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754

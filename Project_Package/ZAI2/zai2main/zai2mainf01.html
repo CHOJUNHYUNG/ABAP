@@ -1,0 +1,1016 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; EUC-KR" />
+<title>ZAI2MAINF01</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZAI2MAINF01</h2>
+<h3> Description: Include ZAI02_MAINF01</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;create_container<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM create_container .<br />
+<br />
+&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;go_custom_con<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container_name&nbsp;=&nbsp;'CONT1'.<br />
+<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;build_node_table<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM build_node_table .<br />
+&nbsp;&nbsp;DATA:&nbsp;node&nbsp;LIKE&nbsp;mtreesnode.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*---------##&nbsp;(###)-----------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'Root'.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"tree&nbsp;####<br />
+&nbsp;&nbsp;node-isfolder&nbsp;=&nbsp;'X'.&nbsp;&nbsp;&nbsp;&nbsp;"######&nbsp;##<br />
+&nbsp;&nbsp;node-text&nbsp;=&nbsp;'Menu'.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*--------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'Child1'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Root'.<br />
+&nbsp;&nbsp;node-isfolder&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'###'.<br />
+&nbsp;&nbsp;node-expander&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'Child2'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Root'.<br />
+&nbsp;&nbsp;node-isfolder&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'###'.<br />
+&nbsp;&nbsp;node-expander&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'Child3'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Root'.<br />
+&nbsp;&nbsp;node-isfolder&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'###'.<br />
+&nbsp;&nbsp;node-expander&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+   </div>
+   <div class="codeComment">
+*--------------------------------------------------------------------*<br />
+*--------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'SD01'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child1'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'##&nbsp;###&nbsp;##'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;icon_fast_entry.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'SD02'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child1'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'####'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;icon_ws_truck.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'SD03'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child1'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'##&nbsp;###&nbsp;##'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;icon_display_text.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'MM01'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child2'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'###&nbsp;##&nbsp;##'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;icon_outgoing_task.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'MM01_01'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child2'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'###&nbsp;####&nbsp;##'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;icon_report_template.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'MM01_02'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child2'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'###&nbsp;####&nbsp;##'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;icon_display_text.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'MM02'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child2'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'###&nbsp;####'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;icon_delivery_complete.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'MM02_1'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child2'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'####&nbsp;####'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;icon_change_text.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'MM03'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child2'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'#####&nbsp;##&nbsp;##'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;icon_warehouses.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'MM03_1'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child2'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'##&nbsp;##&nbsp;##'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;icon_intensify.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'MD61'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child3'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'##&nbsp;###&nbsp;##'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;icon_create_text.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'MD04'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child3'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'##/####&nbsp;##'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;icon_wri.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'PP01'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child3'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'##&nbsp;##/##&nbsp;#&nbsp;##&nbsp;##'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;icon_pm_insert.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;node.<br />
+&nbsp;&nbsp;node-node_key&nbsp;=&nbsp;'PP_02'.&nbsp;"root&nbsp;##&nbsp;##<br />
+&nbsp;&nbsp;node-relatkey&nbsp;=&nbsp;'Child3'.<br />
+&nbsp;&nbsp;node-text&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'##&nbsp;##&nbsp;##&nbsp;##'.<br />
+&nbsp;&nbsp;node-n_image&nbsp;&nbsp;=&nbsp;&nbsp;icon_select_detail.<br />
+&nbsp;&nbsp;APPEND&nbsp;node&nbsp;TO&nbsp;node_table.<br />
+<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;handle_node_double_click<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;NODE_KEY<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM handle_node_double_click  USING    p_node_key.<br />
+&nbsp;&nbsp;DATA:&nbsp;lt_rspar&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;rsparams,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_rspar&nbsp;LIKE&nbsp;LINE&nbsp;OF&nbsp;lt_rspar.<br />
+<br />
+&nbsp;&nbsp;CASE&nbsp;p_node_key.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'SD01'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZAI02_SD_01'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'SD02'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;variants_set_transaction_sd&nbsp;using&nbsp;:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;''&nbsp;'X'&nbsp;''&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'SD03'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;variants_set_transaction_sd&nbsp;using&nbsp;:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;''&nbsp;'X'&nbsp;'X'&nbsp;''.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'MM01'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZAI02_MM_01'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'MM01_01'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZAI02_MM_01_02'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUBMIT&nbsp;zai2mm01&nbsp;VIA&nbsp;SELECTION-SCREEN<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;r1&nbsp;EQ&nbsp;''<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;r2&nbsp;EQ&nbsp;'X'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;r3&nbsp;EQ&nbsp;'X'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;r4&nbsp;EQ&nbsp;''&nbsp;AND&nbsp;RETURN.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'MM01_02'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZAI02_MM_01_03'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUBMIT&nbsp;zai2mm01&nbsp;VIA&nbsp;SELECTION-SCREEN<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;r1&nbsp;EQ&nbsp;''<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;r2&nbsp;EQ&nbsp;'X'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;r3&nbsp;EQ&nbsp;''<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;r4&nbsp;EQ&nbsp;'X'&nbsp;AND&nbsp;RETURN.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'MM02'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZAI02_MM_02'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'MM02_1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZAI2MM02_1'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'MM03'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZAI02_MM_03'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'MM03_1'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZAI2MM03_1'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUBMIT&nbsp;zai2mm03&nbsp;VIA&nbsp;SELECTION-SCREEN<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;r1&nbsp;EQ&nbsp;''<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;r2&nbsp;EQ&nbsp;'X'&nbsp;&nbsp;AND&nbsp;RETURN.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'PP01'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'ZAI02_PP_01'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'MD61'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'MD61'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'MD04'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;'MD04'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'PP_02'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;TRANSACTION&nbsp;&nbsp;'ZAI02_PP_02'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUBMIT&nbsp;zai2pp01&nbsp;VIA&nbsp;SELECTION-SCREEN<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;ra1&nbsp;EQ&nbsp;''<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;ra2&nbsp;EQ&nbsp;'X'&nbsp;AND&nbsp;RETURN.<br />
+<br />
+&nbsp;&nbsp;ENDCASE.<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;SET_DATA<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM set_data .<br />
+<br />
+&nbsp;&nbsp;DATA&nbsp;:&nbsp;lv_sdate&nbsp;TYPE&nbsp;d,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_edate&nbsp;TYPE&nbsp;d,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_eday&nbsp;&nbsp;TYPE&nbsp;d.<br />
+<br />
+&nbsp;&nbsp;DATA&nbsp;:&nbsp;lv_type&nbsp;TYPE&nbsp;numc2,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_cnt&nbsp;&nbsp;TYPE&nbsp;numc2.<br />
+<br />
+&nbsp;&nbsp;DATA&nbsp;:&nbsp;lt_day_attributes&nbsp;LIKE&nbsp;TABLE&nbsp;OF&nbsp;casdayattr,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_day_attributes&nbsp;LIKE&nbsp;LINE&nbsp;OF&nbsp;lt_day_attributes.<br />
+<br />
+&nbsp;&nbsp;DATA&nbsp;:&nbsp;lv_num&nbsp;TYPE&nbsp;numc2,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lv_day&nbsp;TYPE&nbsp;numc2,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;aaa&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;char04,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bbb&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;char04.<br />
+&nbsp;&nbsp;DATA&nbsp;lv_rate&nbsp;&nbsp;TYPE&nbsp;p&nbsp;DECIMALS&nbsp;2.<br />
+<br />
+&nbsp;&nbsp;DATA:&nbsp;lv_sales&nbsp;TYPE&nbsp;vbap-netwr.<br />
+<br />
+&nbsp;&nbsp;FIELD-SYMBOLS&nbsp;:&nbsp;&lt;fs_a&gt;,&nbsp;&lt;fs_b&gt;.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;t_month&nbsp;=&nbsp;sy-datum+5(1)&nbsp;&&&nbsp;'#'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;t_month&nbsp;=&nbsp;'8#'.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;lv_sdate&nbsp;=&nbsp;sy-datum+0(6)&nbsp;&&&nbsp;'01'.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;lv_sdate&nbsp;=&nbsp;'20210801'.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*__&nbsp;###&nbsp;##(###&nbsp;##)&nbsp;###&nbsp;##&nbsp;####<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;PERFORM&nbsp;set_sales_data&nbsp;USING&nbsp;lv_sdate.<br />
+<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'RP_LAST_DAY_OF_MONTHS'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;day_in&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lv_sdate<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IMPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;last_day_of_month&nbsp;=&nbsp;lv_edate.<br />
+<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'DAY_ATTRIBUTES_GET'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FACTORY_CALENDAR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'&nbsp;'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HOLIDAY_CALENDAR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'&nbsp;'<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_from&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lv_sdate<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date_to&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lv_edate<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LANGUAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;SY-LANGU<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NON_ISO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'&nbsp;'<br />
+*&nbsp;IMPORTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YEAR_OF_VALID_FROM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YEAR_OF_VALID_TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETURNCODE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;TABLES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;day_attributes&nbsp;=&nbsp;lt_day_attributes.<br />
+<br />
+&nbsp;&nbsp;READ&nbsp;TABLE&nbsp;lt_day_attributes&nbsp;INTO&nbsp;ls_day_attributes&nbsp;INDEX&nbsp;1.<br />
+&nbsp;&nbsp;lv_num&nbsp;=&nbsp;ls_day_attributes-weekday.<br />
+<br />
+&nbsp;&nbsp;IF&nbsp;lv_num&nbsp;=&nbsp;7.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lv_num&nbsp;=&nbsp;lv_num&nbsp;-&nbsp;7.<br />
+&nbsp;&nbsp;ENDIF.<br />
+<br />
+<br />
+&nbsp;&nbsp;lv_num&nbsp;=&nbsp;lv_num&nbsp;+&nbsp;1.<br />
+&nbsp;&nbsp;lv_day&nbsp;=&nbsp;sy-index&nbsp;+&nbsp;1.<br />
+<br />
+<br />
+&nbsp;&nbsp;lv_eday&nbsp;=&nbsp;lv_edate+6(2).<br />
+<br />
+<br />
+&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_day_attributes&nbsp;INTO&nbsp;ls_day_attributes.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;aaa&nbsp;=&nbsp;'T_'&nbsp;&&&nbsp;lv_num.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;bbb&nbsp;=&nbsp;'P_'&nbsp;&&&nbsp;lv_num.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ASSIGN&nbsp;(aaa)&nbsp;TO&nbsp;&lt;fs_a&gt;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ASSIGN&nbsp;(bbb)&nbsp;TO&nbsp;&lt;fs_b&gt;.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;READ&nbsp;TABLE&nbsp;gt_subtot&nbsp;INTO&nbsp;DATA(ls_subtot)&nbsp;WITH&nbsp;KEY&nbsp;lv_sdate.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;NE&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;fs_b&gt;&nbsp;=&nbsp;0.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;fs_b&gt;&nbsp;=&nbsp;ls_subtot-netwr.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WRITE&nbsp;ls_subtot-netwr&nbsp;TO&nbsp;&lt;fs_b&gt;&nbsp;CURRENCY&nbsp;'EUR'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_total&nbsp;=&nbsp;p_total&nbsp;+&nbsp;ls_subtot-netwr.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;fs_a&gt;&nbsp;=&nbsp;lv_day&nbsp;&&&nbsp;'#'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lv_num&nbsp;&nbsp;&nbsp;=&nbsp;lv_num&nbsp;+&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lv_day&nbsp;&nbsp;&nbsp;=&nbsp;lv_day&nbsp;+&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lv_sdate&nbsp;=&nbsp;lv_sdate&nbsp;+&nbsp;1.<br />
+<br />
+&nbsp;&nbsp;ENDLOOP.<br />
+<br />
+&nbsp;&nbsp;p_goal&nbsp;=&nbsp;300000.<br />
+&nbsp;&nbsp;lv_rate&nbsp;=&nbsp;p_total&nbsp;/&nbsp;p_goal&nbsp;*&nbsp;100.<br />
+&nbsp;&nbsp;p_pcnt&nbsp;=&nbsp;lv_rate&nbsp;&&&nbsp;'%'.<br />
+<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Module&nbsp;SET_ALV_0120&nbsp;OUTPUT<br />
+*&---------------------------------------------------------------------*<br />
+*&<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+MODULE set_alv_0120 OUTPUT.<br />
+&nbsp;&nbsp;IF&nbsp;go_custom_con_0120&nbsp;IS&nbsp;INITIAL.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM:&nbsp;create_object_0120,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set_fieldcat_0120,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set_layout_0120,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set_sort_0120,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display_alv_0120.<br />
+&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;refresh_grid_0120.<br />
+<br />
+&nbsp;&nbsp;ENDIF.<br />
+ENDMODULE.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;create_object_0120<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM create_object_0120 .<br />
+&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;go_custom_con_0120<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container_name&nbsp;=&nbsp;'CTRL2'.<br />
+<br />
+<br />
+&nbsp;&nbsp;CREATE&nbsp;OBJECT&nbsp;go_grid_0120<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i_parent&nbsp;=&nbsp;go_custom_con_0120.<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;set_fieldcat_0120<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM set_fieldcat_0120 .<br />
+&nbsp;&nbsp;CLEAR&nbsp;gt_fieldcat_0120.<br />
+&nbsp;&nbsp;PERFORM&nbsp;add_fieldcat&nbsp;USING:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'BP_TYPE'&nbsp;&nbsp;&nbsp;'##'&nbsp;&nbsp;&nbsp;&nbsp;''&nbsp;&nbsp;''&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'',<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'PARTNER'&nbsp;&nbsp;&nbsp;'##'&nbsp;&nbsp;&nbsp;&nbsp;'X'&nbsp;'BUT000'&nbsp;'',<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'NAME_ORG1'&nbsp;'##'&nbsp;&nbsp;&nbsp;&nbsp;''&nbsp;&nbsp;'BUT000'&nbsp;'',<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'TELEPHONE'&nbsp;'###'&nbsp;&nbsp;&nbsp;''&nbsp;&nbsp;''&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'',<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'E_MAIL'&nbsp;&nbsp;&nbsp;&nbsp;'###'&nbsp;&nbsp;&nbsp;''&nbsp;&nbsp;''&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'',<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ADDRESS'&nbsp;&nbsp;&nbsp;'##'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;''&nbsp;&nbsp;''&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;''.<br />
+<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;set_layout_0120<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM set_layout_0120 .<br />
+&nbsp;&nbsp;CLEAR&nbsp;gs_layout_0120.<br />
+<br />
+&nbsp;&nbsp;gs_layout_0120-zebra&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;gs_layout_0120-no_rowins&nbsp;&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;gs_layout_0120-cwidth_opt&nbsp;=&nbsp;'A'.<br />
+&nbsp;&nbsp;gs_layout_0120-sel_mode&nbsp;&nbsp;&nbsp;=&nbsp;'D'.<br />
+<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;set_sort_0120<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM set_sort_0120 .<br />
+&nbsp;&nbsp;CLEAR:&nbsp;gs_sort_0120,&nbsp;gt_sort_0120.<br />
+<br />
+&nbsp;&nbsp;gs_sort_0120-spos&nbsp;=&nbsp;'1'.<br />
+&nbsp;&nbsp;gs_sort_0120-fieldname&nbsp;=&nbsp;'BP_TYPE'.<br />
+&nbsp;&nbsp;gs_sort_0120-up&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;APPEND&nbsp;gs_sort_0120&nbsp;TO&nbsp;gt_sort_0120.<br />
+<br />
+&nbsp;&nbsp;gs_sort_0120-spos&nbsp;=&nbsp;'2'.<br />
+&nbsp;&nbsp;gs_sort_0120-fieldname&nbsp;=&nbsp;'PARTNER'.<br />
+&nbsp;&nbsp;gs_sort_0120-up&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;APPEND&nbsp;gs_sort_0120&nbsp;TO&nbsp;gt_sort_0120.<br />
+<br />
+<br />
+<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;display_alv_0120<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM display_alv_0120 .<br />
+&nbsp;&nbsp;DATA:&nbsp;lt_exclude&nbsp;TYPE&nbsp;ui_functions,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_exclude&nbsp;TYPE&nbsp;ui_func.<br />
+<br />
+&nbsp;&nbsp;ls_exclude&nbsp;=&nbsp;cl_gui_alv_grid=&gt;mc_fc_excl_all.<br />
+&nbsp;&nbsp;APPEND&nbsp;ls_exclude&nbsp;TO&nbsp;lt_exclude.<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;go_grid_0120-&gt;set_table_for_first_display<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is_layout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;gs_layout_0120<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it_toolbar_excluding&nbsp;=&nbsp;lt_exclude<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CHANGING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it_outtab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;gt_disp_0120<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it_fieldcatalog&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;gt_fieldcat_0120<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;it_sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;gt_sort_0120.<br />
+<br />
+<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;refresh_grid_0120<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM refresh_grid_0120 .<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;go_grid_0120-&gt;refresh_table_display.<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;add_fieldcat<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;P_<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;P_<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;P_<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;P_<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;P_<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM add_fieldcat  USING    VALUE(p_fieldname)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VALUE(p_coltext)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VALUE(p_key)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VALUE(p_ref_table)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VALUE(p_emphasize).<br />
+&nbsp;&nbsp;CLEAR&nbsp;gs_fieldcat_0120.<br />
+&nbsp;&nbsp;gs_fieldcat_0120-fieldname&nbsp;&nbsp;=&nbsp;p_fieldname.<br />
+&nbsp;&nbsp;gs_fieldcat_0120-coltext&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;p_coltext.<br />
+&nbsp;&nbsp;gs_fieldcat_0120-key&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;p_key.<br />
+&nbsp;&nbsp;gs_fieldcat_0120-ref_table&nbsp;&nbsp;=&nbsp;p_ref_table.<br />
+&nbsp;&nbsp;gs_fieldcat_0120-emphasize&nbsp;&nbsp;=&nbsp;p_emphasize.<br />
+<br />
+&nbsp;&nbsp;APPEND&nbsp;gs_fieldcat_0120&nbsp;TO&nbsp;gt_fieldcat_0120.<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;get_bp_data<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM get_bp_data .<br />
+&nbsp;&nbsp;DATA:&nbsp;lt_bapitel&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;bapiadtel,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lt_bapiadsmtp&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;bapiadsmtp,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ls_address&nbsp;&nbsp;&nbsp;&nbsp;TYPE&nbsp;bapibus1006_address.<br />
+&nbsp;&nbsp;DATA:&nbsp;lr_bp&nbsp;TYPE&nbsp;RANGE&nbsp;OF&nbsp;but000-partner.<br />
+&nbsp;&nbsp;DATA:&nbsp;lv_type&nbsp;TYPE&nbsp;char20.<br />
+<br />
+<br />
+&nbsp;&nbsp;lr_bp[]&nbsp;=&nbsp;VALUE&nbsp;#(&nbsp;(&nbsp;sign&nbsp;=&nbsp;'I'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;option&nbsp;=&nbsp;'CP'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;low&nbsp;=&nbsp;'KB*'&nbsp;)&nbsp;).<br />
+&nbsp;&nbsp;SELECT&nbsp;partner,&nbsp;name_org1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;CORRESPONDING&nbsp;FIELDS&nbsp;OF&nbsp;TABLE&nbsp;@gt_disp_0120<br />
+&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;but000<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;partner&nbsp;IN&nbsp;@lr_bp.<br />
+<br />
+<br />
+&nbsp;&nbsp;DELETE&nbsp;gt_disp_0120&nbsp;WHERE&nbsp;partner&nbsp;EQ&nbsp;'KBC3'.<br />
+&nbsp;&nbsp;DELETE&nbsp;gt_disp_0120&nbsp;WHERE&nbsp;partner&nbsp;EQ&nbsp;'KBC02'.<br />
+&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;gt_disp_0120&nbsp;INTO&nbsp;gs_disp_0120.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;lt_bapitel,&nbsp;lt_bapiadsmtp.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;lv_type&nbsp;=&nbsp;gs_disp_0120-partner+2(1).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CASE&nbsp;lv_type.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'C'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gs_disp_0120-bp_type&nbsp;=&nbsp;'###'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'V'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gs_disp_0120-bp_type&nbsp;=&nbsp;'####'.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;OTHERS.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gs_disp_0120-bp_type&nbsp;=&nbsp;''.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;ENDCASE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'BAPI_BUPA_ADDRESS_GETDETAIL'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;businesspartner&nbsp;=&nbsp;gs_disp_0120-partner<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADDRESSGUID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VALID_DATE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;SY-DATLO<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RESET_BUFFER&nbsp;&nbsp;&nbsp;&nbsp;=<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IMPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addressdata&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;ls_address<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TABLES<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bapiadtel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lt_bapitel<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bapiadsmtp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;lt_bapiadsmtp.<br />
+<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;NE&nbsp;0.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'BAPI_TRANSACTION_ROLLBACK'.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ELSE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'BAPI_TRANSACTION_COMMIT'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait&nbsp;=&nbsp;'X'.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;READ&nbsp;TABLE&nbsp;lt_bapitel&nbsp;INTO&nbsp;DATA(ls_bapitel)&nbsp;INDEX&nbsp;1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;READ&nbsp;TABLE&nbsp;lt_bapiadsmtp&nbsp;INTO&nbsp;DATA(ls_bapiadsmtp)&nbsp;INDEX&nbsp;1.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gs_disp_0120-telephone&nbsp;=&nbsp;ls_bapitel-telephone.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gs_disp_0120-e_mail&nbsp;=&nbsp;ls_bapiadsmtp-e_mail.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gs_disp_0120-address&nbsp;=&nbsp;ls_address-street.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MODIFY&nbsp;gt_disp_0120&nbsp;FROM&nbsp;gs_disp_0120.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR:&nbsp;gs_disp_0120,&nbsp;ls_bapitel,&nbsp;ls_bapiadsmtp&nbsp;.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;ENDIF.<br />
+<br />
+<br />
+&nbsp;&nbsp;ENDLOOP.<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;save_longtext<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM save_longtext .<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;DATA&nbsp;lv_modi&nbsp;TYPE&nbsp;i.<br />
+*&nbsp;&nbsp;CHECK&nbsp;go_editor&nbsp;IS&nbsp;NOT&nbsp;INITIAL.<br />
+*<br />
+*&nbsp;&nbsp;gs_header-tdobject&nbsp;=&nbsp;'ZAI2INFO'.<br />
+*&nbsp;&nbsp;gs_header-tdid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;'ZAI2'.<br />
+*&nbsp;&nbsp;gs_header-tdspras&nbsp;&nbsp;=&nbsp;sy-langu.<br />
+*&nbsp;&nbsp;gs_header-tdname&nbsp;&nbsp;&nbsp;=&nbsp;'ZAI2_TDNAME'.<br />
+*<br />
+*&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;go_editor-&gt;get_text_as_r3table<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;only_when_modified&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;FALSE<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;IMPORTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;gt_lines_from<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is_modified&nbsp;=&nbsp;lv_modi<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;EXCEPTIONS<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_dp&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_cntl_call_method&nbsp;=&nbsp;2<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_dp_create&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;potential_data_loss&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;4<br />
+**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;others&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;5<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+*&nbsp;&nbsp;IF&nbsp;sy-subrc&nbsp;&lt;&gt;&nbsp;0.<br />
+**&nbsp;&nbsp;&nbsp;Implement&nbsp;suitable&nbsp;error&nbsp;handling&nbsp;here<br />
+*&nbsp;&nbsp;ENDIF.<br />
+*<br />
+*&nbsp;&nbsp;CALL&nbsp;FUNCTION&nbsp;'CONVERT_STREAM_TO_ITF_TEXT'<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;TABLES<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text_stream&nbsp;=&nbsp;gt_lines_from<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;itf_text&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;gt_lines_to.<br />
+*<br />
+*&nbsp;&nbsp;IF&nbsp;lines(&nbsp;gt_lines_from&nbsp;)&nbsp;=&nbsp;1.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;gt_lines_to-tdformat&nbsp;=&nbsp;'*'.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;gt_lines_to.<br />
+*&nbsp;&nbsp;ELSE.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;gt_lines_from&nbsp;INTO&nbsp;DATA(ls_lines_to).<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;gt_lines_to.<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gt_lines_to-tdformat&nbsp;=&nbsp;'*'.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gt_lines_to-tdline&nbsp;=&nbsp;ls_lines_to.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;gt_lines_to.<br />
+*<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;ENDLOOP.<br />
+*<br />
+*&nbsp;&nbsp;ENDIF.<br />
+<br />
+<br />
+   </div>
+   <div class="code">
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;board_edit<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM board_edit .<br />
+&nbsp;&nbsp;TRANSLATE&nbsp;gv_edit&nbsp;USING&nbsp;'&nbsp;XX&nbsp;'.&nbsp;"#####&nbsp;###&nbsp;###&nbsp;###&nbsp;#####&nbsp;###.&nbsp;1-&gt;2&nbsp;,&nbsp;2-&gt;1<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;go_editor-&gt;set_text_as_r3table<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;gt_editor_text<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;EXCEPTIONS<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_dp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_dp_create&nbsp;=&nbsp;2<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OTHERS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;3.<br />
+*<br />
+*&nbsp;&nbsp;IF&nbsp;gv_edit&nbsp;=&nbsp;'X'.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;go_editor-&gt;set_readonly_mode<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;readonly_mode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;cl_gui_textedit=&gt;false<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXCEPTIONS<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_cntl_call_method&nbsp;=&nbsp;1<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invalid_parameter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2.<br />
+*&nbsp;&nbsp;ELSE.<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;go_editor-&gt;set_readonly_mode<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;readonly_mode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;cl_gui_textedit=&gt;true<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXCEPTIONS<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error_cntl_call_method&nbsp;=&nbsp;1<br />
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invalid_parameter&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;2.<br />
+*&nbsp;&nbsp;ENDIF.<br />
+<br />
+   </div>
+   <div class="code">
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;board_save<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM board_save .<br />
+<br />
+&nbsp;&nbsp;DATA:&nbsp;l_stext_modified&nbsp;TYPE&nbsp;i.<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;METHOD&nbsp;go_editor-&gt;get_text_as_r3table<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;only_when_modified&nbsp;=&nbsp;cl_gui_textedit=&gt;true<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IMPORTING<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;table&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;gt_editor_text<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is_modified&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;l_stext_modified<br />
+&nbsp;&nbsp;&nbsp;&nbsp;EXCEPTIONS<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OTHERS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;1.<br />
+<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;:&nbsp;gt_board,&nbsp;gs_board<br />
+&nbsp;&nbsp;.<br />
+&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;gt_editor_text&nbsp;INTO&nbsp;DATA(ls_editor_text).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;gs_board-datum&nbsp;=&nbsp;sy-datum.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;gs_board-rowno&nbsp;=&nbsp;sy-tabix.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;gs_board-line&nbsp;&nbsp;=&nbsp;ls_editor_text-line.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;APPEND&nbsp;gs_board&nbsp;TO&nbsp;gt_board.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CLEAR&nbsp;gs_board.<br />
+&nbsp;&nbsp;ENDLOOP.<br />
+<br />
+&nbsp;&nbsp;TRY.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MODIFY&nbsp;zai2t_board&nbsp;FROM&nbsp;TABLE&nbsp;gt_board.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;CATCH&nbsp;cx_sy_open_sql_db&nbsp;INTO&nbsp;DATA(xref).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DATA(lv_msg)&nbsp;=&nbsp;xref-&gt;get_text(&nbsp;).<br />
+&nbsp;&nbsp;ENDTRY.<br />
+<br />
+&nbsp;&nbsp;IF&nbsp;lv_msg&nbsp;IS&nbsp;INITIAL.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;s010(kx).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;"--&nbsp;####&nbsp;######.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;gv_edit&nbsp;=&nbsp;''.<br />
+<br />
+&nbsp;&nbsp;ELSE.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;MESSAGE&nbsp;s001(kx)&nbsp;WITH&nbsp;lv_msg.<br />
+&nbsp;&nbsp;ENDIF.<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;set_sales_data<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;LV_SDATE<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM set_sales_data  USING    pv_sdate.<br />
+<br />
+&nbsp;&nbsp;DATA:&nbsp;lv_edate&nbsp;TYPE&nbsp;d.<br />
+<br />
+&nbsp;&nbsp;DATA:&nbsp;lr_date&nbsp;&nbsp;TYPE&nbsp;RANGE&nbsp;OF&nbsp;dats,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lr_matnr&nbsp;TYPE&nbsp;RANGE&nbsp;OF&nbsp;matnr.<br />
+&nbsp;&nbsp;DATA:&nbsp;lt_subtot&nbsp;TYPE&nbsp;TABLE&nbsp;OF&nbsp;ty_subtot.<br />
+<br />
+&nbsp;&nbsp;CLEAR:&nbsp;lt_subtot,&nbsp;gt_subtot.<br />
+&nbsp;&nbsp;lv_edate&nbsp;=&nbsp;'20210831'.<br />
+&nbsp;&nbsp;lr_date[]&nbsp;=&nbsp;VALUE&nbsp;#(&nbsp;(&nbsp;sign&nbsp;&nbsp;&nbsp;=&nbsp;'I'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;option&nbsp;=&nbsp;'BT'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;low&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;pv_sdate<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;high&nbsp;&nbsp;&nbsp;=&nbsp;lv_edate&nbsp;)&nbsp;).<br />
+<br />
+&nbsp;&nbsp;lr_matnr&nbsp;=&nbsp;VALUE&nbsp;#(&nbsp;(&nbsp;sign&nbsp;=&nbsp;'I'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;option&nbsp;=&nbsp;'CP'<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;low&nbsp;=&nbsp;'KB2F*'&nbsp;)&nbsp;).<br />
+<br />
+   </div>
+   <div class="codeComment">
+*__&nbsp;1.&nbsp;####&nbsp;###&nbsp;###&nbsp;##&nbsp;####<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;SELECT&nbsp;netwr,&nbsp;erdat<br />
+&nbsp;&nbsp;&nbsp;&nbsp;INTO&nbsp;CORRESPONDING&nbsp;FIELDS&nbsp;OF&nbsp;TABLE&nbsp;@lt_subtot<br />
+&nbsp;&nbsp;&nbsp;&nbsp;FROM&nbsp;vbap<br />
+&nbsp;&nbsp;&nbsp;&nbsp;WHERE&nbsp;matnr&nbsp;IN&nbsp;@lr_matnr<br />
+&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;&nbsp;&nbsp;erdat&nbsp;IN&nbsp;@lr_date.<br />
+   </div>
+   <div class="codeComment">
+*__&nbsp;2.&nbsp;###<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;LOOP&nbsp;AT&nbsp;lt_subtot&nbsp;INTO&nbsp;DATA(ls_subtot).<br />
+&nbsp;&nbsp;&nbsp;&nbsp;COLLECT&nbsp;ls_subtot&nbsp;INTO&nbsp;gt_subtot.<br />
+&nbsp;&nbsp;ENDLOOP.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*__&nbsp;3.&nbsp;##&nbsp;###&nbsp;##<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;SORT&nbsp;gt_subtot&nbsp;ASCENDING&nbsp;BY&nbsp;erdat.<br />
+<br />
+<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;wau<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;--&gt;&nbsp;&nbsp;p1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&&nbsp;&lt;--&nbsp;&nbsp;p2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM wau .<br />
+<br />
+&nbsp;&nbsp;TABLES&nbsp;z09t0050.<br />
+&nbsp;&nbsp;DATA&nbsp;:&nbsp;BEGIN&nbsp;OF&nbsp;user,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uname&nbsp;TYPE&nbsp;z09t0050-uname,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pgnam&nbsp;TYPE&nbsp;z09t0050-pgnam,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datum&nbsp;TYPE&nbsp;z09t0050-datum,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uzeit&nbsp;TYPE&nbsp;z09t0050-uzeit,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;END&nbsp;OF&nbsp;user.<br />
+<br />
+&nbsp;&nbsp;CLEAR&nbsp;user.<br />
+<br />
+&nbsp;&nbsp;user-uname&nbsp;=&nbsp;sy-uname.<br />
+&nbsp;&nbsp;user-uzeit&nbsp;=&nbsp;sy-uzeit.<br />
+&nbsp;&nbsp;user-datum&nbsp;=&nbsp;sy-datum.<br />
+&nbsp;&nbsp;user-pgnam&nbsp;&nbsp;=&nbsp;sy-cprog.<br />
+&nbsp;&nbsp;MODIFY&nbsp;z09t0050&nbsp;FROM&nbsp;user.<br />
+<br />
+ENDFORM.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Form&nbsp;variants_set_transaction<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;text<br />
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;P_<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;P_<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;P_<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;P_<br />
+*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;&nbsp;P_<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+FORM VARIANTS_SET_TRANSACTION_SD USING  VALUE(RA1)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VALUE(RA2)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VALUE(RA3)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VALUE(RA4).<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUBMIT&nbsp;zai2sd01&nbsp;VIA&nbsp;SELECTION-SCREEN<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;p_ra1&nbsp;EQ&nbsp;ra1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;p_ra2&nbsp;EQ&nbsp;ra2<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;p_ra3&nbsp;EQ&nbsp;ra3<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WITH&nbsp;p_ra4&nbsp;EQ&nbsp;ra4&nbsp;AND&nbsp;RETURN.<br />
+<br />
+ENDFORM.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

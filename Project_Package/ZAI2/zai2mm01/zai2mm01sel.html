@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; EUC-KR" />
+<title>ZAI2MM01SEL</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZAI2MM01SEL</h2>
+<h3> Description: Include Z18R0040SEL</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Include&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Z18R0040SEL<br />
+*&---------------------------------------------------------------------*<br />
+<br />
+   </div>
+   <div class="code">
+TABLES sscrfields.<br />
+<br />
+SELECTION-SCREEN BEGIN OF BLOCK b01 WITH FRAME TITLE TEXT-001. "####<br />
+<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;COMMENT&nbsp;1(10)&nbsp;TEXT-002.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;PARAMETERS&nbsp;r1&nbsp;RADIOBUTTON&nbsp;GROUP&nbsp;rg1&nbsp;DEFAULT&nbsp;'X'&nbsp;USER-COMMAND&nbsp;ra.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;COMMENT&nbsp;25(13)&nbsp;TEXT-003&nbsp;FOR&nbsp;FIELD&nbsp;r1.&nbsp;"###&nbsp;##&nbsp;##<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;PARAMETERS&nbsp;r2&nbsp;RADIOBUTTON&nbsp;GROUP&nbsp;rg1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;COMMENT&nbsp;40(12)&nbsp;TEXT-004&nbsp;FOR&nbsp;FIELD&nbsp;r2.&nbsp;"&nbsp;PO&nbsp;###&nbsp;##<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+SELECTION-SCREEN END OF BLOCK b01.<br />
+<br />
+<br />
+SELECTION-SCREEN BEGIN OF BLOCK b02 WITH FRAME TITLE TEXT-003. " ### ## ##<br />
+&nbsp;&nbsp;SELECTION-SCREEN:<br />
+&nbsp;&nbsp;SKIP&nbsp;1.<br />
+&nbsp;&nbsp;PARAMETERS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_lifnr&nbsp;&nbsp;&nbsp;TYPE&nbsp;i&nbsp;AS&nbsp;LISTBOX&nbsp;VISIBLE&nbsp;LENGTH&nbsp;10&nbsp;MODIF&nbsp;ID&nbsp;sc1.<br />
+<br />
+&nbsp;&nbsp;SELECT-OPTIONS:&nbsp;s_matnr&nbsp;&nbsp;&nbsp;FOR&nbsp;eban-matnr&nbsp;MODIF&nbsp;ID&nbsp;sc1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_banfn&nbsp;&nbsp;&nbsp;FOR&nbsp;eban-banfn&nbsp;MODIF&nbsp;ID&nbsp;sc1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_ebeln&nbsp;&nbsp;&nbsp;FOR&nbsp;eban-ebeln&nbsp;MODIF&nbsp;ID&nbsp;sc1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_ernam&nbsp;&nbsp;&nbsp;FOR&nbsp;eban-ernam&nbsp;MODIF&nbsp;ID&nbsp;sc1,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_frgdt&nbsp;&nbsp;&nbsp;FOR&nbsp;eban-frgdt&nbsp;MODIF&nbsp;ID&nbsp;sc1.<br />
+SELECTION-SCREEN END OF BLOCK b02.<br />
+<br />
+<br />
+SELECTION-SCREEN BEGIN OF BLOCK b03 WITH FRAME TITLE TEXT-004.<br />
+<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;BLOCK&nbsp;b04&nbsp;WITH&nbsp;FRAME.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PARAMETERS&nbsp;r3&nbsp;RADIOBUTTON&nbsp;GROUP&nbsp;rg2&nbsp;DEFAULT&nbsp;'X'&nbsp;USER-COMMAND&nbsp;ra&nbsp;MODIF&nbsp;ID&nbsp;sc2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;COMMENT&nbsp;20(10)&nbsp;TEXT-005&nbsp;FOR&nbsp;FIELD&nbsp;r3&nbsp;MODIF&nbsp;ID&nbsp;sc2.<br />
+<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PARAMETERS&nbsp;r4&nbsp;RADIOBUTTON&nbsp;GROUP&nbsp;rg2&nbsp;MODIF&nbsp;ID&nbsp;sc2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;COMMENT&nbsp;40(10)&nbsp;TEXT-006&nbsp;FOR&nbsp;FIELD&nbsp;r4&nbsp;MODIF&nbsp;ID&nbsp;sc2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;BLOCK&nbsp;b04.<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;SKIP&nbsp;1.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;####&nbsp;##<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;SELECT-OPTIONS:&nbsp;s_ernam2&nbsp;FOR&nbsp;ekko-ernam&nbsp;MODIF&nbsp;ID&nbsp;sc3,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_aedat2&nbsp;FOR&nbsp;ekko-aedat&nbsp;MODIF&nbsp;ID&nbsp;sc3,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_matnr2&nbsp;FOR&nbsp;ekpo-matnr&nbsp;MODIF&nbsp;ID&nbsp;sc3&nbsp;NO-DISPLAY.<br />
+<br />
+&nbsp;&nbsp;PARAMETERS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ckbox&nbsp;&nbsp;&nbsp;&nbsp;AS&nbsp;CHECKBOX&nbsp;USER-COMMAND&nbsp;tday_ck&nbsp;MODIF&nbsp;ID&nbsp;sc3.<br />
+<br />
+&nbsp;&nbsp;PARAMETERS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p_lifnr3&nbsp;TYPE&nbsp;i&nbsp;AS&nbsp;LISTBOX&nbsp;VISIBLE&nbsp;LENGTH&nbsp;10&nbsp;MODIF&nbsp;ID&nbsp;sc4&nbsp;USER-COMMAND&nbsp;fc3.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;SELECTION-SCREEN&nbsp;SKIP&nbsp;1.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;SELECT-OPTIONS:&nbsp;&nbsp;s_werks3&nbsp;FOR&nbsp;ekpo-werks&nbsp;MODIF&nbsp;ID&nbsp;sc4,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_ekgrp3&nbsp;for&nbsp;ekko-ekgrp&nbsp;MODIF&nbsp;ID&nbsp;sc4,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_ebeln3&nbsp;FOR&nbsp;ekpo-ebeln&nbsp;MODIF&nbsp;ID&nbsp;sc4.&nbsp;"&nbsp;PO&nbsp;Num<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_ebelp3&nbsp;FOR&nbsp;ekpo-ebelp&nbsp;MODIF&nbsp;ID&nbsp;sc4.&nbsp;"&nbsp;PO&nbsp;Item&nbsp;No.<br />
+*&nbsp;&nbsp;SELECTION-SCREEN&nbsp;SKIP&nbsp;1<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;SELECT-OPTIONS:&nbsp;s_matnr3&nbsp;FOR&nbsp;ekpo-matnr&nbsp;MODIF&nbsp;ID&nbsp;sc4,&nbsp;"&nbsp;###<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_ernam3&nbsp;FOR&nbsp;ekko-ernam&nbsp;MODIF&nbsp;ID&nbsp;sc4,&nbsp;"&nbsp;###<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s_banfn3&nbsp;FOR&nbsp;ekpo-banfn&nbsp;MODIF&nbsp;ID&nbsp;sc4.&nbsp;"&nbsp;PR&nbsp;No.<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;&nbsp;SELECTION-SCREEN&nbsp;SKIP&nbsp;1.<br />
+   </div>
+   <div class="code">
+&nbsp;&nbsp;SELECT-OPTIONS:&nbsp;s_aedat3&nbsp;FOR&nbsp;ekko-aedat&nbsp;MODIF&nbsp;ID&nbsp;sc4.<br />
+SELECTION-SCREEN END OF BLOCK b03.<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&SELECTION-SCREEN&nbsp;COMMENT<br />
+*&---------------------------------------------------------------------*<br />
+<br />
+<br />
+   </div>
+   <div class="code">
+SELECTION-SCREEN SKIP 2.<br />
+<br />
+SELECTION-SCREEN COMMENT 1(80) gv_txt1 MODIF ID sc1.<br />
+   </div>
+   <div class="codeComment">
+*<br />
+   </div>
+   <div class="code">
+SELECTION-SCREEN SKIP 1.<br />
+<br />
+SELECTION-SCREEN COMMENT 1(80) gv_txt2 MODIF ID sc3.<br />
+   </div>
+   <div class="codeComment">
+*<br />
+*SELECTION-SCREEN&nbsp;SKIP&nbsp;1.<br />
+*<br />
+*SELECTION-SCREEN&nbsp;COMMENT&nbsp;1(80)&nbsp;GV_TXT3&nbsp;MODIF&nbsp;ID&nbsp;T02.<br />
+*<br />
+*SELECTION-SCREEN&nbsp;SKIP&nbsp;1.<br />
+*<br />
+*SELECTION-SCREEN&nbsp;COMMENT&nbsp;1(80)&nbsp;GV_TXT4&nbsp;MODIF&nbsp;ID&nbsp;T03.<br />
+*<br />
+*SELECTION-SCREEN&nbsp;SKIP&nbsp;1.<br />
+*<br />
+*SELECTION-SCREEN&nbsp;COMMENT&nbsp;1(80)&nbsp;GV_TXT5&nbsp;MODIF&nbsp;ID&nbsp;T03.<br />
+*<br />
+*SELECTION-SCREEN&nbsp;SKIP&nbsp;1.<br />
+*<br />
+*SELECTION-SCREEN&nbsp;COMMENT&nbsp;1(80)&nbsp;GV_TXT6&nbsp;MODIF&nbsp;ID&nbsp;T04.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

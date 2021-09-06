@@ -1,0 +1,44 @@
+*&---------------------------------------------------------------------*
+*& Include          ZAI124R20I01
+*&---------------------------------------------------------------------*
+*&---------------------------------------------------------------------*
+*&      Module  EXIT_0100  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE exit_0100 INPUT.
+  CASE ok_code.
+    WHEN 'BACK' OR 'CANC'.
+      LEAVE TO SCREEN 0.
+    WHEN 'EXIT'.
+      LEAVE PROGRAM.
+  ENDCASE.
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_0100  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_0100 INPUT.
+  cp_ok_code = ok_code.
+  CLEAR: ok_code.
+
+  CASE cp_ok_code.
+    WHEN 'SAVE'.
+
+    WHEN 'CHANGE'.
+      PERFORM change_toggle.
+    WHEN 'CREATE_SO'.
+      PERFORM bapi_create_so.
+      isSaved = 'X'.
+    WHEN 'REFRESH'.
+      PERFORM update_flag.
+      PERFORM get_data.
+
+  ENDCASE.
+
+ENDMODULE.
+
+----------------------------------------------------------------------------------
+Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754

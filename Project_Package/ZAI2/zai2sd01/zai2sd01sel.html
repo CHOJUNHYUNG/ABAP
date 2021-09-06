@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; EUC-KR" />
+<title>ZAI2SD01SEL</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZAI2SD01SEL</h2>
+<h3> Description: Include Z09R_PROSEL</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Include&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Z09R_PROSEL<br />
+*&---------------------------------------------------------------------*<br />
+<br />
+<br />
+   </div>
+   <div class="code">
+SELECTION-SCREEN BEGIN OF BLOCK B1 WITH FRAME<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TITLE&nbsp;TEXT-100.<br />
+<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+&nbsp;&nbsp;PARAMETERS&nbsp;&nbsp;P_RA1&nbsp;RADIOBUTTON&nbsp;GROUP&nbsp;RG1&nbsp;USER-COMMAND&nbsp;RA1&nbsp;DEFAULT&nbsp;'X'.<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;COMMENT&nbsp;25(10)&nbsp;TEXT-001&nbsp;FOR&nbsp;FIELD&nbsp;P_RA1.&nbsp;"#####<br />
+<br />
+<br />
+&nbsp;&nbsp;PARAMETERS&nbsp;&nbsp;P_RA2&nbsp;RADIOBUTTON&nbsp;GROUP&nbsp;RG1.<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;COMMENT&nbsp;40(13)&nbsp;TEXT-002&nbsp;FOR&nbsp;FIELD&nbsp;P_RA2.&nbsp;"##&nbsp;##<br />
+&nbsp;&nbsp;SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+<br />
+SELECTION-SCREEN END OF BLOCK B1.<br />
+<br />
+<br />
+SELECTION-SCREEN BEGIN OF BLOCK B2 WITH FRAME<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TITLE&nbsp;TEXT-101.<br />
+PARAMETERS P_PATH TYPE RLGRAP-FILENAME MODIF ID PA1. "## #### # ####<br />
+<br />
+SELECTION-SCREEN END OF BLOCK B2.<br />
+<br />
+<br />
+SELECTION-SCREEN BEGIN OF BLOCK B3 WITH FRAME<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TITLE&nbsp;TEXT-102.<br />
+<br />
+&nbsp;SELECTION-SCREEN&nbsp;SKIP&nbsp;1.<br />
+<br />
+&nbsp;SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;BLOCK&nbsp;B4&nbsp;WITH&nbsp;FRAME.<br />
+<br />
+&nbsp;&nbsp;&nbsp;PARAMETERS&nbsp;:&nbsp;P_MATNR&nbsp;TYPE&nbsp;CHAR15&nbsp;MODIF&nbsp;ID&nbsp;PA3.<br />
+<br />
+&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;SKIP&nbsp;1.<br />
+<br />
+&nbsp;&nbsp;&nbsp;SELECT-OPTIONS&nbsp;:&nbsp;S_VBELN&nbsp;FOR&nbsp;VBAP-VBELN&nbsp;MODIF&nbsp;ID&nbsp;PA3&nbsp;NO-EXTENSION.<br />
+<br />
+&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;SKIP&nbsp;1.<br />
+<br />
+&nbsp;&nbsp;&nbsp;SELECT-OPTIONS&nbsp;:&nbsp;S_ERNAM&nbsp;FOR&nbsp;VBAP-ERNAM&nbsp;MODIF&nbsp;ID&nbsp;PA3&nbsp;NO-EXTENSION,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S_ERDAT&nbsp;FOR&nbsp;VBAP-ERDAT&nbsp;MODIF&nbsp;ID&nbsp;PA3&nbsp;NO-EXTENSION.<br />
+<br />
+&nbsp;SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;BLOCK&nbsp;B4.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&nbsp;SELECTION-SCREEN&nbsp;SKIP&nbsp;1.<br />
+<br />
+   </div>
+   <div class="code">
+&nbsp;SELECTION-SCREEN&nbsp;BEGIN&nbsp;OF&nbsp;LINE.<br />
+&nbsp;&nbsp;&nbsp;PARAMETERS&nbsp;:&nbsp;P_RA3&nbsp;RADIOBUTTON&nbsp;GROUP&nbsp;RG2&nbsp;MODIF&nbsp;ID&nbsp;PA2&nbsp;DEFAULT&nbsp;'X'&nbsp;USER-COMMAND&nbsp;RA1.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;COMMENT&nbsp;25(10)&nbsp;TEXT-005&nbsp;FOR&nbsp;FIELD&nbsp;P_RA3&nbsp;MODIF&nbsp;ID&nbsp;PA2.<br />
+<br />
+&nbsp;&nbsp;&nbsp;PARAMETERS&nbsp;:&nbsp;P_RA4&nbsp;RADIOBUTTON&nbsp;GROUP&nbsp;RG2&nbsp;MODIF&nbsp;ID&nbsp;PA2.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SELECTION-SCREEN&nbsp;COMMENT&nbsp;37(12)&nbsp;TEXT-006&nbsp;FOR&nbsp;FIELD&nbsp;P_RA4&nbsp;MODIF&nbsp;ID&nbsp;PA2.<br />
+&nbsp;SELECTION-SCREEN&nbsp;END&nbsp;OF&nbsp;LINE.<br />
+<br />
+SELECTION-SCREEN END OF BLOCK B3.<br />
+<br />
+<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&SELECTION-SCREEN&nbsp;COMMENT<br />
+*&---------------------------------------------------------------------*<br />
+<br />
+   </div>
+   <div class="code">
+SELECTION-SCREEN SKIP 2.<br />
+<br />
+SELECTION-SCREEN COMMENT 1(80) GV_TXT1 MODIF ID T01.<br />
+<br />
+SELECTION-SCREEN SKIP 1.<br />
+<br />
+SELECTION-SCREEN COMMENT 1(80) GV_TXT2 MODIF ID T01.<br />
+<br />
+SELECTION-SCREEN SKIP 1.<br />
+<br />
+SELECTION-SCREEN COMMENT 1(80) GV_TXT3 MODIF ID T02.<br />
+<br />
+SELECTION-SCREEN SKIP 1.<br />
+<br />
+SELECTION-SCREEN COMMENT 1(80) GV_TXT4 MODIF ID T03.<br />
+<br />
+SELECTION-SCREEN SKIP 1.<br />
+<br />
+SELECTION-SCREEN COMMENT 1(80) GV_TXT5 MODIF ID T03.<br />
+<br />
+SELECTION-SCREEN SKIP 1.<br />
+<br />
+SELECTION-SCREEN COMMENT 1(80) GV_TXT6 MODIF ID T04.<br />
+<br />
+SELECTION-SCREEN SKIP 1.<br />
+<br />
+SELECTION-SCREEN COMMENT 1(80) GV_TXT7 MODIF ID T04.<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>

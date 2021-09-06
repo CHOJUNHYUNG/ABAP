@@ -1,0 +1,162 @@
+*&---------------------------------------------------------------------*
+*& Include          ZAI124R20TOP
+*&---------------------------------------------------------------------*
+TABLES: KNA1, KNVV, MARA, MAKT, MARC, MVKE, KNMT.
+
+CONSTANTS gc_waers TYPE waers VALUE 'EUR'.
+CONSTANTS gc_test TYPE C VALUE ''.
+
+*&---------------------------------------------------------------------*
+*& ===== GUI =====
+*&---------------------------------------------------------------------*
+DATA: go_container      TYPE REF TO cl_gui_custom_container,
+      go_grid           TYPE REF TO cl_gui_alv_grid,
+      go_event_receiver TYPE REF TO lcl_event_receiver.
+
+DATA: gs_fieldcat TYPE LVC_S_FCAT,
+      gt_fieldcat TYPE LVC_T_FCAT,
+      gs_layout   TYPE LVC_S_LAYO,
+      gs_sort     TYPE LVC_s_SORT,
+      gt_sort     TYPE LVC_T_SORT.
+
+DATA: ok_code    TYPE sy-ucomm,
+      cp_ok_code TYPE sy-ucomm.
+
+DATA: isSaved TYPE C,
+      isChanged TYPE C.
+
+DATA: titlebar TYPE char50 VALUE 'Display'.
+DATA: grid_title TYPE char50 VALUE '### ## : &'.
+
+DATA: gt_cells TYPE lvc_t_modi.
+DATA: gt_bdc   TYPE TABLE OF BDCDATA.
+
+*&---------------------------------------------------------------------*
+*& ===== DATA =====
+*&---------------------------------------------------------------------*
+DATA: BEGIN OF gs_excel,
+        partn_name    TYPE char10,
+        purch_no_c    TYPE char20,
+        purch_date    TYPE char10,
+        req_date      TYPE char10,
+        material      TYPE char10,
+        MATERIAL_desc TYPE char50,
+        target_qu     TYPE char05,
+        target_qty    TYPE char05,
+        cond_value    TYPE char20,
+        name          TYPE char10,
+        city          TYPE char10,
+        address       TYPE char100,
+        telephone     TYPE char20,
+        taxnum        TYPE char15,
+        zipcode       TYPE char05,
+      END OF gs_excel.
+
+DATA: gt_excel LIKE TABLE OF gs_excel.
+
+*&---------------------------------------------------------------------*
+DATA: BEGIN OF gs_cust,
+        KUNNR TYPE KNA1-KUNNR,
+        LAND1 TYPE KNA1-LAND1,
+        NAME1 TYPE KNA1-NAME1,
+        ORT01 TYPE KNA1-ORT01,
+        PSTLZ TYPE KNA1-PSTLZ,
+        REGIO TYPE KNA1-REGIO,
+        ADRNR TYPE KNA1-ADRNR,
+        MCOD1 TYPE KNA1-MCOD1,
+        MCOD3 TYPE KNA1-MCOD3,
+        SPRAS TYPE KNA1-SPRAS,
+        STCEG TYPE KNA1-STCEG,
+        VKORG TYPE KNVV-VKORG,
+        VTWEG TYPE KNVV-VTWEG,
+        SPART TYPE KNVV-SPART,
+        INCO1 TYPE KNVV-INCO1,
+        VSBED TYPE KNVV-VSBED,
+        ZTERM TYPE KNB1-ZTERM,
+      END OF gs_cust.
+
+DATA: gt_cust LIKE TABLE OF gs_cust.
+
+DATA: gv_mcod TYPE KNA1-MCOD1.
+DATA: gt_mcod LIKE TABLE OF gv_mcod.
+
+*&---------------------------------------------------------------------*
+DATA: BEGIN OF gs_matr,
+        matnr TYPE MARA-matnr,
+        matkl TYPE MARA-matkl,
+        meins TYPE MARA-meins,
+        brgew TYPE MARA-brgew,
+        ntgew TYPE MARA-ntgew,
+        gewei TYPE MARA-gewei,
+        spras TYPE MAKT-spras,
+        maktx TYPE MAKT-maktx,
+        werks TYPE MARC-werks,
+        ladgr TYPE MARC-ladgr,
+        vkorg TYPE MVKE-vkorg,
+        vtweg TYPE MVKE-vtweg,
+        kunnr TYPE KNMT-kunnr,
+        kdmat TYPE KNMT-kdmat,
+      END OF gs_matr.
+
+DATA: gt_matr LIKE TABLE OF gs_matr.
+DATA: gs_mtmp LIKE gs_matr.
+DATA: gt_mtmp LIKE TABLE OF gs_matr.
+
+*&---------------------------------------------------------------------*
+DATA: BEGIN OF gs_ship,
+        kunnr TYPE KNA1-kunnr,
+        matnr TYPE mara-matnr,
+        vsbed TYPE TVSTZ-vsbed,
+        ladgr TYPE TVSTZ-ladgr,
+        werks TYPE TVSTZ-werks,
+        vstel TYPE TVSTZ-vstel,
+        vste1 TYPE TVSTZ-vste1,
+      END OF gs_ship.
+
+DATA: gt_ship LIKE TABLE OF gs_ship.
+
+*&---------------------------------------------------------------------*
+*DATA: BEGIN OF gs_disp,
+*        partn_numb    TYPE KUNNR,
+*        partn_name    TYPE NAME1_GP,
+*        purch_no_c    TYPE BSTKD,
+*        purch_item_c  TYPE POSNR_VA,
+*        purch_date    TYPE BSTDK,
+*        req_date      TYPE EDATU,
+*        material      TYPE MATNR18,
+*        MATERIAL_desc TYPE MAKTX,
+*        target_qu     TYPE DZIEME,
+*        target_qty    TYPE DZMENG,
+*        cond_value    TYPE NETPR,
+*        currency      TYPE waers,
+*        name          TYPE NAME1_GP,
+*        zipcode       TYPE char05,
+*        city          TYPE ORT01_GP,
+*        address       TYPE STRAS_GP,
+*        telephone     TYPE TELF1,
+*        taxnum        TYPE char15,
+*        icon          TYPE icon_d,
+*        message       TYPE char100,
+*        sales_numb    TYPE vbeln,
+*        klmeng        TYPE klmeng,
+*        besta         TYPE BESTA,
+*        besta_sta     TYPE icon_d,
+*      END   OF gs_disp.
+
+DATA: BEGIN OF gs_disp.
+  INCLUDE STRUCTURE zai24T0010.
+  DATA: icon          TYPE icon_d,
+        message       TYPE char100,
+        taxnum        TYPE char15,
+        partn_name    TYPE NAME1_GP,
+        MATERIAL_desc TYPE MAKTX,
+        besta_sta     TYPE icon_d,
+        lfgsk_sta     TYPE icon_d,
+        celltab       TYPE LVC_T_STYL.
+DATA: END OF gs_disp.
+
+DATA: gt_disp LIKE TABLE OF gs_disp,
+      gt_cp_disp LIKE TABLE OF gs_disp.
+
+----------------------------------------------------------------------------------
+Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754

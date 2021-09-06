@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; EUC-KR" />
+<title>ZAI1PP01</title>
+<style type="text/css">
+.code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
+  .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
+  .normalBold{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; font-weight:800 }
+  .normalBoldLarge{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+</style>
+<style type="text/css">
+  .normal{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px }
+  .footer{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:12px; text-align: center }
+  h2{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:16px; font-weight:800 }
+  h3{ font-family:Arial, Helvetica, sans-serif; color:#000; font-size:14px; font-weight:800 }
+  .outerTable{
+   background-color:#E0E7ED;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-right-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+  .innerTable{
+   background-color:#F2F4F7;
+   width:100%;
+   border-top-width: thin;
+   border-right-width: thin;
+   border-bottom-width: thin;
+   border-left-width: thin;
+   border-top-style: solid;
+   border-right-style: solid;
+   border-bottom-style: solid;
+   border-left-style: solid;
+  }
+</style>
+</head>
+<body>
+<table class="outerTable">
+  <tr class="normalBoldLarge">
+     <td><h2>Code listing for: ZAI1PP01</h2>
+<h3> Description: #### ## ##</h3></td>
+   </tr>
+  <tr>
+     <td>
+     <table class="innerTable">
+       <tr>
+          <td>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;Report&nbsp;YAI10603<br />
+*&---------------------------------------------------------------------*<br />
+*&<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+REPORT ZAI1PP01 MESSAGE-ID ZPP06.<br />
+<br />
+include <a href ="zai1pp01cls.html">ZAI1PP01CLS</a>.<br />
+   </div>
+   <div class="codeComment">
+*INCLUDE&nbsp;ZAI106R08CLS.<br />
+   </div>
+   <div class="code">
+include <a href ="zai1pp01top.html">ZAI1PP01TOP</a>.<br />
+   </div>
+   <div class="codeComment">
+*INCLUDE&nbsp;ZAI106R08TOP.<br />
+   </div>
+   <div class="code">
+include <a href ="zai1pp01sel.html">ZAI1PP01SEL</a>.<br />
+   </div>
+   <div class="codeComment">
+*INCLUDE&nbsp;ZAI106R08SEL.<br />
+   </div>
+   <div class="code">
+include <a href ="zai1pp01i01.html">ZAI1PP01I01</a>.<br />
+   </div>
+   <div class="codeComment">
+*INCLUDE&nbsp;ZAI106R08I01.<br />
+   </div>
+   <div class="code">
+include <a href ="zai1pp01o01.html">ZAI1PP01O01</a>.<br />
+   </div>
+   <div class="codeComment">
+*INCLUDE&nbsp;ZAI106R08O01.<br />
+   </div>
+   <div class="code">
+include <a href ="zai1pp01f01.html">ZAI1PP01F01</a>.<br />
+   </div>
+   <div class="codeComment">
+*INCLUDE&nbsp;ZAI106R08F01.<br />
+<br />
+   </div>
+   <div class="code">
+INITIALIZATION.<br />
+<br />
+PERFORM GET_DATE.<br />
+<br />
+START-OF-SELECTION.<br />
+<br />
+IF P_RB1 = 'X'.<br />
+&nbsp;&nbsp;PERFORM&nbsp;GET_DATA.<br />
+ELSEIF P_RB2 = 'X'.<br />
+&nbsp;&nbsp;PERFORM&nbsp;GET_CONF_DATA.<br />
+ENDIF.<br />
+<br />
+&nbsp;&nbsp;CALL&nbsp;SCREEN&nbsp;100.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*GUI&nbsp;Texts<br />
+*----------------------------------------------------------<br />
+*&nbsp;0100&nbsp;--&gt;&nbsp;&1<br />
+<br />
+*Text&nbsp;elements<br />
+*----------------------------------------------------------<br />
+*&nbsp;T01&nbsp;##&nbsp;##<br />
+*&nbsp;T02&nbsp;##&nbsp;##<br />
+*&nbsp;T03&nbsp;####&nbsp;####<br />
+*&nbsp;T04&nbsp;####&nbsp;####<br />
+*&nbsp;T05&nbsp;##&nbsp;:<br />
+<br />
+<br />
+*Selection&nbsp;texts<br />
+*----------------------------------------------------------<br />
+*&nbsp;S_AUFNR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;####<br />
+*&nbsp;S_ERDAT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;####<br />
+*&nbsp;S_MATNR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;####<br />
+*&nbsp;USERID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;###<br />
+<br />
+<br />
+*Messages<br />
+*----------------------------------------------------------<br />
+*<br />
+*&nbsp;Message&nbsp;class:&nbsp;ZPP06<br />
+*003&nbsp;&nbsp;&nbsp;DB&nbsp;###&nbsp;#######.<br />
+*005&nbsp;&nbsp;&nbsp;&&nbsp;#######.<br />
+*006&nbsp;&nbsp;&nbsp;##&nbsp;#&nbsp;#&nbsp;:&nbsp;&<br />
+            </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      </tr>
+   <tr>
+<td class="footer">Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754</td>
+   </tr>
+</table>
+</body>
+</html>
