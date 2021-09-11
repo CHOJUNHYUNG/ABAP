@@ -1,7 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>ZAI124R20I01</title>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR" />
+<meta http-equiv="Content-Type" content="application/xhtml+xml; EUC-KR" />
+<title>ZA370002</title>
 <style type="text/css">
 .code{ font-family:"Courier New", Courier, monospace; color:#000; font-size:14px; background-color:#F2F4F7 }
   .codeComment {font-family:"Courier New", Courier, monospace; color:#0000F0; font-size:14px; background-color:#F2F4F7 }
@@ -42,8 +44,8 @@
 <body>
 <table class="outerTable">
   <tr class="normalBoldLarge">
-     <td><h2>Code listing for: ZAI124R20I01</h2>
-<h3> Description: Include ZAI124R20I01</h3></td>
+     <td><h2>Code listing for: ZA370002</h2>
+<h3> Description: ##### ##</h3></td>
    </tr>
   <tr>
      <td>
@@ -52,48 +54,77 @@
           <td>
    <div class="codeComment">
 *&---------------------------------------------------------------------*<br />
-*&&nbsp;Include&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZAI124R20I01<br />
+*&&nbsp;Report&nbsp;YZBD2_34<br />
 *&---------------------------------------------------------------------*<br />
+*&<br />
 *&---------------------------------------------------------------------*<br />
-*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Module&nbsp;&nbsp;EXIT_0100&nbsp;&nbsp;INPUT<br />
-*&---------------------------------------------------------------------*<br />
-*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
-*----------------------------------------------------------------------*<br />
    </div>
    <div class="code">
-MODULE exit_0100 INPUT.<br />
-&nbsp;&nbsp;CASE&nbsp;ok_code.<br />
-&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'BACK'&nbsp;OR&nbsp;'CANC'.<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LEAVE&nbsp;TO&nbsp;SCREEN&nbsp;0.<br />
-&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'EXIT'.<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LEAVE&nbsp;PROGRAM.<br />
-&nbsp;&nbsp;ENDCASE.<br />
+REPORT za370002.<br />
 <br />
-ENDMODULE.<br />
+include <a href ="za370002_top.html">za370002_top</a>.<br />
+include <a href ="za370002_c01.html">za370002_c01</a>.<br />
+include <a href ="za370002_f01.html">za370002_f01</a>.<br />
+<br />
    </div>
    <div class="codeComment">
 *&---------------------------------------------------------------------*<br />
-*&&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Module&nbsp;&nbsp;USER_COMMAND_0100&nbsp;&nbsp;INPUT<br />
+*&&nbsp;INITIALIZATION.<br />
 *&---------------------------------------------------------------------*<br />
-*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text<br />
-*----------------------------------------------------------------------*<br />
    </div>
    <div class="code">
-MODULE user_command_0100 INPUT.<br />
-&nbsp;&nbsp;cp_ok_code&nbsp;=&nbsp;ok_code.<br />
-&nbsp;&nbsp;CLEAR:&nbsp;ok_code.<br />
+INITIALIZATION.<br />
+&nbsp;&nbsp;sscrfields-functxt_01&nbsp;=&nbsp;'VIEW'.<br />
 <br />
-&nbsp;&nbsp;CASE&nbsp;cp_ok_code.<br />
-&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'SAVE'.<br />
 <br />
-&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'CHANGE'.<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;change_toggle.<br />
-&nbsp;&nbsp;&nbsp;&nbsp;WHEN&nbsp;'CREATE_SO'.<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERFORM&nbsp;bapi_create_so.<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isSaved&nbsp;=&nbsp;'X'.<br />
-&nbsp;&nbsp;ENDCASE.<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;AT&nbsp;SELECTION-SCREEN.<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+AT SELECTION-SCREEN.<br />
+&nbsp;&nbsp;PERFORM&nbsp;view_maintenance_call.<br />
 <br />
-ENDMODULE.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;START-OF-SELECTION.<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+START-OF-SELECTION.<br />
+<br />
+&nbsp;&nbsp;PERFORM&nbsp;get_data.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*&---------------------------------------------------------------------*<br />
+*&&nbsp;END-OF-SELECTION.<br />
+*&---------------------------------------------------------------------*<br />
+   </div>
+   <div class="code">
+END-OF-SELECTION.<br />
+&nbsp;&nbsp;CALL&nbsp;SCREEN&nbsp;100.<br />
+<br />
+   </div>
+   <div class="codeComment">
+*GUI&nbsp;Texts<br />
+*----------------------------------------------------------<br />
+*&nbsp;TIT0100&nbsp;--&gt;&nbsp;#####&nbsp;##<br />
+<br />
+<br />
+*Selection&nbsp;texts<br />
+*----------------------------------------------------------<br />
+*&nbsp;P_ACT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;##<br />
+*&nbsp;P_GJAHR&nbsp;D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+*&nbsp;P_MERGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Function&nbsp;Module<br />
+*&nbsp;P_OJB&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Object<br />
+*&nbsp;P_PLAN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;##<br />
+*&nbsp;P_RGUBUN&nbsp;D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
+*&nbsp;S_MONAT&nbsp;D&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<br />
             </div>
           </td>
         </tr>

@@ -1,0 +1,173 @@
+*&---------------------------------------------------------------------*
+*& Include          YZBD2_34_C01
+*&---------------------------------------------------------------------*
+*CLASS lcl_event_receiver DEFINITION DEFERRED.
+
+
+*---------------------------------------------------------------------*
+*       CLASS LCL_EVENT_RECEIVER DEFINITION
+*---------------------------------------------------------------------*
+*       ........                                                      *
+*---------------------------------------------------------------------*
+CLASS lcl_event_receiver DEFINITION.
+
+  PUBLIC SECTION.
+    METHODS : handle_toolbar
+      FOR EVENT toolbar OF cl_gui_alv_grid
+      IMPORTING e_object
+                e_interactive.
+
+    METHODS : handle_user_command
+      FOR EVENT user_command OF cl_gui_alv_grid
+      IMPORTING e_ucomm.
+
+    METHODS : handle_data_changed
+      FOR EVENT data_changed OF cl_gui_alv_grid
+      IMPORTING
+        er_data_changed
+        e_onf4
+        e_onf4_before
+        e_onf4_after
+        e_ucomm	.
+
+    METHODS : handle_data_changed_finished
+      FOR EVENT data_changed_finished OF cl_gui_alv_grid
+      IMPORTING e_modified et_good_cells.
+
+    METHODS : handle_hotspot_click
+      FOR EVENT hotspot_click OF cl_gui_alv_grid
+      IMPORTING e_row_id
+                e_column_id.
+
+    METHODS : handle_double_click
+      FOR EVENT double_click OF cl_gui_alv_grid
+      IMPORTING e_row
+                e_column
+                es_row_no.
+
+    METHODS: handle_on_f4 FOR EVENT onf4 OF cl_gui_alv_grid
+      IMPORTING sender
+                e_fieldname
+                e_fieldvalue
+                es_row_no
+                er_event_data
+                et_bad_cells
+                e_display.
+
+    METHODS: handle_top_of_page FOR EVENT top_of_page
+      OF cl_gui_alv_grid
+      IMPORTING e_dyndoc_id.
+
+    METHODS : handle_before_user_command
+      FOR EVENT before_user_command OF cl_gui_alv_grid
+      IMPORTING e_ucomm.
+
+    METHODS : handle_after_user_command
+      FOR EVENT after_user_command OF cl_gui_alv_grid
+      IMPORTING e_ucomm
+                e_not_processed
+                e_saved.
+
+    METHODS : handle_button_click
+      FOR EVENT button_click OF cl_gui_alv_grid
+      IMPORTING es_col_id
+                es_row_no.
+
+    METHODS : handle_subtotal_text
+      FOR EVENT subtotal_text OF cl_gui_alv_grid
+      IMPORTING es_subtottxt_info
+                ep_subtot_line
+                e_event_data.
+
+ENDCLASS. "lcl_event_receiver DEFINITION
+*---------------------------------------------------------------------*
+*       CLASS lcl_event_receiver IMPLEMENTATION
+*---------------------------------------------------------------------*
+*       ........                                                      *
+*---------------------------------------------------------------------*
+CLASS lcl_event_receiver IMPLEMENTATION.
+
+  METHOD handle_toolbar.
+
+*    PERFORM handle_toolbar
+*                       USING e_object e_interactive.
+  ENDMETHOD.                    "handle_toolbar
+
+  METHOD handle_user_command.
+*    PERFORM handle_user_command
+*                        USING e_ucomm.
+  ENDMETHOD.                    "handle_user_command
+
+  METHOD handle_data_changed.
+*    PERFORM handle_data_changed
+*                        USING er_data_changed
+*                              e_onf4
+*                              e_onf4_before
+*                              e_onf4_after
+*                              e_ucomm.
+  ENDMETHOD.                    "handle_data_changed
+
+  METHOD handle_data_changed_finished.
+    PERFORM handle_data_changed_finished
+                        USING  e_modified et_good_cells.
+  ENDMETHOD.                    "handle_data_changed_finished
+
+  METHOD handle_hotspot_click.
+    PERFORM handle_hotspot_click
+                        USING e_row_id e_column_id.
+  ENDMETHOD.                    "handle_hotspot_click
+
+  METHOD handle_double_click.
+    PERFORM handle_double_click
+                        USING e_row e_column es_row_no.
+  ENDMETHOD.                    "handle_double_click
+
+  METHOD handle_on_f4.
+    PERFORM handle_on_f4
+                        USING sender
+                              e_fieldname
+                              e_fieldvalue
+                              es_row_no
+                              er_event_data
+                              et_bad_cells
+                              e_display.
+  ENDMETHOD.                    "handle_on_f4
+
+  METHOD handle_top_of_page.
+    PERFORM handle_top_of_page
+                        USING e_dyndoc_id.
+  ENDMETHOD.                    "handle_top_of_page
+
+  METHOD handle_before_user_command.
+    PERFORM handle_before_user_command
+                        USING e_ucomm.
+  ENDMETHOD.                    "before_user_command
+
+  METHOD handle_after_user_command.
+    PERFORM handle_after_user_command
+                        USING e_ucomm
+                               e_not_processed
+                               e_saved.
+  ENDMETHOD.                    "after_user_command
+
+  METHOD handle_button_click.
+    PERFORM handle_button_click
+                        USING es_col_id
+                              es_row_no.
+  ENDMETHOD.                    "HANDLE_BUTTON_CLICK
+
+
+  METHOD handle_subtotal_text.
+    PERFORM handle_subtotal_text
+                        USING es_subtottxt_info
+                              ep_subtot_line
+                              e_event_data.
+  ENDMETHOD.                    "HANDLE_BUTTON_CLICK
+
+ENDCLASS. "lcl_event_receiver IMPLEMENTATION
+
+
+DATA: go_event_rcvr TYPE REF TO lcl_event_receiver.
+
+----------------------------------------------------------------------------------
+Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754

@@ -1,0 +1,406 @@
+*&---------------------------------------------------------------------*
+*& Report ZCODE_RESULT
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT ZCODE_RESULT.
+
+**INITIALIZATION.
+*
+*"## ## # INITIALIZATION # ##
+*DATA: LV_DATUM TYPE P0001-BEGDA.
+*
+*  CALL FUNCTION 'RP_CALC_DATE_IN_INTERVAL'
+*    EXPORTING
+*      DATE      = SY-DATUM      "###
+*      DAYS      = '07'          "#
+*      MONTHS    = '00'          "#
+*      SIGNUM    = '-'           " +, -
+*      YEARS     = '00'          "##
+*    IMPORTING
+*      CALC_DATE = LV_DATUM.
+
+
+*"## ##### ## ### ##
+*DATA : GV_DIR TYPE STRING,
+*       GV_RC  TYPE ABAP_BOOL.
+*  CLEAR GV_DIR.
+*  GV_DIR = 'C:\EXCEL\' && SY-DATUM+0(4) && '-' && SY-DATUM+4(2) && '-' && SY-DATUM+6(2).  "C:\EXCEL\### ### ### ## ## ## ##  EX)'C:\EXCEL\07-06'
+*
+*  "## ## ##
+*  CALL METHOD CL_GUI_FRONTEND_SERVICES=>DIRECTORY_EXIST
+*    EXPORTING
+*      DIRECTORY            = GV_DIR
+*    RECEIVING
+*      RESULT               = GV_RC
+*    EXCEPTIONS
+*      CNTL_ERROR           = 1
+*      ERROR_NO_GUI         = 2
+*      WRONG_PARAMETER      = 3
+*      NOT_SUPPORTED_BY_GUI = 4
+*      OTHERS               = 5.
+*
+*  IF GV_RC <> 'X'.
+**    LV_CHECK = 1.
+**    MESSAGE S000 DISPLAY LIKE 'E' WITH GV_DIR. "## ### #### ####. : &
+*  ENDIF.
+
+**********************************************************************
+
+" #### ## ## ## ## ### ##
+
+*CALL METHOD CL_GUI_FRONTEND_SERVICES=>DIRECTORY_LIST_FILES
+*    EXPORTING
+*      DIRECTORY                   = GV_DIR
+**     FILTER                      = '*.JPG'
+*      FILES_ONLY                  = 'X'
+**     DIRECTORIES_ONLY            = 'X'
+*    CHANGING
+*      FILE_TABLE                  = GT_FILETAB[]
+*      COUNT                       = GV_COUNT
+*    EXCEPTIONS
+*      CNTL_ERROR                  = 1
+*      DIRECTORY_LIST_FILES_FAILED = 2
+*      WRONG_PARAMETER             = 3
+*      ERROR_NO_GUI                = 4
+*      NOT_SUPPORTED_BY_GUI        = 5
+*      OTHERS                      = 6.
+
+**********************************************************************
+
+" MM01(#####) BAPI TOP
+*  DATA: GS_HEAD   TYPE BAPI2017_GM_HEAD_01, " Importing__BAPI2017_GM_HEAD_01
+*        GV_GMCODE TYPE BAPI2017_GM_CODE.    " Importing__BAPI2017_GM_CODE
+*
+*  DATA: GS_HEADRET TYPE BAPI2017_GM_HEAD_RET,
+*        GV_MATDOC  TYPE BAPI2017_GM_HEAD_RET-MAT_DOC,     " 5000- GR##.
+*        GV_RETYEAR TYPE BAPI2017_GM_HEAD_RET-DOC_YEAR.
+
+
+
+" MM01 BAPI FUNCHION
+
+*  CALL FUNCTION 'BAPI_GOODSMVT_CREATE'
+*    EXPORTING
+*      GOODSMVT_HEADER  = GS_HEAD
+*      GOODSMVT_CODE    = GV_GMCODE
+**     TESTRUN          = 'X'                              " TEST RUN!!!!!
+**     GOODSMVT_REF_EWM =
+**     GOODSMVT_PRINT_CTRL           =
+*    IMPORTING
+*      GOODSMVT_HEADRET = GS_HEADRET
+*      MATERIALDOCUMENT = GV_MATDOC
+*      MATDOCUMENTYEAR  = GV_RETYEAR
+*    TABLES
+*      GOODSMVT_ITEM    = GT_ITEM
+**     GOODSMVT_SERIALNUMBER         =
+*      RETURN           = GT_RETURN_MSG
+**     GOODSMVT_SERV_PART_DATA       =
+**     EXTENSIONIN      =
+**     GOODSMVT_ITEM_CWM             =
+
+" MIGO DIALOG
+*CALL FUNCTION 'MIGO_DIALOG'
+*    EXPORTING
+**     I_ACTION                  = 'A04'
+**     I_REFDOC                  = 'R02'
+**     I_NOTREE                  = 'X'
+**     I_NO_AUTH_CHECK           =
+**     I_SKIP_FIRST_SCREEN       = 'X'
+**     I_DEADEND                 = 'X'
+**     I_OKCODE                  = 'OK_GO'
+**     I_LEAVE_AFTER_POST        =
+**     I_NEW_ROLLAREA            = 'X'
+**     I_SYTCODE                 =
+**     I_EBELN
+**     I_EBELP =
+*      I_MBLNR = GS_DATA2-MATDOC
+**     I_MJAHR = GS_DISP-MJAHR
+**     I_ZEILE =
+**     I_TRANSPORT               =
+**     I_ORDER_NUMBER            =
+**     I_ORDER_ITEM              =
+**     I_TRANSPORT_MEANS         =
+**     I_TRANSPORTIDENT          =
+**     I_INBOUND_DELIV           =
+**     I_OUTBOUND_DELIV          =
+**     I_RESERVATION_NUMB        =
+**     I_RESERVATION_ITEM        =
+**     EXT     =
+**     I_MOVE_TYPE               =
+**     I_SPEC_STOCK              =
+**     I_PSTNG_DATE              =
+**     I_DOC_DATE                =
+**     I_REF_DOC_NO              =
+**     I_HEADER_TXT              =
+** EXCEPTIONS
+**     ILLEGAL_COMBINATION       = 1
+**     OTHERS  = 2
+*    .
+*  IF SY-SUBRC <> 0.
+*  ENDIF.
+
+**********************************************************************
+*MM02(####) BAPI FUN
+*
+*
+*"####
+*
+*  DATA: LS_HEADER  TYPE BAPI_INCINV_CREATE_HEADER,
+*        LS_ITEM    TYPE BAPI_INCINV_CREATE_ITEM,
+*        LT_ITEM    TYPE TABLE OF BAPI_INCINV_CREATE_ITEM,
+*        LS_RETURN  TYPE BAPIRET2,
+*        LT_RETURN  TYPE TABLE OF BAPIRET2,
+*        LS_INV_NUM LIKE BAPI_INCINV_FLD.
+*
+*"HEADER DATA
+*LS_HEADER-INVOICE_IND = 'X'.
+*LS_HEADER-DOC_TYPE = 'RE'.
+*LS_HEADER-DOC_DATE = GS_DATA-INVDAT.
+*LS_HEADER-PSTNG_DATE = SY-DATUM.
+*LS_HEADER-COMP_CODE = '1010'.
+*LS_HEADER-CURRENCY = GS_DATA-WAERS.
+*LS_HEADER-GROSS_AMOUNT = GS_DATA-RBWWR.
+*LS_HEADER-CALC_TAX_IND = 'X'.
+*LS_HEADER-PMNTTRMS = '0001'.
+*
+*
+*"ITEM DATA
+*
+*LS_ITEM-INVOICE_DOC_ITEM = GS_DATA-BUZEI. "000001(6##).
+*LS_ITEM-PO_NUMBER = GS_DATA-EBELN.
+*LS_ITEM-PO_ITEM = GS_DATA-EBELP.      "00010(5##)
+*LS_ITEM-QUANTITY = GS_DATA-MENGE.
+*LS_ITEM-TAX_CODE = 'V3'.
+*LS_ITEM-ITEM_AMOUNT = GS_DATA-NETWR.
+*LS_ITEM-PO_UNIT_ISO = GS_DATA-MEINS.
+*LS_ITEM-PO_UNIT = GS_DATA-MEINS.
+*APPEND LS_ITEM TO LT_ITEM.
+*
+*"IV BAPI
+*
+*CALL FUNCTION 'BAPI_INCOMINGINVOICE_CREATE'
+*  EXPORTING
+*    HEADERDATA       = LS_HEADER
+***   ADDRESSDATA               =
+*  IMPORTING
+*    INVOICEDOCNUMBER = LS_INV_NUM-INV_DOC_NO
+*    FISCALYEAR       = LS_INV_NUM-FISC_YEAR
+*  TABLES
+*    ITEMDATA         = LT_ITEM
+**   ACCOUNTINGDATA   =
+**   GLACCOUNTDATA    =
+**   MATERIALDATA     =
+**   TAXDATA          =
+**   WITHTAXDATA      =
+**   VENDORITEMSPLITDATA       =
+*    RETURN           = LT_RETURN
+**   EXTENSIONIN      =
+**   TM_ITEMDATA      =
+**   NFMETALLITMS     =
+**   ASSETDATA        =
+*  .
+**********************************************************************
+
+"### ## ## ### ## FUNC.
+*DATA : LS_OBJECT  TYPE SIBFLPORB,
+*       LT_OBJECTS TYPE TABLE OF SIBFLPORB,
+*       LT_ROWS    TYPE LVC_T_ROW,
+*       LV_SUBRC   TYPE SY-SUBRC.
+*
+*CALL METHOD GO_GRID->GET_SELECTED_ROWS
+*  IMPORTING
+*    ET_INDEX_ROWS = GT_ROWS.
+*     ET_ROW_NO     =
+*
+*
+*LOOP AT LT_ROWS INTO DATA(LS_ROW).
+*  READ TABLE GT_DATA INTO GS_DATA INDEX LS_ROW.
+*ENDLOOP.
+*
+*PERFORM CHK_ATTACH TABLES LT_OBJECTS
+*                   USING GS_DATA-EBELN LS_OBJECT LV_SUBRC.
+*LS_OBJECT-INSTID = GS_DATA-EBELN.
+*LS_OBJECT-TYPEID = SY-REPID.
+*LS_OBJECT-CATID  = 'BO'.
+*
+*
+*SELECT *  INTO CORRESPONDING FIELDS OF TABLE LT_OBJECTS
+*      FROM SRGBTBREL
+*      WHERE RELTYPE = 'ATTA'
+*      AND   INSTID_A = LS_OBJECT-INSTID
+*      AND  TYPEID_A  = LS_OBJECT-TYPEID
+*      AND   CATID_A  = LS_OBJECT-CATID.
+*
+*CALL FUNCTION 'GOS_ATTACHMENT_LIST_POPUP'
+*  EXPORTING
+*    IS_OBJECT      = LS_OBJECT
+*    IP_CHECK_ARL   = 'X'
+*    IP_CHECK_BDS   = 'X'
+*    IP_NOTES       = 'X'
+*    IP_ATTACHMENTS = 'X'
+*    IP_URLS        = 'X'
+*    IP_MODE        = 'E'   " gv_mode TYPE c VALUE 'E',
+** IMPORTING
+**   EP_SAVE_REQUEST       =
+*  TABLES
+*    IT_OBJECTS     = LT_OBJECTS.
+*
+*IF GV_MODE = 'E'.
+*  COMMIT WORK AND WAIT.
+*ENDIF.
+
+"###### ##
+*FORM CHK_ATTACH  TABLES LT_OBJECTS STRUCTURE SIBFLPORB
+*                 USING  PV_EBELN
+*                        LS_OBJECT TYPE SIBFLPORB
+*                        LV_SUBRC.
+*
+*  LS_OBJECT-INSTID = PV_EBELN.
+*  LS_OBJECT-TYPEID = SY-REPID.
+*  LS_OBJECT-CATID  = 'BO'.
+*
+*
+*  SELECT *  INTO CORRESPONDING FIELDS OF TABLE LT_OBJECTS
+*        FROM SRGBTBREL
+*        WHERE RELTYPE = 'ATTA'
+*        AND   INSTID_A = LS_OBJECT-INSTID
+*        AND  TYPEID_A  = LS_OBJECT-TYPEID
+*        AND   CATID_A  = LS_OBJECT-CATID.
+*  IF SY-SUBRC = 0.
+*    LV_SUBRC = 0.
+*  ELSE.
+*    LV_SUBRC = 4.
+*  ENDIF.
+*ENDFORM.
+
+
+**********************************************************************
+*SD BAPI_SALESORDER_CREATEFROMDAT2
+
+*DATA: ls_header  TYPE bapisdhd1,
+*      ls_headerx TYPE bapisdhd1x.
+*
+**  Importing
+*  DATA: lv_vbeln   TYPE bapivbeln-vbeln.
+*
+**  Tables
+*  DATA: ls_return  TYPE bapiret2,
+*        lt_return  TYPE TABLE OF bapiret2,
+*        ls_partner TYPE bapiparnr,
+*        lt_partner TYPE TABLE OF bapiparnr,
+*        ls_item    TYPE BAPISDITM,
+*        lt_item    TYPE TABLE OF BAPISDITM,
+*        ls_itemx   TYPE BAPISDITMX,
+*        lt_itemx   TYPE TABLE Of BAPISDITMX,
+*        ls_schd    TYPE BAPISCHDL,
+*        lt_schd    TYPE TABLE OF BAPISCHDL,
+*        ls_schdx   TYPE BAPISCHDLX,
+*        lt_schdx   TYPE TABLE OF BAPISCHDLX,
+*        ls_cond    TYPE BAPICOND,
+*        lt_cond    TYPE TABLE OF BAPICOND,
+*        ls_condx   TYPE BAPICONDX,
+*        lt_condx   TYPE TABLE OF BAPICONDX.
+*
+*  SORT lt_disp BY req_date ASCENDING.
+*  CLEAR: gs_disp.
+*  LOOP AT lt_disp INTO gs_disp GROUP BY ( partn_numb = gs_disp-partn_numb purch_no_c = gs_disp-purch_no_c ).
+*    CLEAR: lt_item, lt_schd, lt_cond.
+*    gt_cp_disp = gt_disp.
+*    LOOP AT lt_disp INTO ls_disp WHERE partn_numb = gs_disp-partn_numb AND purch_no_c = gs_disp-purch_no_c.
+*      " Item setting
+*      PERFORM set_items CHANGING ls_disp ls_item ls_itemx.
+**      item: ITM_NUMBER, MATERIAL, PLANT, TARGET_QTY, TARGET_QU, PURCH_NO_C, INCOTERMS1, PMNTTRMS, SHIP_POINT
+**      itemX: UPDATEFLAG, ITM_NUMBER, MATERIAL, PLANT, TARGET_QTY, TARGET_QU, PURCH_NO_C, INCOTERMS1, PMNTTRMS, SHIP_POINT
+*      APPEND ls_item  TO lt_item.
+*      APPEND ls_itemx TO lt_itemx.
+*
+*      " schedule line setting
+*      PERFORM set_schd USING ls_disp CHANGING ls_schd ls_schdx.
+**      schd: ITM_NUMBER, SCHED_LINE, REQ_QTY
+**      schdx: UPDATEFLAG, ITM_NUMBER, SCHED_LINE, REQ_QTY
+*      APPEND ls_schd  TO lt_schd.
+*      APPEND ls_schdx TO lt_schdx.
+*
+*      " conditions setting
+*      PERFORM set_cond USING ls_disp CHANGING ls_cond ls_condx.
+**      cond: ITM_NUMBER, COND_TYPE, COND_VALUE, CURRENCY
+**      condx: ITM_NUMBER, COND_TYPE, COND_VALUE, CURRENCY
+*      APPEND ls_cond  TO lt_cond.
+*      APPEND ls_condx TO lt_condx.
+*    ENDLOOP.
+*
+*    " header setting
+*    PERFORM set_header USING ls_disp CHANGING ls_header ls_headerx.
+**    header : doc_type, SALES_ORG, DISTR_CHAN, DIVISION, PURCH_NO_C , PURCH_DATE, INCOTERMS1, PMNTTRMS
+*
+*    " partner setting
+*    CLEAR: lt_partner, ls_partner, gs_cust.
+*    READ TABLE gt_cust INTO gs_cust WITH KEY KUNNR = ls_disp-partn_numb.
+*    IF sy-subrc = 0.
+*      ls_partner-PARTN_ROLE = 'AG'. " sold-to-party
+*      ls_partner-PARTN_NUMB = gs_cust-KUNNR.
+*      ls_partner-COUNTRY = gs_cust-land1.
+*      ls_partner-LANGU = gs_cust-spras.
+*      ls_partner-REGION =  gs_cust-regio.
+*      ls_partner-NAME = gs_cust-name1.
+*      ls_partner-CITY = gs_cust-ort01.
+*      ls_partner-POSTL_CODE = gs_cust-pstlz.
+*      APPEND ls_partner TO lt_partner.
+*    ENDIF.
+*
+*    CLEAR ls_partner.
+*    ls_partner-PARTN_ROLE = 'WE'. " ship-to-party
+*    ls_partner-PARTN_NUMB = 'CS01_99999'. "gs_disp-partn_numb.
+*    ls_partner-COUNTRY = 'DE'.
+*    ls_partner-LANGU = 'E'.
+**    gs_partner-REGION =  '02'.
+*    ls_partner-NAME = ls_disp-name.
+*    ls_partner-CITY = ls_disp-city.
+*    ls_partner-POSTL_CODE = ls_disp-zipcode.
+*    ls_partner-STREET = ls_disp-address.
+*    ls_partner-TELEPHONE = ls_disp-telephone.
+*    APPEND ls_partner TO lt_partner.
+*
+*    " create_bapi_salesorder
+*    CALL FUNCTION 'BAPI_SALESORDER_CREATEFROMDAT2'
+*      EXPORTING
+**       SALESDOCUMENTIN  =
+*        order_header_in  = ls_header
+*        order_header_inx = ls_headerx
+**       SENDER           =
+**       BINARY_RELATIONSHIPTYPE       =
+**       INT_NUMBER_ASSIGNMENT         =
+**       BEHAVE_WHEN_ERROR             =
+**       LOGIC_SWITCH     =
+*        testrun          = gc_test
+**       CONVERT          = ' '
+*      IMPORTING
+*        salesdocument         = lv_vbeln
+*      TABLES
+*        return                = lt_return
+*        ORDER_ITEMS_IN        = lt_item
+*        ORDER_ITEMS_INX       = lt_itemx
+*        order_partners        = lt_partner
+*        ORDER_SCHEDULES_IN    = lt_schd
+*        ORDER_SCHEDULES_INX   = lt_schdx
+*        ORDER_CONDITIONS_IN   = lt_cond
+*        ORDER_CONDITIONS_INX  = lt_condx
+**       ORDER_CFGS_REF   =
+**       ORDER_CFGS_INST  =
+**       ORDER_CFGS_PART_OF            =
+**       ORDER_CFGS_VALUE =
+**       ORDER_CFGS_BLOB  =
+**       ORDER_CFGS_VK    =
+**       ORDER_CFGS_REFINST            =
+**       ORDER_CCARD      =
+**       ORDER_TEXT       =
+**       ORDER_KEYS       =
+**       EXTENSIONIN      =
+**       PARTNERADDRESSES =
+**       EXTENSIONEX      =
+**       NFMETALLITMS     =
+*      .
+
+----------------------------------------------------------------------------------
+Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754

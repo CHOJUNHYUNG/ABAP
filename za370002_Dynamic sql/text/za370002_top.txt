@@ -1,0 +1,82 @@
+*&---------------------------------------------------------------------*
+*& Include          YZBD2_34_TOP
+*&---------------------------------------------------------------------*
+TABLES : sscrfields, za370001, bkpf, ce2a000.
+
+DATA: BEGIN OF  gs_data.
+DATA: rgubun LIKE za370001-rgubun,
+      code   LIKE za370001-code,
+      ltext  LIKE za370001-ltext,
+      tname  LIKE za370001-tname,
+      fname  LIKE za370001-fname,
+      cname  LIKE za370001-cname,
+      zseq   LIKE za370001-zseq,
+      color  LIKE za370001-color,
+      glevel LIKE za370001-glevel,
+
+      wkgtot LIKE ce2a000-vv010001,
+      wkg001 LIKE ce2a000-vv010001,
+      wkg002 LIKE ce2a000-vv010001,
+      wkg003 LIKE ce2a000-vv010001,
+      wkg004 LIKE ce2a000-vv010001,
+      wkg005 TYPE ce2a000-vv010001,
+      wkg006 TYPE ce2a000-vv010001,
+      wkg007 TYPE ce2a000-vv010001,
+      wkg008 TYPE ce2a000-vv010001,
+      wkg009 TYPE ce2a000-vv010001,
+      wkg010 TYPE ce2a000-vv010001,
+      wkg011 TYPE ce2a000-vv010001,
+      wkg012 TYPE ce2a000-vv010001,
+      WAERS  TYPE WAERS,
+      END OF gs_data.
+DATA :  gt_data LIKE TABLE OF gs_data.
+
+  DATA : BEGIN OF gs_cal,
+           cname(100),
+           cal(1),
+         END OF gs_cal.
+  DATA gt_cal LIKE TABLE OF gs_cal.
+
+DATA : go_gui_con TYPE REF TO cl_gui_container,
+       go_grid    TYPE REF TO cl_gui_alv_grid.
+
+DATA : gt_fcat TYPE lvc_t_fcat,
+       gs_fcat LIKE LINE OF gt_fcat,
+       gS_LAYOUT 	TYPE LVC_S_LAYO,
+       GS_VARIANT	TYPE DISVARIANT.
+
+
+
+DATA : gt_sort TYPE lvc_t_sort,
+       gs_sort LIKE LINE OF gt_sort.
+
+DATA : gv_tname(30),
+       gs_sql(100),
+       sql(100) ,
+       gt_sql       LIKE TABLE OF gs_sql,
+       GV_EDIT     TYPE C,
+       ok_code      TYPE sy-ucomm.
+
+
+
+
+SELECTION-SCREEN BEGIN OF BLOCK main WITH FRAME TITLE TEXT-t01.
+  PARAMETERS :p_rgubun TYPE za370001-rgubun DEFAULT 'R02',
+              p_gjahr  TYPE gjahr DEFAULT '2022'.
+
+  SELECT-OPTIONS :s_monat FOR bkpf-monat  DEFAULT '01' TO '12',
+                  s_perbl FOR ce2a000-perbl NO-DISPLAY.
+
+  SELECTION-SCREEN ULINE.
+  PARAMETERS : p_act  RADIOBUTTON GROUP grp1,
+               p_plan RADIOBUTTON GROUP grp1.
+
+  SELECTION-SCREEN ULINE.
+  PARAMETERS : p_merge RADIOBUTTON GROUP grp2,
+               p_ojb   RADIOBUTTON GROUP grp2 DEFAULT 'X'.
+SELECTION-SCREEN END OF BLOCK main.
+
+SELECTION-SCREEN FUNCTION KEY 1.
+
+----------------------------------------------------------------------------------
+Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754

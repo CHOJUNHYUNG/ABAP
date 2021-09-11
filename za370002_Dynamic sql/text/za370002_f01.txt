@@ -1,0 +1,828 @@
+*&---------------------------------------------------------------------*
+*& Module STATUS_0100 OUTPUT
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+MODULE status_0100 OUTPUT.
+  SET PF-STATUS 'PF_0100'.
+  SET TITLEBAR 'TIT0100' WITH sy-title.
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_0100  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_0100 INPUT.
+  CASE ok_code.
+    WHEN 'BACK' OR 'EXIT' OR 'CANC'.
+      LEAVE TO SCREEN 0.
+
+    WHEN 'EDIT'.
+      PERFORM exec_edit.
+
+  ENDCASE.
+
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*& Module DISPLAY_ALV OUTPUT
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+MODULE display_alv OUTPUT.
+
+  IF go_grid IS INITIAL .
+    PERFORM display_alv.
+
+  ELSE.
+
+  ENDIF.
+
+
+ENDMODULE.
+
+*&---------------------------------------------------------------------*
+*& Form GUI_CONTAINER
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM display_alv .
+
+  PERFORM create_grid.
+
+  PERFORM app_fcat.
+
+  gs_layout-info_fname = 'COLOR'.
+
+  gs_variant-report   = sy-repid.
+  gs_variant-username = sy-uname.
+
+  CALL METHOD go_grid->set_table_for_first_display
+    EXPORTING
+     is_variant                    = gs_variant
+     i_save                        = 'A'
+      is_layout                     = gs_layout
+    CHANGING
+      it_outtab                     = gt_data
+      it_fieldcatalog               = gt_fcat
+*     it_sort                       =
+*     it_filter                     =
+    EXCEPTIONS
+      invalid_parameter_combination = 1
+      program_error                 = 2
+      too_many_lines                = 3
+      OTHERS                        = 4.
+
+  IF sy-subrc <> 0.
+* Implement suitable error handling here
+  ENDIF.
+
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form app_fcat
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM app_fcat .
+
+  CLEAR gt_fcat[].
+  CASE 'X'.
+    WHEN p_merge.
+      PERFORM fieldcatalog_merge USING 'GS_DATA'.
+
+    WHEN p_ojb.
+      PERFORM abap_structdescr USING gs_data.
+
+  ENDCASE.
+
+  FIELD-SYMBOLS <fcat> LIKE gs_fcat.
+  LOOP AT gt_fcat ASSIGNING <fcat>.
+
+    <fcat>-col_opt = 'X'.
+
+    CASE <fcat>-fieldname.
+      WHEN 'RGUBUN' OR 'CODE' OR 'TNAME' OR 'FNAME' OR
+            'CNAME' OR 'ZSEQ' OR 'COLOR' OR 'GLEVEL'.
+        <fcat>-no_out = 'X'.
+
+      WHEN 'LTEXT'.
+        <fcat>-key = 'X'.
+
+      WHEN 'WKGTOT'.
+        <fcat>-emphasize = 'C300'.
+        <fcat>-reptext   = '##'.
+        <fcat>-outputlen = 12.
+        <fcat>-col_opt   = ''.
+
+      WHEN OTHERS.
+
+    ENDCASE.
+
+    IF <fcat>-fieldname+0(4) = 'WKG0'.
+      <fcat>-reptext   = <fcat>-fieldname+4(2) && '#'.
+      <fcat>-outputlen = 12.
+      <fcat>-col_opt   = ''.
+      <fcat>-edit      = gv_edit.
+    ENDIF.
+
+    <fcat>-scrtext_l = <fcat>-reptext.
+    <fcat>-scrtext_m =  <fcat>-reptext.
+    <fcat>-scrtext_s =  <fcat>-reptext.
+
+  ENDLOOP.
+
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form handle_data_changed_finished
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> E_MODIFIED
+*&      --> ET_GOOD_CELLS
+*&---------------------------------------------------------------------*
+FORM handle_data_changed_finished  USING    p_e_modified
+                                            p_et_good_cells.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form handle_hotspot_click
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> E_ROW_ID
+*&      --> E_COLUMN_ID
+*&---------------------------------------------------------------------*
+FORM handle_hotspot_click  USING    p_e_row_id
+                                    p_e_column_id.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form handle_double_click
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> E_ROW
+*&      --> E_COLUMN
+*&      --> ES_ROW_NO
+*&---------------------------------------------------------------------*
+FORM handle_double_click  USING e_row     TYPE lvc_s_row
+                               e_column  TYPE lvc_s_col
+                               es_row_no TYPE lvc_s_roid.
+
+*
+*  READ TABLE gt_csks INTO gs_csks INDEX e_row-index.
+*  CHECK sy-subrc = 0.
+*
+*  SET PARAMETER ID 'KOS' FIELD gs_csks-kostl.
+*  CALL TRANSACTION 'KS03' AND SKIP FIRST SCREEN.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form handle_on_f4
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> SENDER
+*&      --> E_FIELDNAME
+*&      --> E_FIELDVALUE
+*&      --> ES_ROW_NO
+*&      --> ER_EVENT_DATA
+*&      --> ET_BAD_CELLS
+*&      --> E_DISPLAY
+*&---------------------------------------------------------------------*
+FORM handle_on_f4  USING    p_sender
+                            p_e_fieldname
+                            p_e_fieldvalue
+                            p_es_row_no
+                            p_er_event_data
+                            p_et_bad_cells
+                            p_e_display.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form handle_top_of_page
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> E_DYNDOC_ID
+*&---------------------------------------------------------------------*
+FORM handle_top_of_page  USING po_dd_doc TYPE REF TO cl_dd_document.
+*
+*  DATA : lv_text TYPE sdydo_text_element.
+*
+*  lv_text = '######'.
+*  CALL METHOD po_dd_doc->add_text
+*    EXPORTING
+*      text         = lv_text
+*      sap_style    = cl_dd_document=>key
+*      sap_color    = cl_dd_document=>list_normal_int
+**     sap_fontsize = cl_dd_document=>small
+*      sap_emphasis = space
+*      style_class  = space.
+*
+*  CALL METHOD po_dd_doc->add_gap
+*    EXPORTING
+*      width = 5.
+*
+*  lv_text = p_kokrs.
+*  CALL METHOD po_dd_doc->add_text
+*    EXPORTING
+*      text         = lv_text
+*      sap_style    = cl_dd_document=>large
+*      sap_color    = cl_dd_document=>list_normal_int
+*      sap_fontsize = cl_dd_document=>small
+*      sap_emphasis = space
+*      style_class  = space.
+*
+*  CALL METHOD po_dd_doc->new_line( ).
+*
+*  lv_text = '###'.
+*  CALL METHOD po_dd_doc->add_text
+*    EXPORTING
+*      text         = lv_text
+*      sap_style    = cl_dd_document=>key
+*      sap_color    = cl_dd_document=>list_normal_int
+**     sap_fontsize = cl_dd_document=>small
+*      sap_emphasis = space
+*      style_class  = space.
+*
+*  CALL METHOD po_dd_doc->add_gap
+*    EXPORTING
+*      width = 15.
+*
+*  lv_text = sy-datum.
+*  CALL METHOD po_dd_doc->add_text
+*    EXPORTING
+*      text         = lv_text
+*      sap_style    = cl_dd_document=>large
+*      sap_color    = cl_dd_document=>list_normal_int
+*      sap_fontsize = cl_dd_document=>small
+*      sap_emphasis = space
+*      style_class  = space.
+*
+*
+*  CALL METHOD po_dd_doc->new_line( ).
+*  lv_text = '####'.
+*  CALL METHOD po_dd_doc->add_text
+*    EXPORTING
+*      text         = lv_text
+*      sap_style    = cl_dd_document=>key
+*      sap_color    = cl_dd_document=>list_normal_int
+**     sap_fontsize = cl_dd_document=>small
+*      sap_emphasis = space
+*      style_class  = space.
+*
+*  CALL METHOD po_dd_doc->add_gap
+*    EXPORTING
+*      width = 12.
+*
+*  lv_text = sy-uzeit.
+*  CALL METHOD po_dd_doc->add_text
+*    EXPORTING
+*      text         = lv_text
+*      sap_style    = cl_dd_document=>large
+*      sap_color    = cl_dd_document=>list_normal_int
+*      sap_fontsize = cl_dd_document=>small
+*      sap_emphasis = space
+*      style_class  = space.
+*
+*  CALL METHOD po_dd_doc->display_document
+*    EXPORTING
+*      parent = go_gui_con_top.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form handle_before_user_command
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> E_UCOMM
+*&---------------------------------------------------------------------*
+FORM handle_before_user_command  USING    p_e_ucomm.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form handle_after_user_command
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> E_UCOMM
+*&      --> E_NOT_PROCESSED
+*&      --> E_SAVED
+*&---------------------------------------------------------------------*
+FORM handle_after_user_command  USING    p_e_ucomm
+                                         p_e_not_processed
+                                         p_e_saved.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form handle_button_click
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> ES_COL_ID
+*&      --> ES_ROW_NO
+*&---------------------------------------------------------------------*
+FORM handle_button_click  USING    p_es_col_id
+                                   p_es_row_no.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form handle_subtotal_text
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> ES_SUBTOTTXT_INFO
+*&      --> EP_SUBTOT_LINE
+*&      --> E_EVENT_DATA
+*&---------------------------------------------------------------------*
+FORM handle_subtotal_text  USING    p_es_subtottxt_info
+                                    p_ep_subtot_line
+                                    p_e_event_data.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form register_event_handler
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM register_event_handler .
+*
+**  CALL METHOD go_grid->register_edit_event
+**    EXPORTING
+**      i_event_id = cl_gui_alv_grid=>mc_evt_enter.
+*
+**  CALL METHOD go_grid->register_edit_event
+**    EXPORTING
+**      i_event_id = cl_gui_alv_grid=>mc_evt_modified.
+*
+*  CREATE OBJECT go_event_rcvr.
+*
+*  SET HANDLER :
+*  go_event_rcvr->handle_top_of_page           FOR go_grid,
+*  go_event_rcvr->handle_double_click          FOR go_grid,
+*  go_event_rcvr->handle_data_changed          FOR go_grid,
+**  go_event_rcvr->handle_toolbar               FOR go_grid,
+**  go_event_rcvr->handle_user_command          FOR go_grid,
+**  go_event_rcvr->handle_hotspot_click         FOR go_grid,
+**  go_event_rcvr->handle_on_f4                 FOR go_grid,
+*  go_event_rcvr->handle_button_click          FOR go_grid.
+*
+*  CALL METHOD go_grid->list_processing_events
+*    EXPORTING
+*      i_event_name = 'TOP_OF_PAGE'
+*      i_dyndoc_id  = go_dd_doc.
+
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form VIEW_MAINTENANCE_CALL
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM view_maintenance_call .
+  IF sy-ucomm = 'FC01'.
+    CALL FUNCTION 'VIEW_MAINTENANCE_CALL'
+      EXPORTING
+        action    = 'S'
+*       CORR_NUMBER                          = '          '
+*       GENERATE_MAINT_TOOL_IF_MISSING       = ' '
+*       SHOW_SELECTION_POPUP                 = ' '
+        view_name = 'ZA370001V'
+*       NO_WARNING_FOR_CLIENTINDEP           = ' '
+*       RFC_DESTINATION_FOR_UPGRADE          = ' '
+*       CLIENT_FOR_UPGRADE                   = ' '
+*       VARIANT_FOR_SELECTION                = ' '
+*       COMPLEX_SELCONDS_USED                = ' '
+*       CHECK_DDIC_MAINFLAG                  = ' '
+*       SUPPRESS_WA_POPUP                    = ' '
+*     TABLES
+*       DBA_SELLIST                          =
+*       EXCL_CUA_FUNCT                       =
+*     EXCEPTIONS
+*       CLIENT_REFERENCE                     = 1
+*       FOREIGN_LOCK                         = 2
+*       INVALID_ACTION                       = 3
+*       NO_CLIENTINDEPENDENT_AUTH            = 4
+*       NO_DATABASE_FUNCTION                 = 5
+*       NO_EDITOR_FUNCTION                   = 6
+*       NO_SHOW_AUTH                         = 7
+*       NO_TVDIR_ENTRY                       = 8
+*       NO_UPD_AUTH                          = 9
+*       ONLY_SHOW_ALLOWED                    = 10
+*       SYSTEM_FAILURE                       = 11
+*       UNKNOWN_FIELD_IN_DBA_SELLIST         = 12
+*       VIEW_NOT_FOUND                       = 13
+*       MAINTENANCE_PROHIBITED               = 14
+*       OTHERS    = 15
+      .
+    IF sy-subrc <> 0.
+* Implement suitable error handling here
+    ENDIF.
+
+  ENDIF.
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form get_data
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM get_data .
+
+  DATA : lt_za370001 TYPE TABLE OF za370001,
+         ls_za370001 TYPE za370001.
+
+  DATA : lt_ce2a000   TYPE TABLE OF ce2a000,
+         ls_ce2a000   TYPE ce2a000,
+         lt_zce1a000  TYPE TABLE OF zce1a000,
+         ls_zce1a000  TYPE zce1a000,
+         lv_fname(50).
+
+
+  SELECT * INTO CORRESPONDING FIELDS OF TABLE lt_za370001
+     FROM za370001
+    WHERE rgubun = p_rgubun
+ORDER BY zseq.
+
+  LOOP AT lt_za370001 INTO ls_za370001.
+    MOVE-CORRESPONDING ls_za370001 TO gs_data.
+    APPEND gs_data TO gt_data. CLEAR gs_data.
+  ENDLOOP.
+
+  LOOP AT s_monat.
+    s_perbl-sign = s_monat-sign.
+    s_perbl-option = s_monat-option.
+    s_perbl-low    =  p_gjahr && '0' && s_monat-low.
+    s_perbl-high   =  p_gjahr && '0' && s_monat-high.
+    APPEND s_perbl.
+  ENDLOOP.
+
+*  IF p_plan = 'X'.
+*    SELECT * INTO CORRESPONDING FIELDS OF TABLE lt_ce2a000
+*      FROM ce2a000
+*      WHERE gjahr = p_gjahr
+*       AND perbl IN s_perbl.
+*
+*  ELSE.
+*    SELECT * INTO CORRESPONDING FIELDS OF TABLE lt_zce1a000
+*      FROM zce1a000
+*      WHERE gjahr = p_gjahr
+*       AND perio IN s_perbl.
+*  ENDIF.
+
+
+  "-- SELECT table
+
+  DEFINE __app_sql.
+    gs_sql = &1.
+    APPEND gs_sql TO gt_sql. CLEAR gs_sql.
+  END-OF-DEFINITION.
+
+  CASE 'X'.
+    WHEN p_plan.   "##
+      gv_tname = 'CE2A000'.
+      __app_sql :  'PERBL'.
+
+      LOOP AT lt_za370001 INTO ls_za370001 WHERE fname IS NOT INITIAL.
+        __app_sql  ls_za370001-fname.
+      ENDLOOP.
+
+      CONCATENATE 'PERBL' 'IN' 's_perbl' INTO sql SEPARATED BY space.
+
+    WHEN OTHERS.  "##
+      gv_tname = 'ZCE1A000'.
+      __app_sql :  'PERIO AS PERBL'.
+
+      LOOP AT lt_za370001 INTO ls_za370001 WHERE fname IS NOT INITIAL.
+        CONCATENATE  ls_za370001-fname+0(5)  'as' ls_za370001-fname
+        INTO lv_fname SEPARATED BY space.
+        __app_sql lv_fname.
+      ENDLOOP.
+
+      CONCATENATE 'PERIO' 'IN' 's_perbl' INTO sql SEPARATED BY space.
+  ENDCASE.
+
+  TRY.
+      SELECT (gt_sql) INTO CORRESPONDING FIELDS OF TABLE lt_ce2a000
+        FROM (gv_tname)
+       WHERE gjahr = p_gjahr
+         AND (sql).
+
+    CATCH cx_sy_dynamic_osql_semantics.
+    CATCH cx_sy_dynamic_osql_syntax.
+  ENDTRY.
+
+
+  "-- modify table
+  FIELD-SYMBOLS :<data> LIKE gs_data,
+                 <tval> TYPE any,
+                 <fval> TYPE any.
+
+  DATA lv_monat(30).
+  LOOP AT lt_ce2a000 INTO ls_ce2a000.
+    LOOP AT lt_za370001 INTO ls_za370001 WHERE fname IS NOT INITIAL.
+
+      lv_monat = 'WKG' &&  ls_ce2a000-perbl+4(3).
+      READ TABLE gt_data ASSIGNING <data> WITH KEY fname = ls_za370001-fname.
+      IF sy-subrc = 0.
+        ASSIGN COMPONENT ls_za370001-fname OF STRUCTURE ls_ce2a000 TO <fval>.
+        ASSIGN COMPONENT lv_monat OF STRUCTURE <data> TO <tval>.
+        IF sy-subrc = 0.
+          <tval> = <tval> + <fval>.
+        ENDIF.
+        CLEAR <fval>.
+      ENDIF.
+    ENDLOOP.
+
+  ENDLOOP.
+
+
+
+  "-- ###
+  DATA lv_mons(3) TYPE n.
+  DATA lv_formula TYPE string.
+  DATA lv_value   TYPE f. "p DECIMALS 2.
+  DATA lv_cal.
+
+  DO 12 TIMES.
+    lv_mons  = sy-index.
+    lv_monat = 'WKG' && lv_mons.
+
+    LOOP AT gt_data INTO gs_data WHERE cname IS NOT INITIAL.
+
+      CLEAR : lv_formula, gt_cal.
+      PERFORM split TABLES gt_cal.
+
+      ASSIGN COMPONENT lv_monat OF STRUCTURE gs_data TO <tval>.
+      LOOP AT gt_cal INTO gs_cal.
+
+        lv_cal = gs_cal-cal.
+        AT LAST.
+          CLEAR lv_cal.
+        ENDAT.
+
+        READ TABLE gt_data INTO DATA(ls_data) WITH KEY code = gs_cal-cname.
+        IF sy-subrc = 0.
+          ASSIGN COMPONENT lv_monat OF STRUCTURE ls_data TO <fval>.
+          IF sy-subrc = 0.
+            lv_formula = lv_formula && <fval> && lv_cal.
+          ENDIF.
+        ENDIF.
+      ENDLOOP.
+
+      CLEAR lv_value.
+      CALL FUNCTION 'EVAL_FORMULA'
+        EXPORTING
+*         DEGREES                 = ' '
+          formula                 = lv_formula
+*         PROGRAM                 = ' '
+*         ROUTINE                 = ' '
+*         UNIT_OF_MEASURE         = ' '
+*         NO_EXISTENCE_CHECK      = ' '
+        IMPORTING
+          value                   = lv_value
+        EXCEPTIONS
+          division_by_zero        = 1
+          exp_error               = 2
+          formula_table_not_valid = 3
+          invalid_expression      = 4
+          invalid_value           = 5
+          log_error               = 6
+          parameter_error         = 7
+          sqrt_error              = 8
+          units_not_valid         = 9
+          missing_parameter       = 10
+          OTHERS                  = 11.
+
+      IF sy-subrc = 0.
+        <tval> = lv_value.
+        MODIFY gt_data FROM gs_data TRANSPORTING (lv_monat) WHERE cname = gs_data-cname.
+      ENDIF.
+    ENDLOOP.
+  ENDDO.
+
+
+
+  "-- ####
+  DATA lv_wkg TYPE rke2_vv010.
+  DATA lv_space(10) VALUE '#'..
+
+  LOOP AT gt_data ASSIGNING <data>.
+    DO 12 TIMES VARYING lv_wkg FROM <data>-wkg001 NEXT <data>-wkg002.
+      <data>-wkgtot = <data>-wkgtot  + lv_wkg.
+    ENDDO.
+
+    CLEAR lv_space.
+    DO <data>-glevel TIMES .
+      CONCATENATE  lv_space '#' INTO  lv_space.
+    ENDDO.
+    <data>-ltext =  lv_space && <data>-ltext.
+  ENDLOOP.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form CREATE_GRID
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM create_grid .
+
+
+  CREATE OBJECT go_grid
+    EXPORTING
+*     i_shellstyle      = 0
+*     i_lifetime        =
+      i_parent = go_gui_con
+*     i_appl_events     = SPACE
+*     i_parentdbg       =
+*     i_applogparent    =
+*     i_graphicsparent  =
+*     i_name   =
+*     i_fcat_complete   = SPACE
+*     o_previous_sral_handler =
+*  EXCEPTIONS
+*     error_cntl_create = 1
+*     error_cntl_init   = 2
+*     error_cntl_link   = 3
+*     error_dp_create   = 4
+*     others   = 5
+    .
+  IF sy-subrc <> 0.
+* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+*            WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+  ENDIF.
+
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form FIELDCATALOG_MERGE
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM fieldcatalog_merge USING pv_tabname.
+
+  DATA lt_fieldcat  TYPE slis_t_fieldcat_alv.
+  CALL FUNCTION 'REUSE_ALV_FIELDCATALOG_MERGE'
+    EXPORTING
+      i_program_name         = sy-repid
+      i_internal_tabname     = 'GS_DATA'
+*     i_structure_name       = 'gs_data'
+*     I_CLIENT_NEVER_DISPLAY = 'X'
+      i_inclname             = sy-repid
+      i_bypassing_buffer     = 'X'
+*     I_BUFFER_ACTIVE        =
+    CHANGING
+      ct_fieldcat            = lt_fieldcat[]
+    EXCEPTIONS
+      inconsistent_interface = 1
+      program_error          = 2
+      OTHERS                 = 3.
+
+  CALL FUNCTION 'LVC_TRANSFER_FROM_SLIS'
+    EXPORTING
+      it_fieldcat_alv = lt_fieldcat
+*     IT_SORT_ALV     =
+*     IT_FILTER_ALV   =
+*     IS_LAYOUT_ALV   =
+    IMPORTING
+      et_fieldcat_lvc = gt_fcat
+*     ET_SORT_LVC     =
+*     ET_FILTER_LVC   =
+*     ES_LAYOUT_LVC   =
+    TABLES
+      it_data         = gt_data
+    EXCEPTIONS
+      it_data_missing = 1
+      OTHERS          = 2.
+  IF sy-subrc <> 0.
+* Implement suitable error handling here
+  ENDIF.
+
+
+
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form abap_structdescr
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM abap_structdescr USING pv_tabname.
+
+  DATA : lr_strdescr TYPE REF TO cl_abap_structdescr,
+         lt_dfies    TYPE ddfields,
+         ls_dfies    TYPE dfies.
+
+  lr_strdescr ?= cl_abap_structdescr=>describe_by_data( gs_data ).
+  lt_dfies = cl_salv_data_descr=>read_structdescr( lr_strdescr ).
+
+  LOOP AT lt_dfies INTO ls_dfies.
+    MOVE-CORRESPONDING ls_dfies TO gs_fcat.
+    APPEND gs_fcat TO gt_fcat. CLEAR gs_fcat.
+
+  ENDLOOP.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form SPLIT
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> LT_CAL
+*&---------------------------------------------------------------------*
+FORM split  TABLES   lt_cal STRUCTURE gs_cal.
+
+  DATA : ls_cname(100),
+         lt_cname      LIKE TABLE OF ls_cname,
+         lv_code       LIKE gs_data-code,
+         ls_cal        LIKE gs_cal,
+         lv_cals       TYPE c.
+
+  CLEAR lt_cname.
+  SPLIT gs_data-cname  AT '+' INTO TABLE  lt_cname.
+  lv_cals = '+'.
+
+  CLEAR lt_cal.
+  LOOP AT lt_cname INTO ls_cname.
+    DATA(lv_len) = strlen( ls_cname ).
+    IF lv_len = 3.
+      ls_cal-cal   = '+'.
+    ENDIF.
+    ls_cal-cname = ls_cname.
+    APPEND ls_cal TO lt_cal. CLEAR ls_cal.
+  ENDLOOP.
+
+  LOOP AT lt_cal INTO ls_cal WHERE cal IS INITIAL.
+    CLEAR lt_cname.
+    SPLIT ls_cal-cname  AT '-' INTO TABLE  lt_cname.
+
+    LOOP AT lt_cname INTO ls_cname.
+      lv_len = strlen( ls_cname ).
+      IF lv_len = 3.
+        ls_cal-cal   = lv_cals.
+        lv_cals      = '-'.
+      ENDIF.
+      ls_cal-cname = ls_cname.
+      INSERT ls_cal INTO lt_cal. CLEAR ls_cal.
+    ENDLOOP.
+
+  ENDLOOP.
+
+  DELETE lt_cal WHERE cal IS INITIAL.
+
+ENDFORM.
+*&---------------------------------------------------------------------*
+*& Form exec_edit
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*& -->  p1        text
+*& <--  p2        text
+*&---------------------------------------------------------------------*
+FORM exec_edit .
+
+  TRANSLATE gv_edit USING ' XX '.
+  IF go_grid IS NOT INITIAL.
+    CALL METHOD go_grid->free
+*      EXCEPTIONS
+*        cntl_error        = 1
+*        cntl_system_error = 2
+*        others            = 3
+      .
+    IF sy-subrc <> 0.
+*     Implement suitable error handling here
+    ENDIF.
+
+    CLEAR go_grid.
+  ENDIF.
+
+
+ENDFORM.
+
+----------------------------------------------------------------------------------
+Extracted by Mass Download version 1.5.5 - E.G.Mellodew. 1998-2021. Sap Release 754

@@ -3,22 +3,21 @@
 *   Please do not change it manually.                          *																																
 ****************************************************************																																
 %_DYNPRO																																
-ZAI124R20																																
+ZA370002																																
 0100																																
 754																																
                 40																																
 %_HEADER																																
-ZAI124R20                               0100 0100    200255192 37  0  0200255  0G E                              20210824040708																																
+ZA370002                                0100 0100     18105192 37  0  0 27123  0G E                              20210907171339																																
 %_DESCRIPTION																																
-Main Screen																																
+FOR DISPLAY																																
 %_FIELDS																																
-GO_CONTAINER			255	00	00	00	30	00	  1	  2		  0	  0	  0		200	U				  1	  1	101									
+CON			104	00	00	00	30	00	  1	  3		  0	  0	  0		 18	U				  1	  1	101									
 OK_CODE		CHAR	 20	80	10	00	00	00	255	  1	O	  0	  0	  0		  0					  0	  0								____________________		
 %_FLOWLOGIC																																
 PROCESS BEFORE OUTPUT.																																
-    MODULE STATUS_0100.																																
-    MODULE set_alv_0100.																																
-																																
+  MODULE status_0100.																																
+  MODULE display_alv.																																
+*																																
 PROCESS AFTER INPUT.																																
-    MODULE EXIT_0100 AT EXIT-COMMAND.																																
-    MODULE USER_COMMAND_0100.																																
+  MODULE user_command_0100.																																
